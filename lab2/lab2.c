@@ -7,7 +7,7 @@ int main()
 {
 	int choice;
 	float d, g, V;
-	printf("MENIU:\n1. Instructiunea if\n2. Instructiunea if-elseh\n3. Instructiunea if-else-if\n");
+	printf("MENIU:\n1. Instructiunea if\n2. Instructiunea if-else\n3. Instructiunea if-else-if\n");
 	printf("Alegeti optiunea:\n");
 	scanf("%d", &choice);
 	printf("Introduceti necunoscutele d si g: ");

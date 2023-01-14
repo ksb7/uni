@@ -13,6 +13,7 @@ int **alloc(int m, int n)
 	    printf("Tabloul nu a fost alocat\n");
 	    exit(1);
     }
+    printf("Memoria s-a alocat cu succes\n");
     return a;
 }
 void insert(int** a, int m, int n)
@@ -22,7 +23,6 @@ void insert(int** a, int m, int n)
     for(int j = 0; j < m; j++)
     {
         scanf("%d", &a[i][j]);
-        printf("element %d \n", a[i][j]);
     }
 }
 void rand_insert(int** a, int m, int n)
@@ -32,7 +32,6 @@ void rand_insert(int** a, int m, int n)
     for(int j = 0; j < m; j++)
     {
         a[i][j] = rand();
-        printf("element %d\n", a[i][j]);
     }
 }
 void bubbleSort(int **a, int m, int n)
@@ -81,9 +80,11 @@ int main()
     scanf("%d%d", &n, &m);
     int choice;
     do{
+	printf("----------------------------------------------------------------\n");
         printf("Meniu:\n");
-        printf(" 1. Alocarea dinamica a memoriei pentru tablourile bidimensionale\n2. Introducerea elementelor tabloului de la tastatura\n3. Completarea tabloului cu valori aleatorii\n4. Sortarea elementelor tabloului (cоnform variantelor)\n5. Afișarea elementelor tabloului la ecran\n6. Eliberarea memoriei alocate pentru tablou\n7. Ieșire din program\n");
-        printf("Alegerea:\n");
+        printf("1. Alocarea dinamica a memoriei pentru tablourile bidimensionale\n2. Introducerea elementelor tabloului de la tastatura\n3. Completarea tabloului cu valori aleatorii\n4. Sortarea elementelor tabloului (cоnform variantelor)\n5. Afișarea elementelor tabloului la ecran\n6. Eliberarea memoriei alocate pentru tablou\n7. Ieșire din program\n");
+        printf("----------------------------------------------------------------\n");
+       	printf("Alegerea:\n");
         scanf("%d", &choice);
         switch(choice)
         {
