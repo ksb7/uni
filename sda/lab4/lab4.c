@@ -14,7 +14,7 @@ void node_insert(struct node *initial, int valoare)
 {
 	struct node *temp = NULL;
 	struct node *curent = (struct node*) malloc(sizeof(struct node));
-	if(curent== NULL)
+	if(!curent)
 	{
 		printf("Alocare esuata\n");
 		exit(1);
@@ -22,48 +22,62 @@ void node_insert(struct node *initial, int valoare)
 	
 	curent->val = valoare;
 	curent->head = NULL;
-	
-	if (initial == NULL) 
-	{
-	    initial = curent; //pentru primul nod
-	}
-	
+	//temp si initial vor avea aceeasi adresa in memorie
+	temp = initial; 
 	while(temp->head != NULL)
 	{
 	    temp = temp->head; //trece prin toate nodurile pana ajunge la ultimul
 	}
 	temp->head = curent; //adauga noul nod la capat
 }
-/*void find(struct node *original, int n)
+
+void find(struct node *original, int n)
 {
-    struct node *temp = original;
+    struct node *temp, *control;
+    temp = original;
     for(int i = 0; i < n; i++)
-    {
-        while (node->head != NULL)
+    {   
+        control = temp->head;
+        int k = 0;
+        //pentru fiecare nod va trece prin intreaga lista 
+        //incepand de la urmatorul 
+        for(int j = i+1; j < n; ++j) 
         {
-            if(node)
+            if(control->val < 0) k++;
+            control = control->head;
         }
+        printf("Elementul %f are %d elemente negative succesive\n", temp->val, k);
+        temp = temp->head;
     }
+        
 }
-*/
+
 int main()
 {
 	printf("Introduceti numarul de noduri\n");
 	int n;
 	scanf("%d", &n);
-	struct node *N = NULL;
+	struct node *N = (struct node*) malloc(sizeof(struct node));
+	if(!N)
+	{
+		printf("Alocare esuata\n");
+		exit(1);
+	}
+	
 	float element;
-	printf("introduceti elementele: \n");
-	for(int i = 0; i < n; i++)
+	printf("Introduceti elementele: \n");
+	//-------------------------
+	//pentru primul nod
+	scanf("%f", &element);
+	N->val = element;
+	N->head = NULL; 
+	//-------------------------
+	for(int i = 1; i < n; i++)
 	{
 		scanf("%f", &element);
 		node_insert(N, element);
 	}
-	while(N != NULL)
-    {
-        printf("Data = %f\n", N->val); // Print data of current node
-        N = N->head;                 // Move to next node
-    }
+	find(N, n);
 	return 0;
 }
 
