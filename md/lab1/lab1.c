@@ -21,8 +21,10 @@ void insert_node(struct node *initial, int valoare); //introduce valori in lista
 void LAtoMI(int *lista, int n, int m); //din lista in matrice de incidenta
 void printList(struct node* list);
 void printMatrix(int **a, int n, int m);
+void insertArrayOfList(struct node ***arrayOflist, int m);
+struct node** allocArrayOfList(int m);
+void MAtoMI(int **MA, int **MI, int n, int m);
 /*TODO
-void MAtoMI();
 void MItoLI();
 void LItoMA();
 */
@@ -48,9 +50,9 @@ int main()
     }
     return 0;
 }
-void freeMatrix(struct node **a, int m)
+void freeMatrix(int **a, int n)
 {
-    for(int i = 0; i < m; i++) free(a[i]);
+    for(int i = 0; i < n; i++) free(a[i]);
     free(a);
 }
 void freeList(struct node* list)
@@ -65,7 +67,7 @@ void freeList(struct node* list)
 }
 int **allocMatrix(int n, int m)
 {
-    int **a = malloc(sizeof(int*) * m);
+    int **a = calloc(m, sizeof(int*));
     if(!a)
     {
 	    printf("Matricea nu a fost alocata\n");
@@ -73,7 +75,7 @@ int **allocMatrix(int n, int m)
     }
     for(int i = 0; i < m; i++)
     {
-        a[i] = malloc(sizeof(int) * n);
+        a[i] = calloc(n, sizeof(int));
         if(!a[i])
         {
             printf("Matricea nu a fost alocata\n");
@@ -135,7 +137,7 @@ void MI(int n, int m) //matricea de incidenta
     int **matrice;
     insertMatrix(&matrice, n, m);
     printMatrix(matrice, n, m);
-    printf("Meniu:\n1.Transformarea in matricea de adiacenta\n2.Transformarea in lista de adiacenta\nAlegerea :");
+    printf("\nMeniu:\n1.Transformarea in matricea de adiacenta\n2.Transformarea in lista de adiacenta\nAlegerea :");
     int choice;
     scanf("%d", &choice);
     switch(choice)
@@ -163,14 +165,19 @@ void MA(int n, int m) //matricea de adiacenta
     int **matrice;
     insertMatrix(&matrice, n, n);
     printMatrix(matrice, n, n);
-    printf("Meniu:\n1.Transformarea in matricea de incidenta\n2.Transformarea in lista de adiacenta\nAlegerea :");
+    printf("\nMeniu:\n1.Transformarea in matricea de incidenta\n2.Transformarea in lista de adiacenta\nAlegerea: ");
     int choice;
     scanf("%d", &choice);
     switch(choice)
     {
         case 1: 
-        //functia
-        break;
+        {
+            int **MI = allocMatrix(n, m);
+            MAtoMI(matrice, MI, n, m);
+            printMatrix(MI, n, m);
+            break;
+        }
+        
         case 2:
         //functia
         break;
@@ -296,7 +303,7 @@ void LA(int n, int m) //lista de adiacenta
 	{
 	    freeList(arrayOflist[i]);
 	}
-	freeMatrix(arrayOflist, m);
+	free(arrayOflist);
 	
 }
 void LAtoMI(int *lista, int n, int m) //lista de adiacenta la matricea de incidenta
@@ -323,17 +330,37 @@ void printMatrix(int **a, int n, int m)
     {
         printf(" x%d", j);
     }
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < m; i++)
     {
         printf("\nx%d ", i+1);
-        for(int j = 0; j < m; j++) 
+        for(int j = 0; j < n; j++) 
         {
             printf("%d  ", a[i][j]);
         }
     }
 }
 
-/*void MAtoMI(int **MA, int **MI)
+void MAtoMI(int **MA, int **MI, int n, int m)
 {
+    
     for(int i = 0; i < n; i++)
-}*/
+    {
+        int k = 0;
+        for(int j = 0; j < n; j++)
+        {
+            if(MA[i][j]==1) 
+            {
+                MI[k][i] = -1;
+                MI[k][j] = 1;
+            }
+            k++;
+        }
+    }
+}
+/*void MItoLA(int **MI, struct node **LI, int n, int m)
+{
+    
+}
+
+*/
+
