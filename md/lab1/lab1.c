@@ -18,21 +18,21 @@ void MA(); //matricea de adiacenta
 int **allocMatrix(int n, int m); //aloca memorie pentru matrici
 void insertMatrix(int ***a, int n, int m); //introduce valori in matrici
 void insert_node(struct node *initial, int valoare); //introduce valori in lista
-void LAtoMI(int *lista, int n, int m); //din lista in matrice de incidenta
 void printList(struct node* list);
 void printMatrix(int **a, int n, int m);
 void insertArrayOfList(struct node ***arrayOflist, int m);
 struct node** allocArrayOfList(int m);
 void MAtoMI(int **MA, int **MI, int n, int m);
+void MItoLA(int **MI, struct node **LI, int n, int m);
 /*TODO
-void MItoLI();
-void LItoMA();
+void MItoLA();
+void LAtoMA();
 */
 
 int main()
 {
     int choice;
-    int n, m;
+    int n, ;
     printf("Dati numarul de arce: "); scanf("%d", &m);
     printf("Dati numarul de varfuri: "); scanf("%d", &n);
     printf("Meniu:\n1.Matricea de incidenta\n2.Matricea de adiacenta\n3.Lista de adiacenta\nAlegerea: ");
@@ -151,7 +151,13 @@ void MI(int n, int m) //matricea de incidenta
         }
         case 2:
         {
-            
+            struct node** lista = allocArrayOfList(m);
+            MItoLA(matrice, lista, n, m);
+            printf("Lista este \n");
+            for(int i = 0; i < n; i++)
+	        {
+	            printList(lista[i]);
+	        }
         }
         //functia
         break;
@@ -342,25 +348,31 @@ void printMatrix(int **a, int n, int m)
 
 void MAtoMI(int **MA, int **MI, int n, int m)
 {
-    
+    int k = 0;
     for(int i = 0; i < n; i++)
     {
-        int k = 0;
         for(int j = 0; j < n; j++)
         {
-            if(MA[i][j]==1) 
+            if(MA[i][j]) 
             {
                 MI[k][i] = -1;
                 MI[k][j] = 1;
+                k++;
             }
-            k++;
         }
     }
 }
-/*void MItoLA(int **MI, struct node **LI, int n, int m)
+void MItoLA(int **MI, struct node **LI, int n, int m)
 {
-    
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < m; i++)
+        {
+            if(MI[i][j] == -1)
+            {
+                for(int k = 0; k < m; k++)
+                if(MI[i][k]) insert_node(LI[j], k+1);
+            }
+        }
+    }
 }
-
-*/
-
