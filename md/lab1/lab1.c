@@ -24,10 +24,7 @@ void insertArrayOfList(struct node ***arrayOflist, int arc);
 struct node** allocArrayOfList(int arc);
 void MAtoMI(int **MA, int **MI, int varf, int arc);
 void MItoLA(int **MI, struct node **LI, int varf, int arc);
-/*TODO
-void MItoLA();
-void LAtoMA();
-*/
+void LAtoMA(struct node **LA, int **MA, int varf, int arc);
 
 int main()
 {
@@ -151,10 +148,10 @@ void MI(int varf, int arc) //matricea de incidenta
         }
         case 2:
         {
-            struct node** lista = allocArrayOfList(arc);
+            struct node** lista = allocArrayOfList(varf);
             MItoLA(matrice, lista, varf, arc);
             printf("Lista este \n");
-            for(int i = 0; i < arc; i++)
+            for(int i = 0; i < varf; i++)
                 {
                     printList(lista[i]);
                 }
@@ -211,15 +208,15 @@ void insert_node(struct node *initial, int valoare)
         }
         temp->head = curent; //adauga noul nod la capat
 }
-struct node** allocArrayOfList(int arc)
+struct node** allocArrayOfList(int varf)
 {
-    struct node **arrayOflist = malloc(arc*sizeof(struct node*));
+    struct node **arrayOflist = malloc(varf*sizeof(struct node*));
     if(!arrayOflist)
     {
         printf("Alocare esuata\n");
         exit(1);
     }
-        for(int i = 0; i < arc; i++)
+        for(int i = 0; i < varf; i++)
         {
             arrayOflist[i] = malloc(sizeof(struct node*));
             if(!arrayOflist[i])
@@ -230,10 +227,10 @@ struct node** allocArrayOfList(int arc)
         }
         return arrayOflist;
 }
-void insertArrayOfList(struct node ***arrayOflist, int arc)
+void insertArrayOfList(struct node ***arrayOflist, int varf)
 {
 
-    for(int i = 0; i < arc; i++)
+    for(int i = 0; i < varf; i++)
         {
             printf("Dati numarul coloanei:");
             scanf("%d", &((*arrayOflist)[i]->val));
@@ -250,9 +247,9 @@ void insertArrayOfList(struct node ***arrayOflist, int arc)
 void LA(int varf, int arc) //lista de adiacenta
 {
     /*ALOCARE MEMORIE*/
-        struct node **arrayOflist = allocArrayOfList(arc);
+        struct node **arrayOflist = allocArrayOfList(varf);
 
-        insertArrayOfList(&arrayOflist, arc);
+        insertArrayOfList(&arrayOflist, varf);
         /*VERIFICARE ERORI
         if(!arrayOflist)
         {
@@ -298,8 +295,13 @@ void LA(int varf, int arc) //lista de adiacenta
         {
                 case 1: //functia
                         break;
-                case 2: //functia
-                        break;
+                case 2: 
+                {
+                    int **MA = allocMatrix(varf, varf);
+                    LAtoMA(arrayOflist, MA, varf, arc);
+                    printMatrix(MA, varf, varf);
+                    break;
+                }
                 default: printf("Optiune invalida\n");
                          break;
         }
@@ -363,17 +365,18 @@ void MAtoMI(int **MA, int **MI, int varf, int arc)
 }
 void MItoLA(int **MI, struct node **LI, int varf, int arc)
 {
-    int j = 0;
     for(int i = 0; i < arc; i++)
     {
-        LI[i]->val = j+1;
-        LI[i]->head = NULL;
-        int k;
-        for(; j < varf; j++)
+       if(i < varf)
+       {
+            LI[i]->val = i+1;
+            LI[i]->head = NULL;
+       }
+        for(int j = 0; j < varf; j++)
         {
             if(MI[i][j] == -1)
             {
-                for(k = 0; k < varf; k++)
+                for(int k = 0; k < varf; k++)
                 {
                     
                     if(MI[i][k] == 1) insert_node(LI[j], k+1);
@@ -382,5 +385,22 @@ void MItoLA(int **MI, struct node **LI, int varf, int arc)
             }
         }
     }
-    for(int i = 0 ; i < arc; i++) insert_node(LI[i], 0);
+    for(int i = 0 ; i < varf; i++) insert_node(LI[i], 0);
+}
+
+void LAtoMA(struct node **LA, int **MA, int varf, int arc)
+{
+    struct node *temp;
+    for(int i = 0; i < varf; i++)
+    {
+        int r = LA[i]->val;
+        for(temp = LA[i]->head; temp->val != 0; temp = temp->head)
+        {
+            //r = LA[i]->val;
+            //LA[i] = LA[i]->head;
+            MA[r-1][(temp->val)-1] = 1;
+            //printf("MA[%d][%d] %d \n", r-1, (temp->val)-1, MA[r-1][(temp->val)-1]);
+        }
+    }
+    //printMatrix(MA, varf, varf);
 }
