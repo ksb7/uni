@@ -10,20 +10,22 @@ struct node
     int val;
     struct node* head;
 }*list;
- //int arc, varf, u;
- void MI(); //matricea de incidenta
+
+void MI(); //matricea de incidenta
 void LA(); //lista de adiacenta
 void MA(); //matricea de adiacenta
-int **allocMatrix(int varf, int arc); //aloca memorie pentru matrici
-void insertMatrix(int ***a, int varf, int arc); //introduce valori in matrici
-void insert_node(struct node *initial, int valoare); //introduce valori in lista
+void MAtoMI(int **MA, int **MI, int varf, int arc); //din matricea de adiacenta in matricea de incidenta
+void MItoLA(int **MI, struct node **LI, int varf, int arc); //din matricea de incidenta in lista de adiacenta
+void LAtoMA(struct node **LA, int **MA, int varf, int arc); //din lista de adiacenta in matricea de adiacenta
+int **allocMatrix(int varf, int arc); 
+void insertMatrix(int ***a, int varf, int arc); 
+struct node** allocArrayOfList(int arc);
+void insertArrayOfList(struct node ***arrayOflist, int arc);
+void insert_node(struct node *initial, int valoare);
 void printList(struct node* list);
 void printMatrix(int **a, int varf, int arc);
-void insertArrayOfList(struct node ***arrayOflist, int arc);
-struct node** allocArrayOfList(int arc);
-void MAtoMI(int **MA, int **MI, int varf, int arc);
-void MItoLA(int **MI, struct node **LI, int varf, int arc);
-void LAtoMA(struct node **LA, int **MA, int varf, int arc);
+void freeMatrix(int **a, int arc);
+void freeList(struct node* list);
 
 int main()
 {
@@ -46,93 +48,16 @@ int main()
     }
     return 0;
 }
-void freeMatrix(int **a, int varf)
+void MI(int varf, int arc) 
 {
-    for(int i = 0; i < varf; i++) free(a[i]);
-    free(a);
-}
-void freeList(struct node* list)
-{
-   struct node* tmp;
-   while (list)
-    {
-       tmp = list;
-       list = list->head;
-       free(tmp);
-    }
-}
-int **allocMatrix(int varf, int arc)
-{
-    int **a = calloc(arc, sizeof(int*));
-    if(!a)
-    {
-            printf("Matricea nu a fost alocata\n");
-            exit(1);
-    }
-    for(int i = 0; i < arc; i++)
-    {
-        a[i] = calloc(varf, sizeof(int));
-        if(!a[i])
-        {
-            printf("Matricea nu a fost alocata\n");
-            exit(1);
-        }
-    }
-
-    printf("Memoria pentru matrice a fost alocata\n");
-    return a;
-}
-void insertMatrix(int ***a, int varf, int arc)
-{
-    *a = allocMatrix(varf, arc);
-    printf("Dati elementele\n");
-    for(int i = 0; i < arc; i++)
-    for(int j = 0; j < varf; j++)
-    {
-        scanf("%d", &(*a)[i][j]);
-    }
-}
-/*struct node** allocArrayOfList(int arc)
-{
-    struct node **arrayOflist = malloc(m*sizeof(struct node*));
-    if(!arrayOflist)
-    {
-        printf("Alocare esuata\n");
-        exit(1);
-    }
-        for(int i = 0; i < arc; i++) 
-        {
-            arrayOflist[i] = malloc(sizeof(struct node*));
-            if(!arrayOflist[i])
-            {
-                printf("Alocare esuata\n");
-                exit(1);
-            }
-        }
-        return arrayOflist;
-}
-void insertArrayOfList(struct node ***arrayOflist, int arc)
-{
-    
-    for(int i = 0; i < arc; i++)
-        {
-            printf("Dati numarul coloanei:");
-            scanf("%d", &(arrayOflist[i]->val));
-            int node;
-            *(arrayOflist[i])->head=NULL;
-            printf("Dati arcele:");
-            do
-            {
-                scanf("%d", &node);
-                insert_node(&arrayOflist[i], node);
-            }while(node);
-        }
-}*/
-void MI(int varf, int arc) //matricea de incidenta
-{
+    /*INTRODUCERE DATE*/
     int **matrice;
     insertMatrix(&matrice, varf, arc);
+    
+    /*AFISARE ELEMENTE*/
     printMatrix(matrice, varf, arc);
+    
+    /*TRANSFORMARI*/
     printf("\nMeniu:\n1.Transformarea in matricea de adiacenta\n2.Transformarea in lista de adiacenta\nAlegerea :");
     int choice;
     scanf("%d", &choice);
@@ -162,12 +87,20 @@ void MI(int varf, int arc) //matricea de incidenta
         printf("Alegere invalida\n");
         break;
     }
+    
+    /*ELIBERARE MEMORIE*/
+    freeMatrix(matrice, arc);
 }
-void MA(int varf, int arc) //matricea de adiacenta
+void MA(int varf, int arc) 
 {
+    /*INTRODUCERE DATE*/
     int **matrice;
     insertMatrix(&matrice, varf, varf);
+    
+    /*AFISARE ELEMENTE*/
     printMatrix(matrice, varf, varf);
+    
+    /*TRANSFORMARI*/
     printf("\nMeniu:\n1.Transformarea in matricea de incidenta\n2.Transformarea in lista de adiacenta\nAlegerea: ");
     int choice;
     scanf("%d", &choice);
@@ -197,97 +130,16 @@ void MA(int varf, int arc) //matricea de adiacenta
         printf("Alegere invalida\n");
         break;
     }
+     
+    /*ELIBERARE MEMORIE*/
+    freeMatrix(matrice, arc);
 }
-void insert_node(struct node *initial, int valoare)
+void LA(int varf, int arc) 
 {
-        struct node *temp = NULL;
-        struct node *curent = (struct node*) malloc(sizeof(struct node));
-        if(!curent)
-        {
-                printf("Alocare esuata\n");
-                exit(1);
-        }
-        curent->val = valoare;
-        curent->head = NULL;
-        //temp si initial vor avea aceeasi adresa in memorie
-        temp = initial;
-        while(temp->head != NULL)
-        {
-            temp = temp->head; //trece prin toate nodurile pana ajunge la ultimul
-        }
-        temp->head = curent; //adauga noul nod la capat
-}
-struct node** allocArrayOfList(int varf)
-{
-    struct node **arrayOflist = malloc(varf*sizeof(struct node*));
-    if(!arrayOflist)
-    {
-        printf("Alocare esuata\n");
-        exit(1);
-    }
-        for(int i = 0; i < varf; i++)
-        {
-            arrayOflist[i] = malloc(sizeof(struct node*));
-            if(!arrayOflist[i])
-            {
-                printf("Alocare esuata\n");
-                exit(1);
-            }
-        }
-        return arrayOflist;
-}
-void insertArrayOfList(struct node ***arrayOflist, int varf)
-{
-
-    for(int i = 0; i < varf; i++)
-        {
-            printf("Dati numarul coloanei:");
-            scanf("%d", &((*arrayOflist)[i]->val));
-            int node;
-            (*arrayOflist)[i]->head=NULL;
-            printf("Dati arcele:");
-            do
-            {
-                scanf("%d", &node);
-                insert_node((*arrayOflist)[i], node);
-            }while(node);
-        }
-}
-void LA(int varf, int arc) //lista de adiacenta
-{
-    /*ALOCARE MEMORIE*/
+        /*INTRODUCERE DATE*/
         struct node **arrayOflist = allocArrayOfList(varf);
 
         insertArrayOfList(&arrayOflist, varf);
-        /*VERIFICARE ERORI
-        if(!arrayOflist)
-        {
-            printf("Alocare esuata\n");
-            exit(1);
-        }
-        for(int i = 0; i < varf; i++) 
-        {
-            if(!arrayOflist[i])
-            {
-                printf("Alocare esuata\n");
-                exit(1);
-            }
-        }*/
-
-        /*INTRODUCERE VALORI*/
-        /*for(int i = 0; i < varf; i++)
-        {
-            printf("Dati numarul coloanei:");
-            scanf("%d", &(arrayOflist[i]->val));
-            int node;
-            arrayOflist[i]->head=NULL;
-            printf("Dati arcele:");
-            do
-            {
-                scanf("%d", &node);
-                insert_node(arrayOflist[i], node);
-            }while(node);
-        }*/
 
         /*AFISARE LISTA*/
         printf("Lista de adiacenta:\n");
@@ -330,39 +182,6 @@ void LA(int varf, int arc) //lista de adiacenta
         free(arrayOflist);
 
 }
-void LAtoMI(int *lista, int varf, int arc) //lista de adiacenta la matricea de incidenta
-{
-        int **matrice = allocMatrix(arc, varf);
-
-}
-void printList(struct node* list)
-{
-    printf("%d | ", list->val);
-    list = list->head;
-    while(list)
-    {
-        printf("%d ", list->val);
-        list=list->head;
-    }
-    printf("\n");
-}
-void printMatrix(int **a, int varf, int arc)
-{
-    printf("Matricea este \n  ");
-    for(int j = 1; j <= varf; j++)
-    {
-        printf(" x%d", j);
-    }
-    for(int i = 0; i < arc; i++)
-    {
-        printf("\nx%d ", i+1);
-        for(int j = 0; j < varf; j++)
-        {
-            printf("%d  ", a[i][j]);
-        }
-    }
-}
-
 void MAtoMI(int **MA, int **MI, int varf, int arc)
 {
     int k = 0;
@@ -417,5 +236,138 @@ void LAtoMA(struct node **LA, int **MA, int varf, int arc)
             MA[r-1][(temp->val)-1] = 1;
             //printf("MA[%d][%d] %d \n", r-1, (temp->val)-1, MA[r-1][(temp->val)-1]);
         }
+    }
+}
+
+
+int **allocMatrix(int varf, int arc)
+{
+    int **a = calloc(arc, sizeof(int*));
+    if(!a)
+    {
+            printf("Matricea nu a fost alocata\n");
+            exit(1);
+    }
+    for(int i = 0; i < arc; i++)
+    {
+        a[i] = calloc(varf, sizeof(int));
+        if(!a[i])
+        {
+            printf("Matricea nu a fost alocata\n");
+            exit(1);
+        }
+    }
+
+    printf("Memoria pentru matrice a fost alocata\n");
+    return a;
+}
+void insertMatrix(int ***a, int varf, int arc)
+{
+    *a = allocMatrix(varf, arc);
+    printf("Dati elementele\n");
+    for(int i = 0; i < arc; i++)
+    for(int j = 0; j < varf; j++)
+    {
+        scanf("%d", &(*a)[i][j]);
+    }
+}
+
+struct node** allocArrayOfList(int varf)
+{
+    struct node **arrayOflist = malloc(varf*sizeof(struct node*));
+    if(!arrayOflist)
+    {
+        printf("Alocare esuata\n");
+        exit(1);
+    }
+        for(int i = 0; i < varf; i++)
+        {
+            arrayOflist[i] = malloc(sizeof(struct node*));
+            if(!arrayOflist[i])
+            {
+                printf("Alocare esuata\n");
+                exit(1);
+            }
+        }
+        return arrayOflist;
+}
+void insertArrayOfList(struct node ***arrayOflist, int varf)
+{
+
+    for(int i = 0; i < varf; i++)
+        {
+            printf("Dati numarul coloanei:");
+            scanf("%d", &((*arrayOflist)[i]->val));
+            int node;
+            (*arrayOflist)[i]->head=NULL;
+            printf("Dati arcele:");
+            do
+            {
+                scanf("%d", &node);
+                insert_node((*arrayOflist)[i], node);
+            }while(node);
+        }
+}
+void insert_node(struct node *initial, int valoare)
+{
+        struct node *temp = NULL;
+        struct node *curent = (struct node*) malloc(sizeof(struct node));
+        if(!curent)
+        {
+                printf("Alocare esuata\n");
+                exit(1);
+        }
+        curent->val = valoare;
+        curent->head = NULL;
+        //temp si initial vor avea aceeasi adresa in memorie
+        temp = initial;
+        while(temp->head != NULL)
+        {
+            temp = temp->head; //trece prin toate nodurile pana ajunge la ultimul
+        }
+        temp->head = curent; //adauga noul nod la capat
+}
+
+
+void printList(struct node* list)
+{
+    printf("%d | ", list->val);
+    list = list->head;
+    while(list)
+    {
+        printf("%d ", list->val);
+        list=list->head;
+    }
+    printf("\n");
+}
+void printMatrix(int **a, int varf, int arc)
+{
+    printf("Matricea este \n  ");
+    for(int j = 1; j <= varf; j++)
+    {
+        printf(" x%d", j);
+    }
+    for(int i = 0; i < arc; i++)
+    {
+        printf("\nx%d ", i+1);
+        for(int j = 0; j < varf; j++)
+        {
+            printf("%d  ", a[i][j]);
+        }
+    }
+}
+void freeMatrix(int **a, int arc)
+{
+    for(int i = 0; i < arc; i++) free(a[i]);
+    free(a);
+}
+void freeList(struct node* list)
+{
+   struct node* tmp;
+   while (list)
+    {
+       tmp = list;
+       list = list->head;
+       free(tmp);
     }
 }
