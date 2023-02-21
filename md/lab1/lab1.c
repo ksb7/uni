@@ -13,7 +13,6 @@ struct node
  //int arc, varf, u;
  void MI(); //matricea de incidenta
 void LA(); //lista de adiacenta
-
 void MA(); //matricea de adiacenta
 int **allocMatrix(int varf, int arc); //aloca memorie pentru matrici
 void insertMatrix(int ***a, int varf, int arc); //introduce valori in matrici
@@ -141,8 +140,10 @@ void MI(int varf, int arc) //matricea de incidenta
     {
         case 1:
         {
-            int **MA = allocMatrix(arc, varf);
-            //functia
+            int **MA = allocMatrix(varf, varf);
+            struct node** LA = allocArrayOfList(varf);
+            MItoLA(matrice, LA, varf, arc);
+            LAtoMA(LA, MA, varf, arc);
             printMatrix(MA, varf, varf);
             break;
         }
@@ -155,9 +156,8 @@ void MI(int varf, int arc) //matricea de incidenta
                 {
                     printList(lista[i]);
                 }
+            break;
         }
-        //functia
-        break;
         default:
         printf("Alegere invalida\n");
         break;
@@ -182,8 +182,17 @@ void MA(int varf, int arc) //matricea de adiacenta
         }
 
         case 2:
-        //functia
-        break;
+        {
+            struct node **LA = allocArrayOfList(varf);
+            int **MI = allocMatrix(varf, arc);
+            MAtoMI(matrice, MI, varf, arc);
+            MItoLA(MI, LA, varf, arc);
+            for(int i = 0; i < varf; i++)
+                {
+                    printList(LA[i]);
+                }
+            break;
+        }
         default:
         printf("Alegere invalida\n");
         break;
@@ -293,13 +302,20 @@ void LA(int varf, int arc) //lista de adiacenta
         scanf("%d", &choice);
         switch(choice)
         {
-                case 1: //functia
-                        break;
+                case 1:
+                {
+                    int **MI = allocMatrix(varf, arc);
+                    int **MA = allocMatrix(varf, varf);
+                    LAtoMA(arrayOflist, MA, varf, arc);
+                    MAtoMI(MA, MI, varf, arc);
+                    printMatrix(MI, varf, arc+1); //somehow it doesnt show me the last row regardless of anything
+                    break;
+                }
                 case 2: 
                 {
                     int **MA = allocMatrix(varf, varf);
                     LAtoMA(arrayOflist, MA, varf, arc);
-                    printMatrix(MA, varf, varf);
+                    printMatrix(MA, varf, arc+1); //same as case 1
                     break;
                 }
                 default: printf("Optiune invalida\n");
@@ -402,5 +418,4 @@ void LAtoMA(struct node **LA, int **MA, int varf, int arc)
             //printf("MA[%d][%d] %d \n", r-1, (temp->val)-1, MA[r-1][(temp->val)-1]);
         }
     }
-    //printMatrix(MA, varf, varf);
 }
