@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*TODO
-free every alloc-ed memory
-*/
-
 struct node
 {
     int val;
@@ -70,17 +66,29 @@ void MI(int varf, int arc)
             MItoLA(matrice, LA, varf, arc);
             LAtoMA(LA, MA, varf, arc);
             printMatrix(MA, varf, varf);
+            freeMatrix(MA, arc);
+            for(int i = 0; i < varf; i++)
+            {
+                freeList(LA[i]);
+            }
+            free(LA);
+            freeMatrix(MA, varf);
             break;
         }
         case 2:
         {
-            struct node** lista = allocArrayOfList(varf);
-            MItoLA(matrice, lista, varf, arc);
+            struct node** LA = allocArrayOfList(varf);
+            MItoLA(matrice, LA, varf, arc);
             printf("Lista este \n");
             for(int i = 0; i < varf; i++)
-                {
-                    printList(lista[i]);
-                }
+            {
+                printList(LA[i]);
+            }
+            for(int i = 0; i < varf; i++)
+            {
+                freeList(LA[i]);
+            }
+            free(LA);
             break;
         }
         default:
@@ -111,6 +119,7 @@ void MA(int varf, int arc)
             int **MI = allocMatrix(varf, arc);
             MAtoMI(matrice, MI, varf, arc);
             printMatrix(MI, varf, arc);
+            freeMatrix(MI, arc);
             break;
         }
 
@@ -121,9 +130,15 @@ void MA(int varf, int arc)
             MAtoMI(matrice, MI, varf, arc);
             MItoLA(MI, LA, varf, arc);
             for(int i = 0; i < varf; i++)
-                {
-                    printList(LA[i]);
-                }
+            {
+                printList(LA[i]);
+            }
+            for(int i = 0; i < varf; i++)
+            {
+                freeList(LA[i]);
+            }
+            free(LA);
+            freeMatrix(MI, arc);
             break;
         }
         default:
@@ -132,7 +147,7 @@ void MA(int varf, int arc)
     }
      
     /*ELIBERARE MEMORIE*/
-    freeMatrix(matrice, arc);
+    freeMatrix(matrice, varf);
 }
 void LA(int varf, int arc) 
 {
@@ -161,6 +176,8 @@ void LA(int varf, int arc)
             LAtoMA(arrayOflist, MA, varf, arc);
             MAtoMI(MA, MI, varf, arc);
             printMatrix(MI, varf, arc+1); //somehow it doesnt show me the last row regardless of anything
+            freeMatrix(MI, arc);
+            freeMatrix(MA, varf);
             break;
         }
         case 2: 
@@ -168,6 +185,7 @@ void LA(int varf, int arc)
             int **MA = allocMatrix(varf, varf);
             LAtoMA(arrayOflist, MA, varf, arc);
             printMatrix(MA, varf, arc+1); //same as case 1
+            freeMatrix(MA, varf);
             break;
         }
             default: printf("Optiune invalida\n");
@@ -175,7 +193,7 @@ void LA(int varf, int arc)
         }
 
     /*ELIBERARE MEMORIE*/
-    for(int i = 0; i < arc; i++)
+    for(int i = 0; i < varf; i++)
     {
         freeList(arrayOflist[i]);
     }
@@ -286,43 +304,43 @@ struct node** allocArrayOfList(int varf)
                 exit(1);
             }
         }
-        return arrayOflist;
+    return arrayOflist;
 }
 void insertArrayOfList(struct node ***arrayOflist, int varf)
 {
 
     for(int i = 0; i < varf; i++)
+    {
+        printf("Dati numarul coloanei:");
+        scanf("%d", &((*arrayOflist)[i]->val));
+        int node;
+        (*arrayOflist)[i]->head=NULL;
+        printf("Dati arcele:");
+        do
         {
-            printf("Dati numarul coloanei:");
-            scanf("%d", &((*arrayOflist)[i]->val));
-            int node;
-            (*arrayOflist)[i]->head=NULL;
-            printf("Dati arcele:");
-            do
-            {
-                scanf("%d", &node);
-                insert_node((*arrayOflist)[i], node);
-            }while(node);
-        }
+            scanf("%d", &node);
+            insert_node((*arrayOflist)[i], node);
+        }while(node);
+    }
 }
 void insert_node(struct node *initial, int valoare)
 {
-        struct node *temp = NULL;
-        struct node *curent = (struct node*) malloc(sizeof(struct node));
-        if(!curent)
-        {
-                printf("Alocare esuata\n");
-                exit(1);
-        }
-        curent->val = valoare;
-        curent->head = NULL;
-        //temp si initial vor avea aceeasi adresa in memorie
-        temp = initial;
-        while(temp->head != NULL)
-        {
-            temp = temp->head; //trece prin toate nodurile pana ajunge la ultimul
-        }
-        temp->head = curent; //adauga noul nod la capat
+    struct node *temp = NULL;
+    struct node *curent = (struct node*) malloc(sizeof(struct node));
+    if(!curent)
+    {
+            printf("Alocare esuata\n");
+            exit(1);
+    }
+    curent->val = valoare;
+    curent->head = NULL;
+    //temp si initial vor avea aceeasi adresa in memorie
+    temp = initial;
+    while(temp->head != NULL)
+    {
+        temp = temp->head; //trece prin toate nodurile pana ajunge la ultimul
+    }
+    temp->head = curent; //adauga noul nod la capat
 }
 
 
