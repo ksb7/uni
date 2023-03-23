@@ -1,20 +1,38 @@
 #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int **allocMatrix();
-void createMatrix(int **matrice, int varf);
+int **allocMatrix(int varf);
+int **createMatrix(int varf);
 void input(int **matrice, int varf);
-void Ford(int **matrice, int varf);
-int cmpArr(int *A, int *B);
+void Ford(int matrice[7][7], int varf);
+int cmpArr(int *A, int *B, int varf);
+void cpyArr(int *A, int *B, int varf);
 int main()
 {
-    int **MA; //matricea ponderata de adiacenta
+    //int **MA; //matricea ponderata de adiacenta
     int choice;
     printf("Numarul de varfuri\n");
     int varf;
     scanf("%d", &varf);
-    createMatrix(MA, varf);
+    int MA[7][7] = {{0, 5, 3, 5, 6, 8, 100},
+                {100, 0, 100, 1, 4, 100, 100},
+                {100, 100, 0, 100, 2, 100, 100},
+                {100, 100, 100, 0, 3, 5, 100},
+                {100, 100, 100, 100, 0, 4, 6},
+                {100, 100, 100, 100, 100, 0, 5},
+                {100, 100, 100, 100, 100, 100, 0}};
+    //createMatrix(varf);
+    int A[] = {1, 2, 3, 4, 5};
+    int B[] = {6, 7, 8, 9, 10};
+    for(int i = 0; i < 5; i++)
+    printf("A[i] = %d, B[i] = %d\n", A[i], B[i]);
+    printf("comp arr %d\n", cmpArr(A, B, 5));
+    cpyArr(A, B, varf);
+    printf("comp arr %d\n", cmpArr(A, B, 5));
+    for(int i = 0; i < 5; i++)
+    printf("A[i] = %d, B[i] = %d\n", A[i], B[i]);
     printf("Meniu:\n1. Algoritmul Ford\n2.Algoritmul Bellman-Kalaba\nAlegerea: ");
     scanf("%d", &choice);
     switch(choice)
@@ -46,10 +64,11 @@ int main()
     }
     return 0;
 }
-void createMatrix(int **matrice, int varf)
+int **createMatrix(int varf)
 {
-    matrice = allocMatrix(varf);
+    int **matrice = allocMatrix(varf);
     input(matrice, varf);
+    return matrice;
 }
 int **allocMatrix(int varf)
 {
@@ -72,13 +91,20 @@ int **allocMatrix(int varf)
 }
 void input(int **matrice, int varf)
 {
-    printf("Dati matricea ponderata de adiacenta (infinit == 100)\n");
+    /*matrice = {{0, 5, 3, 6, 8 100},
+                {100, 0, 100, 1, 4, 100, 100},
+                {100, 100, 0, 100, 2, 100, 100},
+                {100, 100, 100, 0, 3, 5, 100},
+                {100, 100, 100, 100, 0, 4, 6},
+                {100, 100, 100, 100, 100, 0, 5},
+                {100, 100, 100, 100, 100, 100, 0}};
+    /*printf("Dati matricea ponderata de adiacenta (infinit == 100)\n");
     for(int i = 0; i < varf; i++)
     {
         for(int j = 0; j < varf; j++)
         {
             scanf("%d", &matrice[i][j]);
-            /*TODO:
+            TODO:
             for(int k = 0; k < i-1; k++)
             {
                 if((i == j && matrice[i][j]) && isdigit(matrice[i][j])); 
@@ -86,27 +112,33 @@ void input(int **matrice, int varf)
                     printf("Element invalid\n");
                     input(matrice, varf);
                 }
-           }*/
+           }
         }
-    }
+    }*/
 } 
-int cmpArr(int *A, int *B)
+int cmpArr(int *A, int *B, int varf)
 {
-    int Asize = sizeof(A) / sizeof(A[0]);
-    int Bsize = sizeof(B) / sizeof(B[0]);
-    if(Asize == Bsize)
-    {
-        for(int i = 0; i < Asize; i++)
-        {
-            for(int j = 0; j < Bsize; j++)
-            {
-                if(A[i] != B[j]) return 1;
-            }
-        }
-    } else return 1;
+    for(int i = 0; i < varf; i++)
+        if(A[i] != B[i]) return 1;
     return 0;
 }
-void Ford(int **matrice, int varf)
+void cpyArr(int *A, int *B, int varf)
+{
+    /*int Asize = sizeof(A) / sizeof(A[0]);
+    int Bsize = sizeof(B) / sizeof(B[0]);
+    if(Asize == Bsize)
+    {*/
+        for(int i = 0; i < varf; i++)
+        {
+            A[i] = B[i];
+        }
+    /*} else 
+    {
+        printf("Eroare la matricea de varfuri\n");
+        exit(1);
+    }*/
+}
+void Ford(int matrice[7][7], int varf)
 {
     printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
         int choice;
@@ -115,27 +147,48 @@ void Ford(int **matrice, int varf)
         {
             case 1: 
             {
-                int *H = malloc(varf * sizeof(int));
-                int *H2 = malloc(varf * sizeof(int));
+                int *H = calloc(varf, sizeof(int));
+                int *H2 = calloc(varf, sizeof(int));
                 for(int i = 0; i < varf; i++) H2[i] = 100;
                 H2[0] = 0;
+                int count =0;
                 do{
+                    
                 for(int i = 0; i < varf; i++)
-                {
-                    H[i] = H2[i];
+                {  
+                    cpyArr(H, H2, varf);
+                    cpyArr(H2, H, varf);
+                    //printf("count %d", count);
                     for(int j = 0; j < varf; j++)
                     {
-                        if(matrice[i][j] != 0 && matrice[i][j] != 100)
-                        {
+                        printf("-------------------H[%d] %d, H2[%d] %d ---\n", i, H[i], j, H2[j]);
+                       if(i != j && matrice[i][j] != 100)
+                       {
                             if(H2[j] - H[i] > matrice[i][j])
-                            {
+                            { 
+                                printf("1. H[%d] %d, H2[%d] %d matrice %d\n", i, H[i], j, H2[j], matrice[i][j]);
                                 H2[j] = H[i] + matrice[i][j];
-                                printf("H %d, H2 %d\n", H[i], H2[i]);
+                                printf("2. H[%d] %d, H2[%d] %d matrice %d\n \n", i, H[i],  j, H2[j], matrice[i][j]);
                             }
-                        }
+                            printf("H[%d] %d, H2[%d] %d ---\n", i, H[i], j, H2[j]);
+                       }
                     } 
+                    
+                }count++;
+                }while(cmpArr(H, H2, varf)!= 0);
+                for(int i = varf-1; i >= 0; i--)
+                {
+                    for(int j = varf-1; j > 0; j--)
+                    {
+                        if(i < j)
+                        {
+                        if(H2[j] - H[i] == matrice[i][j]) 
+                        {
+                            printf("drumul minim %d diferenta %d-%d = %d\n", H[i], H2[j], H[i], matrice[i][j]);
+                        }
+                    }
+                    }
                 }
-                }while(cmpArr(H, H2)!= 0);
                 break;
             }
             case 2:
