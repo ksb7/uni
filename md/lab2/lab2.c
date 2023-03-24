@@ -170,20 +170,21 @@ void Ford(int matrice[7][7], int varf)
 
                 for(int i = varf-1; i >= 0; i--)
                     {
-                    for(int j = i; j >= 0; j--)
-		{	//printf(" %d ", matrice[varf-j-1][varf-i-1]);
-	                 if(1)
-                     {
-                        if(H2[j] - H[i] == matrice[varf-j-1][varf-i-1]) 
+                    for(int j = varf-1; j >= 0; j--)
+		    {	//printf("%d ", matrice[varf-i-1][varf-j-1]); 
+				  // printf(" H2 %d H %d", H2[i], H[j]);
+	                 if(j<i)
+		            {
+                        if(H2[i] - H[j] == matrice[varf-i-1][varf-i-1]) 
                         {
-                           printf("drumul minim %d diferenta %d-%d = %d\n", H[i], H2[j], H[i], matrice[varf-j-1][varf-i-1]);
+                           printf("drumul minim %d diferenta %d-%d = %d\n", H[i], H2[j], H[i], matrice[j][i]);
 			    printf("h2 %d h1 %d\n", H2[j], H[i]);
+           }
                     }
-                    }
-                }//printf("\n");
+                }printf("\n");
 		    }
                 break;
-            }
+	} 
             case 2:
             {
                 break;
