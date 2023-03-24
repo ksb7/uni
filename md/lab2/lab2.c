@@ -24,15 +24,6 @@ int main()
                 {100, 100, 100, 100, 100, 0, 5},
                 {100, 100, 100, 100, 100, 100, 0}};
     //createMatrix(varf);
-    int A[] = {1, 2, 3, 4, 5};
-    int B[] = {6, 7, 8, 9, 10};
-    for(int i = 0; i < 5; i++)
-    printf("A[i] = %d, B[i] = %d\n", A[i], B[i]);
-    printf("comp arr %d\n", cmpArr(A, B, 5));
-    cpyArr(A, B, varf);
-    printf("comp arr %d\n", cmpArr(A, B, 5));
-    for(int i = 0; i < 5; i++)
-    printf("A[i] = %d, B[i] = %d\n", A[i], B[i]);
     printf("Meniu:\n1. Algoritmul Ford\n2.Algoritmul Bellman-Kalaba\nAlegerea: ");
     scanf("%d", &choice);
     switch(choice)
@@ -176,19 +167,21 @@ void Ford(int matrice[7][7], int varf)
                     
                 }count++;
                 }while(cmpArr(H, H2, varf)!= 0);
+
                 for(int i = varf-1; i >= 0; i--)
-                {
-                    for(int j = varf-1; j > 0; j--)
                     {
-                        if(i < j)
+                    for(int j = i; j >= 0; j--)
+		{	//printf(" %d ", matrice[varf-j-1][varf-i-1]);
+	                 if(1)
+                     {
+                        if(H2[j] - H[i] == matrice[varf-j-1][varf-i-1]) 
                         {
-                        if(H2[j] - H[i] == matrice[i][j]) 
-                        {
-                            printf("drumul minim %d diferenta %d-%d = %d\n", H[i], H2[j], H[i], matrice[i][j]);
-                        }
+                           printf("drumul minim %d diferenta %d-%d = %d\n", H[i], H2[j], H[i], matrice[varf-j-1][varf-i-1]);
+			    printf("h2 %d h1 %d\n", H2[j], H[i]);
                     }
                     }
-                }
+                }//printf("\n");
+		    }
                 break;
             }
             case 2:
