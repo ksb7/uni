@@ -184,7 +184,7 @@ void LA(int varf, int arc)
         {
             int **MA = allocMatrix(varf, varf);
             LAtoMA(arrayOflist, MA, varf, arc);
-            printMatrix(MA, varf, arc+1); //same as case 1
+            printMatrix(MA, varf, varf); //same as case 1
             freeMatrix(MA, varf);
             break;
         }
@@ -297,7 +297,7 @@ struct node** allocArrayOfList(int varf)
     }
         for(int i = 0; i < varf; i++)
         {
-            arrayOflist[i] = malloc(sizeof(struct node*));
+            arrayOflist[i] = malloc(sizeof(struct node));
             if(!arrayOflist[i])
             {
                 printf("Alocare esuata\n");
