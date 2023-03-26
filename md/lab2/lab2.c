@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 int **allocMatrix(int varf);
 int **createMatrix(int varf);
 void input(int **matrice, int varf);
 void Ford(int matrice[7][7], int varf);
 int cmpArr(int *A, int *B, int varf);
 void cpyArr(int *A, int *B, int varf);
+void Path(int *H2, int *H, int matrice[7][7], int varf, int pozitiai, int pozitiaj, int drum[7][7], int count);
 int main()
 {
     //int **MA; //matricea ponderata de adiacenta
@@ -250,34 +250,48 @@ void Ford(int matrice[7][7], int varf)
     }
     }
     }while(cmpArr(H, H2, varf)!= 0);
-    for(int i = 0; i < varf; i++)
+    /*for(int i = 0; i < varf; i++)
     {
         printf("H %d \n", H[i]);
-    }
-        int *pozitii = calloc(1, sizeof(int));
-        int c = 0;
-        pozitii[c] = varf; //stabilim varful din top
-        for(int i = varf-1; i >= 0; i--)
-        {
-            for(int j = varf-1; j > 0; j--)
-		    {	
-	            if(j<i)
-		       {
-                    if(H2[i] - H[j] == matrice[j][i]) 
-                    { 
-                        c++;
-                        pozitii = realloc(pozitii, (c+1)*sizeof(int));
-                        pozitii[c] = i-1; //determinam drumul dintre punctul initial si final
-                        printf("drumul minim %d diferenta %d-%d = %d\n", H[i], H2[i], H[j], matrice[j][i]);
-			    printf("h2 %d h1 %d\n", H2[j], H[i]);
-                    }
-                }
-            }
-		}
-    if(H2[pozitii[c++]] - H[0]) pozitii[c++] = 1; //determinam daca este drum de la punctul initial
-	printf("Drumul este"); 
-	for(int i = c-1; i >= 0; i--)
+    }*/
+    int pozitia = varf;
+    int drum[7][7] = {0};
+    int total = 0;
+    Path(H2, H, matrice, varf, varf-1, varf-1, drum, total);
+}
+void Path(int *H2, int *H, int matrice[7][7], int varf, int pozitiai, int pozitiaj, int drum[7][7], int count)
+{
+	int *temp = malloc(sizeof(int));
+	if(!temp)
+	{	
+		printf("Alocare esuata");
+		exit(1);
+	}
+	temp[0] = varf;
+	for(int i = varf-1; i >= 0; i--)
 	{
-	    printf(" %d ", pozitii[i]); 
-    }
+		for(int j = varf-1; j >= 0; j--)
+		{
+			int tempElemente = 1;
+			if(j<i)
+			{
+				if(H2[i] - H[j] == matrice[j][i])
+				{
+					pozitiai = i;
+				       	pozitiaj = j;
+					count++;
+					temp[tempElemente++] = i-1;
+					cpyArr(drum[count], temp, tempElemente);
+					if(count > 1) Path(H2, H, matrice, varf, pozitiai, pozitiaj, drum, count);
+					printf("temp %d, drum %d, tempElemente%d, pozitiai %d pozitiaj %d, count %d\n", temp[tempElemente], drum[count][0], tempElemente, pozitiai, pozitiaj, count);
+				}
+			}
+		}
+		count = 0;
+
+	}
+	for(int i = 0; i < varf; i++)
+	{
+	printf("temp %d \n", temp[i]);
+	}	
 }
