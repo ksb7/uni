@@ -14,9 +14,12 @@ int **allocMatrix();
 int **createMatrix();
 void input();
 void Ford();
+void BellmanKalaba();
 void Path(int H2[7],int vcurent, int k, int prec);
 int cmpArr(int *A, int *B, int varf);
 void cpyArr(int *A, int *B, int varf);
+#define min(a, b) (a<b) ? a : b;
+#define max(a, b) (a>b) ? a : b;
 int main()
 {
     //int **MA; //matricea ponderata de adiacenta
@@ -35,21 +38,7 @@ int main()
         }
         case 2:
         {
-            /*printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
-            int choice;
-            scanf("%d", &choice);
-            switch(choice)
-            {
-                case 1: 
-                {
-                    
-                    break;
-                }
-                case 2:
-                {
-                    break;
-                }
-            }*/
+            BellmanKalaba();
             break;
         }
     }
@@ -255,6 +244,83 @@ void Ford()
         printf("H %d \n", H[i]);
     }*/
     Path(H2, varf-1, 0, 0);
+}
+void BellmanKalaba()
+{
+    printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
+    int H2[varf], H[varf];
+    int choice;
+    scanf("%d", &choice);
+    switch(choice)
+    {
+        case 1:
+        {
+            int minim;
+            for(int i = 0; i < varf; i++)
+            {
+                H[i] = matrice[i][varf-1]; //initializam vectorul 0
+            }
+            do{
+                cpyArr(H, H2, varf);
+                for(int i = 0; i < varf-1; i++)
+                {
+                    minim = matrice[i][0] + H[0];
+                    for(int j = 0; j < varf-1; j++)
+                    {
+                        if(i != j)
+                        {
+                            minim = min(minim, matrice[i][j+1] + H[j+1]);
+                            H2[i] = minim;
+                            printf("H2 %d i %d\n", H2[i], i);
+                            //printf("H2 %d H %d\n", H2[i], H[j]);
+                        }
+                    }
+                    
+                    
+                }
+                
+            }while(cmpArr(H2, H, varf) != 0);
+            break;
+        }
+        case 2:
+        {
+            for(int i = 0; i < varf; i++)
+            {
+                for(int j = 0; j < varf; j++)
+                {
+                    if(matrice[i][j] == 100) matrice[i][j] = -100;
+                }
+                H2[i] = matrice[i][varf-1];
+                //printf("H %d \n", H2[i]);
+            }
+            int maxim;
+            do{
+                cpyArr(H, H2, varf);
+                cpyArr(H2, H, varf);
+                for(int i = 0; i < varf-1; i++)
+                {
+                    maxim = matrice[i][0] + H[0];
+                    for(int j = 0; j < varf-1; j++)
+                    {
+                        if(i != j)
+                        {
+                            maxim = max(maxim, matrice[i][j+1] + H[j+1]); //TODO has to skip i=j  elements
+                            H2[i] = maxim;
+                            printf("H2 %d i %d maxim %d j %d H[j+1] %d matrice %d\n", H2[i], i, maxim, j, H[j+1], matrice[i][j+1]);
+                            //printf("H2 %d H %d\n", H2[i], H[j]);
+                        }
+                    }
+                    //printf("H2 %d\n", H2[i]);
+                    
+                    
+                }
+                printf("\n");
+                
+            }while(cmpArr(H2, H, varf) != 0);
+            break;
+        }
+    }
+    
 }
 int indice = 101;
 void Path(int H2[7],int vcurent, int k, int prec)
