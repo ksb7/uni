@@ -2,27 +2,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int **allocMatrix(int varf);
-int **createMatrix(int varf);
-void input(int **matrice, int varf);
-void Ford(int matrice[7][7], int varf);
-int cmpArr(int *A, int *B, int varf);
-void cpyArr(int *A, int *B, int varf);
-void Path(int *H2, int *H, int matrice[7][7], int varf, int pozitiai, int pozitiaj, int drum[7][7], int count);
-int main()
-{
-    //int **MA; //matricea ponderata de adiacenta
-    int choice;
-    printf("Numarul de varfuri\n");
-    int varf;
-    scanf("%d", &varf);
-    int MA[7][7] = {{0, 5, 3, 5, 6, 8, 100},
+int prev[7], curent[7], varf;
+int  matrice[7][7] = {{0, 5, 3, 5, 6, 8, 100},
                 {100, 0, 100, 1, 4, 100, 100},
                 {100, 100, 0, 100, 2, 100, 100},
                 {100, 100, 100, 0, 3, 5, 100},
                 {100, 100, 100, 100, 0, 4, 6},
                 {100, 100, 100, 100, 100, 0, 5},
                 {100, 100, 100, 100, 100, 100, 0}};
+int **allocMatrix();
+int **createMatrix();
+void input();
+void Ford();
+void Path(int H2[7],int vcurent, int k, int prec);
+int cmpArr(int *A, int *B, int varf);
+void cpyArr(int *A, int *B, int varf);
+int main()
+{
+    //int **MA; //matricea ponderata de adiacenta
+    int choice;
+    printf("Numarul de varfuri\n");
+    scanf("%d", &varf);
     //createMatrix(varf);
     printf("Meniu:\n1. Algoritmul Ford\n2.Algoritmul Bellman-Kalaba\nAlegerea: ");
     scanf("%d", &choice);
@@ -30,7 +30,7 @@ int main()
     {
         case 1: 
         {
-            Ford(MA, varf);
+            Ford();
             break;
         }
         case 2:
@@ -187,7 +187,7 @@ void cpyArr(int *A, int *B, int varf)
 	    printf(" %d ", pozitii[i]); 
     }
 }*/
-void Ford(int matrice[7][7], int varf)
+void Ford()
 {
     printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
         int choice;
@@ -254,44 +254,54 @@ void Ford(int matrice[7][7], int varf)
     {
         printf("H %d \n", H[i]);
     }*/
-    int pozitia = varf;
-    int drum[7][7] = {0};
-    int total = 0;
-    Path(H2, H, matrice, varf, varf-1, varf-1, drum, total);
+    Path(H2, varf-1, 0, 0);
 }
-void Path(int *H2, int *H, int matrice[7][7], int varf, int pozitiai, int pozitiaj, int drum[7][7], int count)
+int indice = 101;
+void Path(int H2[7],int vcurent, int k, int prec)
 {
-	int *temp = malloc(sizeof(int));
-	if(!temp)
-	{	
-		printf("Alocare esuata");
-		exit(1);
-	}
-	temp[0] = varf;
-	for(int i = varf-1; i >= 0; i--)
+	if(indice < varf+1) //testeaza daca incepe un nou drum
 	{
-		for(int j = varf-1; j >= 0; j--)
+		int pozitie;
+		for(int i = 0; i < prec; i++)
 		{
-			int tempElemente = 1;
-			if(j<i)
+			if(indice == curent[i])
 			{
-				if(H2[i] - H[j] == matrice[j][i])
-				{
-					pozitiai = i;
-				       	pozitiaj = j;
-					count++;
-					temp[tempElemente++] = i-1;
-					cpyArr(drum[count], temp, tempElemente);
-					if(count > 1) Path(H2, H, matrice, varf, pozitiai, pozitiaj, drum, count);
-					printf("temp %d, drum %d, tempElemente%d, pozitiai %d pozitiaj %d, count %d\n", temp[tempElemente], drum[count][0], tempElemente, pozitiai, pozitiaj, count);
-				}
+				pozitie = i;
 			}
 		}
-		count = 0;
-
+		for(int j = prec - 1; j >= pozitie; j--)
+		prev[k++] = curent[j];
+		indice = varf+1; //indicele nu poate fi mai mare decat nr de varfuri
 	}
 	for(int i = 0; i < varf; i++)
 	{
-	printf("temp %d \n", temp[i]);
-	}	
+		printf("prev %d curent %d prec %d indice %d k %d vcurent %d\n", prev[i], curent[i], prec, indice, k, vcurent);
+	}
+	prev[k++] = vcurent; //adauga varful curent la drum
+	if(vcurent == 1)
+	{
+		printf("Drumul este: ");
+		for(int i = k; i >= 0; i--)
+			printf("%d ", prev[i]);
+		prec = k;
+		for(int i = k-1; i >= 0; i--)
+		{
+			curent[k-i-1] = prev[i];
+		}
+		k = 0;
+	}
+	for(int i = varf-1; i > 0; i--)
+	{
+		if(matrice[i][vcurent] > 0)
+		{
+			if(H2[vcurent] - H2[i] == matrice[i][vcurent])
+			{
+				Path(H2, i, k, prec);
+				indice = vcurent;
+			}
+		}
+	}
+
+
+
 }
