@@ -301,16 +301,18 @@ void BellmanKalaba()
                 {
                     maxim = matrice[i][0] + H[0];
                     for(int j = 0; j < varf-1; j++)
-                    {
+                    { 
+			int k = j+1;;
                         if(i != j)
                         {
-                            maxim = max(maxim, matrice[i][j+1] + H[j+1]); //TODO has to skip i=j  elements
+				if(k == (i == j)) k = j+2;
+                            maxim = max(maxim, matrice[i][k] + H[k]); //TODO has to skip i=j  elements
                             H2[i] = maxim;
-                            printf("H2 %d i %d maxim %d j %d H[j+1] %d matrice %d\n", H2[i], i, maxim, j, H[j+1], matrice[i][j+1]);
+                            //printf("H2 %d i %d maxim %d j %d H[j+1] %d matrice %d\n", H2[i], i, maxim, j, H[k], matrice[i][j+1]);
                             //printf("H2 %d H %d\n", H2[i], H[j]);
                         }
                     }
-                    //printf("H2 %d\n", H2[i]);
+                    printf("H2 %d\n", H2[i]);
                     
                     
                 }
