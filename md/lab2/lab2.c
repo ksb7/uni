@@ -15,7 +15,7 @@ int **createMatrix();
 void input();
 void Ford();
 void BellmanKalaba();
-void Path(int H2[7],int vcurent, int k, int prec);
+void Path(int H2[7],int vcurent, int indice);
 int cmpArr(int *A, int *B, int varf);
 void cpyArr(int *A, int *B, int varf);
 #define min(a, b) (a<b) ? a : b;
@@ -243,7 +243,7 @@ void Ford()
     {
         printf("H %d \n", H[i]);
     }*/
-    Path(H2, varf-1, 0, 0);
+    Path(H2, varf-1, 101);
 }
 void BellmanKalaba()
 {
@@ -330,33 +330,36 @@ void BellmanKalaba()
     }
     
 }
-int indice = 101;
-void Path(int H2[7],int vcurent, int k, int prec)
+int prec = 0, k = 0;
+void Path(int H2[7],int vcurent, int indice)
 {
-	if(indice < varf+1) //testeaza daca incepe un nou drum
+	int pozitie = 0;
+	printf(" \nal doilea indice %d\n", indice);
+	printf("---- k %d ----\n", k);
+	if(indice < 100) //testeaza daca incepe un nou drum
 	{
-		int pozitie;
 		for(int i = 0; i < prec; i++)
 		{
+		//printf("al treilea idnice %d prec %d\n", indice, prec);
+			prev[i] = 0;
 			if(indice == curent[i])
 			{
 				pozitie = i;
 			}
+			printf(" prev %d indice %d pozitie %d\n", prev[i], indice, pozitie);
 		}
 		for(int j = prec - 1; j >= pozitie; j--)
 		prev[k++] = curent[j];
-		indice = varf+1; //indicele nu poate fi mai mare decat nr de varfuri
+		indice = 101; //indicele nu poate fi mai mare decat nr de varfuri
 	}
-	for(int i = 0; i < varf; i++)
-	{
-		printf("prev %d curent %d prec %d indice %d k %d vcurent %d\n", prev[i], curent[i], prec, indice, k, vcurent);
-	}
-	prev[k++] = vcurent; //adauga varful curent la drum
-	if(vcurent == 1)
+	prev[pozitie+k+1] = vcurent; //adauga varful curent la drum
+	//TODO: sa adauge si varful 1
+	printf("---- k %d indice%d mtrice %d----\n", k, indice, matrice[prec][vcurent]);
+	if(vcurent == 0)
 	{
 		printf("Drumul este: ");
-		for(int i = k; i >= 0; i--)
-			printf("%d ", prev[i]);
+		for(int i = k-1; i >= 0; i--)
+			printf("%d ", prev[i]+1);
 		prec = k;
 		for(int i = k-1; i >= 0; i--)
 		{
@@ -364,18 +367,19 @@ void Path(int H2[7],int vcurent, int k, int prec)
 		}
 		k = 0;
 	}
-	for(int i = varf-1; i > 0; i--)
+	for(int i = 0; i < varf; i++)
+	{
+		printf("prev %d curent %d prec %d indice %d k %d vcurent %d pozitie %d\n", prev[i], curent[i], prec, indice, k, vcurent, pozitie);
+	}
+	for(int i = varf-1; i >= 0; i--)
 	{
 		if(matrice[i][vcurent] > 0)
 		{
 			if(H2[vcurent] - H2[i] == matrice[i][vcurent])
 			{
-				Path(H2, i, k, prec);
-				indice = vcurent;
+			printf(" inddddice %d \n", indice);
+				Path(H2, i, vcurent);
 			}
 		}
 	}
-
-
-
 }
