@@ -44,7 +44,7 @@ int main()
     }
     return 0;
 }
-/*int **createMatrix(int varf)
+int **createMatrix(int varf)
 {
     int **matrice = allocMatrix(varf);
     input(matrice, varf);
@@ -95,7 +95,7 @@ void input(int **matrice, int varf)
            }
         }
     }*/
-}*/
+} 
 int cmpArr(int *A, int *B, int varf)
 {
     for(int i = 0; i < varf; i++)
@@ -109,7 +109,73 @@ void cpyArr(int *A, int *B, int varf)
         A[i] = B[i];
     }
 }
-
+/*void calculFord(int choice)
+{
+    int *H = calloc(varf, sizeof(int));
+    int *H2 = calloc(varf, sizeof(int));
+    if(choice == 1) 
+    {
+        for(int i = 0; i < varf; i++) H2[i] = 100;
+    } else if(choice == 2)
+    {
+        for(int i = 0; i < varf; i++) H2[i] = -100;
+    }
+    H2[0] = 0;
+    do{
+    for(int i = 0; i < varf; i++)
+    {  
+        cpyArr(H, H2, varf);
+        cpyArr(H2, H, varf);
+        for(int j = 0; j < varf; j++)
+        {
+           if(i != j && (matrice[i][j] != 100 || matrice[i][j] != -100))
+           {
+                switch(choice)
+                {
+                    case 1:
+                    { 
+                        if(H2[j] - H[i] > matrice[i][j])
+                        { 
+                            H2[j] = H[i] + matrice[i][j];
+                        }
+                    }
+                    case 2:
+                    {
+                        if(H2[j] - H[i] < matrice[i][j])
+                        {
+                            H2[j] = H[i] + matrice[i][j];
+                        }
+                    }
+                    
+            }
+        }
+    }
+    }while(cmpArr(H, H2, varf)!= 0);
+        int *pozitii = calloc(1, sizeof(int));
+        int c = 0;
+        pozitii[c] = varf; //stabilim varful din top
+        for(int i = varf-1; i >= 0; i--)
+        {
+            for(int j = varf-1; j > 0; j--)
+		    {	
+	            if(j<i)
+		       {
+                    if(H2[i] - H[j] == matrice[j][i]) 
+                    { 
+                        c++;
+                        pozitii = realloc(pozitii, (c+1)*sizeof(int));
+                        pozitii[c] = i-1; //determinam drumul dintre punctul initial si final
+                    }
+                }
+            }
+		}
+    if(H2[pozitii[c++]] - H[0]) pozitii[c++] = 1; //determinam daca este drum de la punctul initial
+	printf("Drumul este"); 
+	for(int i = c-1; i >= 0; i--)
+	{
+	    printf(" %d ", pozitii[i]); 
+    }
+}*/
 void Ford()
 {
     printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
@@ -160,24 +226,24 @@ void Ford()
                     {
                         if(H2[j] - H[i] < matrice[i][j])
                         {
+                            printf("1. H[%d] %d, H2[%d] %d matrice %d\n", i, H[i], j, H2[j], matrice[i][j]);
                             H2[j] = H[i] + matrice[i][j];
+                            printf("2. H[%d] %d, H2[%d] %d matrice %d\n \n", i, H[i],  j, H2[j], matrice[i][j]);
                         }
                          
                         break;
                     }
                 }
-            }
+                printf("H[%d] %d, H2[%d] %d ---\n", i, H[i], j, H2[j]);
         }
     }
+    }
     }while(cmpArr(H, H2, varf)!= 0);
-<<<<<<< HEAD
     /*for(int i = 0; i < varf; i++)
     {
         printf("H %d \n", H[i]);
     }*/
     Path(H2, varf-1, 101);
-=======
->>>>>>> b191ee043dbbb7276aff78b54a752bd2020fbee8
 }
 void BellmanKalaba()
 {
@@ -196,22 +262,27 @@ void BellmanKalaba()
             }
             do{
                 cpyArr(H, H2, varf);
-		        cpyArr(H2, H, varf);
+		cpyArr(H2, H, varf);
                 for(int i = 0; i < varf; i++)
                 {
                     minim = matrice[i][i+1] + H[i+1];
                     for(int j = 0; j < varf-1; j++)
                     {
-			            int k = j+1;
+			    int k = j+1;
                         if(i != j)
                         {
-				            if(i == k) k = j+2;
+				if(i == k) k = j+2;
                             minim = min(minim, matrice[i][k] + H[k]);
                             H2[i] = minim;
+                           // printf("H2 %d i %d\n", H2[i], i);
+                            //printf("H2 %d H %d\n", H2[i], H[j]);
                         }
                     }
 		    H2[varf-1] = 0;
+		    printf("H2 %d\n", H2[i]);
                 }
+		printf("\n");
+                
             }while(cmpArr(H2, H, varf) != 0);
             break;
         }
@@ -224,6 +295,7 @@ void BellmanKalaba()
                     if(matrice[i][j] == 100) matrice[i][j] = -100;
                 }
                 H2[i] = matrice[i][varf-1];
+                //printf("H %d \n", H2[i]);
             }
             int maxim;
             do{
@@ -234,23 +306,30 @@ void BellmanKalaba()
                     maxim = matrice[i][i+1] + H[i+1];
                     for(int j = 0; j < varf-1; j++)
                     { 
-			            int k = j+1;
+			int k = j+1;;
                         if(i != j)
                         {
-			                if(i == k) k = j+2; 
+				if(i == k) k = j+2;
+				//printf("k %d\n", k);
                             maxim = max(maxim, matrice[i][k] + H[k]); 
                             H2[i] = maxim;
+                           //printf("H2 %d i %d maxim %d j %d H[k] %d matrice %d\n", H2[i], i, maxim, j, H[k], matrice[i][k]);
+                            //printf("H2 %d H %d\n", H2[i], H[j]);
                         }
                     }
                     H2[varf-1] = 0;
+		    printf("H2 %d\n", H2[i]);
+                    
+                    
                 }
+                printf("\n");
+                
             }while(cmpArr(H2, H, varf) != 0);
             break;
         }
     }
     
 }
-<<<<<<< HEAD
 int prec = 0, k = 0;
 void Path(int H2[7],int vcurent, int indice)
 {
@@ -304,6 +383,3 @@ void Path(int H2[7],int vcurent, int indice)
 		}
 	}
 }
-=======
-
->>>>>>> b191ee043dbbb7276aff78b54a752bd2020fbee8
