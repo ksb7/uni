@@ -16,7 +16,8 @@ int **createMatrix();
 void input();
 void Ford();
 void BellmanKalaba();
-void Path(int H2[7],int vcurent, int indice);
+ void PathFord(int H2[7],int vcurent, int indice);
+ void PathBellman(int H2[7],int vcurent, int indice);
 int cmpArr(int *A, int *B, int varf);
 void cpyArr(int *A, int *B, int varf);
 #define min(a, b) (a<b) ? a : b;
@@ -252,7 +253,7 @@ void Ford()
         printf("H %d \n", H[i]);
     }*/
     printf("Drumul este \n");
-    Path(H2, varf-1, 101);
+    PathFord(H2, varf-1, 101);
 }
 void BellmanKalaba()
 {
@@ -338,12 +339,12 @@ void BellmanKalaba()
         }
     }
     
-    arrRev(H, H2);
+    //arrRev(H, H2);
     printf("Drumul este: ");
-    Path(H2, varf-1, 101);
+    PathBellman(H2, 0, 101);
 }
 int prec = 0, k = 0;
-void Path(int H2[7],int vcurent, int indice)
+void PathFord(int H2[7],int vcurent, int indice)
 {
 	//printf(" \nal doilea indice %d\n", indice);
 	printf("---- k %d ----\n", k);
@@ -366,14 +367,14 @@ void Path(int H2[7],int vcurent, int indice)
 	}
 	prev[k++] = vcurent; //adauga varful curent la drum
 	printf("---- k %d indice%d mtrice %d----\n", k, indice, matrice[prec][vcurent]);
-	if (vcurent != 0 && matrice[0][vcurent] > 0 && H2[vcurent] == H2[0] + matrice[0][vcurent]) 
+	if (vcurent != 0 && matrice[0][vcurent] > 0 && H2[vcurent] == H2[0] + matrice[0][vcurent])
 	{
     		prev[k++] = 0;
     		for (int i = k-1; i >= 0; i--)
         	printf("%d ", prev[i]+1);
 		printf("\n");
     		prec = k;
-    		for (int i = k-1; i >= 0; i--) 
+    		for (int i = k-1; i >= 0; i--)
 		{
         		curent[k-i-1] = prev[i];
     		}
@@ -390,7 +391,59 @@ void Path(int H2[7],int vcurent, int indice)
 			if(H2[vcurent] - H2[i] == matrice[i][vcurent])
 			{
 				indice = vcurent;
-				Path(H2, i, indice);
+				PathFord(H2, i, indice);
+			}
+		}
+	}
+}
+void PathBellman(int H2[7],int vcurent, int indice)
+{
+	//printf(" \nal doilea indice %d\n", indice);
+	printf("---- k %d ----\n", k);
+	if(indice < 100) //testeaza daca incepe un nou drum
+	{
+		int pozitie;
+		for(int i = 0; i < prec; i++)
+		{
+	printf("al treilea idnice %d prec %d\n", indice, prec);
+			if(indice == curent[i])
+			{
+				pozitie = i;
+			}
+			printf(" prev %d indice %d pozitie %d\n", prev[i], indice, pozitie);
+		}
+		for(int j = 0; j <= pozitie; j++)
+		prev[k++] = curent[j];
+		indice = 101; //indicele nu poate fi mai mare decat nr de varfuri
+	}
+	prev[k++] = vcurent; //adauga varful curent la drum
+	printf("---- k %d indice%d mtrice %d----\n", k, indice, matrice[prec][vcurent]);
+	if (vcurent != varf-1 && matrice[vcurent][varf-1] > 0 && H2[vcurent] == H2[varf-1] + matrice[vcurent][varf-1]) 
+	{
+		prev[k++] = varf-1;
+    		for (int i = 0; i < k; i++)
+        	printf("%d ", prev[i]+1);
+		printf("\n");
+    		prec = k;
+    		for (int i = 0; i < k; i++) 
+		{
+        		curent[i] = prev[i];
+    		}
+    		k = 0;
+	}
+	for(int i = 0; i < varf; i++)
+	{
+		printf("prev %d curent %d prec %d indice %d k %d vcurent %d\n", prev[i], curent[i], prec, indice, k, vcurent);
+	}
+	for(int i = vcurent; i < varf-1; i++)
+	{
+		if(matrice[vcurent][i] > 0)
+		{
+			if(H2[vcurent] - H2[i] == matrice[vcurent][i])
+			{
+				indice = vcurent;
+				printf("H2 curent %d H2 i %d matrice vcurent i %d\n", H2[vcurent], H2[i], matrice[vcurent][i]);
+				PathBellman(H2, i, indice);
 			}
 		}
 	}
