@@ -175,7 +175,7 @@ void LA(int varf, int arc)
             int **MA = allocMatrix(varf, varf);
             LAtoMA(arrayOflist, MA, varf, arc);
             MAtoMI(MA, MI, varf, arc);
-            printMatrix(MI, varf, arc+1); //somehow it doesnt show me the last row regardless of anything
+            printMatrix(MI, varf, arc+1); 
             freeMatrix(MI, arc);
             freeMatrix(MA, varf);
             break;
@@ -184,7 +184,7 @@ void LA(int varf, int arc)
         {
             int **MA = allocMatrix(varf, varf);
             LAtoMA(arrayOflist, MA, varf, arc);
-            printMatrix(MA, varf, varf); //same as case 1
+            printMatrix(MA, varf, varf); 
             freeMatrix(MA, varf);
             break;
         }
@@ -207,6 +207,9 @@ void MAtoMI(int **MA, int **MI, int varf, int arc)
     {
         for(int j = 0; j < varf; j++)
         {
+		//daca pe randul i este elementul 1
+		//atunci in matricea de incidenta coloana i va avea -1
+		//iar coloana j va avea 1
             if(MA[i][j])
             {
                 MI[k][i] = -1;
@@ -222,23 +225,23 @@ void MItoLA(int **MI, struct node **LI, int varf, int arc)
     {
        if(i < varf)
        {
-            LI[i]->val = i+1;
+            LI[i]->val = i+1; //adauga indicii pentru fiecare rand
             LI[i]->head = NULL;
        }
         for(int j = 0; j < varf; j++)
         {
-            if(MI[i][j] == -1)
+            if(MI[i][j] == -1) //daca din varful i iese arc
             {
                 for(int k = 0; k < varf; k++)
                 {
                     
-                    if(MI[i][k] == 1) insert_node(LI[j], k+1);
+                    if(MI[i][k] == 1) insert_node(LI[j], k+1); //va cauta varful in care intra arcul si va adauga la lista pe pozitia i
                 }
                 break;
             }
         }
     }
-    for(int i = 0 ; i < varf; i++) insert_node(LI[i], 0);
+    for(int i = 0 ; i < varf; i++) insert_node(LI[i], 0); //va adauga elementul 0 la sfarsitul fiecarul rand
 }
 
 void LAtoMA(struct node **LA, int **MA, int varf, int arc)
@@ -246,10 +249,10 @@ void LAtoMA(struct node **LA, int **MA, int varf, int arc)
     struct node *temp;
     for(int i = 0; i < varf; i++)
     {
-        int r = LA[i]->val;
-        for(temp = LA[i]->head; temp->val != 0; temp = temp->head)
+        int r = LA[i]->val; //varfurile din care ies arce
+        for(temp = LA[i]->head; temp->val != 0; temp = temp->head) //varfurile in care intra arce
         {
-            MA[r-1][(temp->val)-1] = 1;
+            MA[r-1][(temp->val)-1] = 1; 
         }
     }
 }
