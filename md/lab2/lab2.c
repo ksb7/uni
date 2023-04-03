@@ -1,129 +1,67 @@
 #include <stdio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-int prev[7], curent[7], varf;
-int  matrice[7][7] = {{0, 5, 3, 5, 6, 8, 100},
+int prec[7], curent[7], varf, choice;
+/*int  matrice[7][7] = {{0, 5, 3, 5, 6, 8, 100},
                 {100, 0, 100, 1, 4, 100, 100},
                 {100, 100, 0, 100, 2, 100, 100},
                 {100, 100, 100, 0, 3, 5, 100},
                 {100, 100, 100, 100, 0, 4, 6},
                 {100, 100, 100, 100, 100, 0, 5},
-                {100, 100, 100, 100, 100, 100, 0}};
+                {100, 100, 100, 100, 100, 100, 0}};*/
+int **matrice; //matricea ponderata de adiacenta
+#define min(a, b) (a<b) ? a : b;
+#define max(a, b) (a>b) ? a : b;
 int **allocMatrix();
-int **createMatrix();
+void createMatrix();
 void input();
 void Ford();
 void BellmanKalaba();
-void Path(int H2[7],int vcurent, int indice);
+ void PathFord(int H2[7],int vcurent, int indice);
+ void PathBellman(int H2[7],int vcurent, int indice);
 int cmpArr(int *A, int *B, int varf);
 void cpyArr(int *A, int *B, int varf);
-#define min(a, b) (a<b) ? a : b;
-#define max(a, b) (a>b) ? a : b;
+void freeArr();
+
 int main()
 {
-    //int **MA; //matricea ponderata de adiacenta
-    int choice;
+   
     printf("Numarul de varfuri\n");
     scanf("%d", &varf);
-    //createMatrix(varf);
+    createMatrix(varf);
     printf("Meniu:\n1. Algoritmul Ford\n2.Algoritmul Bellman-Kalaba\nAlegerea: ");
     scanf("%d", &choice);
     switch(choice)
     {
         case 1: 
         {
-            Ford();
+            Ford(matrice);
             break;
         }
         case 2:
         {
-            BellmanKalaba();
+            BellmanKalaba(matrice);
             break;
         }
     }
+    freeArr();
     return 0;
 }
-/*int **createMatrix(int varf)
-{
-    int **matrice = allocMatrix(varf);
-    input(matrice, varf);
-    return matrice;
-}
-int **allocMatrix(int varf)
-{
-    int **matrice = malloc(varf*sizeof(int*));
-    if(!matrice)
-    {
-        printf("Alocare esuata");
-        exit(1);
-    }
-    for(int i = 0; i < varf; i++)
-    {
-        matrice[i] = malloc(varf*sizeof(int));
-        if(!matrice[i])
-        {
-            printf("Alocare esuata");
-            exit(1);
-        }
-    }
-    return matrice;
-}
-void input(int **matrice, int varf)
-{
-    /*matrice = {{0, 5, 3, 6, 8 100},
-                {100, 0, 100, 1, 4, 100, 100},
-                {100, 100, 0, 100, 2, 100, 100},
-                {100, 100, 100, 0, 3, 5, 100},
-                {100, 100, 100, 100, 0, 4, 6},
-                {100, 100, 100, 100, 100, 0, 5},
-                {100, 100, 100, 100, 100, 100, 0}};
-    /*printf("Dati matricea ponderata de adiacenta (infinit == 100)\n");
-    for(int i = 0; i < varf; i++)
-    {
-        for(int j = 0; j < varf; j++)
-        {
-            scanf("%d", &matrice[i][j]);
-            TODO:
-            for(int k = 0; k < i-1; k++)
-            {
-                if((i == j && matrice[i][j]) && isdigit(matrice[i][j])); 
-                {
-                    printf("Element invalid\n");
-                    input(matrice, varf);
-                }
-           }
-        }
-    }*/
-}*/
-int cmpArr(int *A, int *B, int varf)
-{
-    for(int i = 0; i < varf; i++)
-        if(A[i] != B[i]) return 1;
-    return 0;
-}
-void cpyArr(int *A, int *B, int varf)
-{
-    for(int i = 0; i < varf; i++)
-    {
-        A[i] = B[i];
-    }
-}
-
 void Ford()
 {
-    printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
-        int choice;
-        scanf("%d", &choice);
+    printf("1. Drumul minim\n2. Drumul maxim\nAlegerea: ");
+        int c;
+        scanf("%d", &c);
         int *H = calloc(varf, sizeof(int));
     int *H2 = calloc(varf, sizeof(int));
-    switch(choice)
+    //initializeaza varfurile cu etichete
+    switch(c)
     {
         case 1:
         {
             for(int i = 0; i < varf; i++) 
             {
-                H2[i] = 100;
+                H2[i] = 100; 
             }
             break;
         }
@@ -136,7 +74,7 @@ void Ford()
             break;
         }
     }
-    H2[0] = 0;
+    H2[0] = 0; //varful initial este 0
     do{
     for(int i = 0; i < varf; i++)
     {  
@@ -144,9 +82,11 @@ void Ford()
         cpyArr(H2, H, varf);
         for(int j = 0; j < varf; j++)
         {
-           if(i != j && matrice[i][j] != 100)
+            //trece peste elementele de sub diagonala principala
+            //si celelalte unde nu este varf
+           if(i != j && matrice[i][j] != 100) 
            {
-                switch(choice)
+                switch(c)
                 {
                     case 1:
                     { 
@@ -162,37 +102,30 @@ void Ford()
                         {
                             H2[j] = H[i] + matrice[i][j];
                         }
-                         
                         break;
                     }
                 }
-            }
         }
     }
-    }while(cmpArr(H, H2, varf)!= 0);
-<<<<<<< HEAD
-    /*for(int i = 0; i < varf; i++)
-    {
-        printf("H %d \n", H[i]);
-    }*/
-    Path(H2, varf-1, 101);
-=======
->>>>>>> b191ee043dbbb7276aff78b54a752bd2020fbee8
+    }
+    }while(cmpArr(H, H2, varf)!= 0); //se va opri cand niciun varf nu isi va mai schimba eticheta
+    printf("Drumul este \n");
+    PathFord(H2, varf-1, 101);
 }
 void BellmanKalaba()
 {
-    printf("1. Drumul minim\n2.Drumul maxim\nAlegerea: ");
+    printf("1. Drumul minim\n2. Drumul maxim\nAlegerea: ");
     int H2[varf], H[varf];
-    int choice;
-    scanf("%d", &choice);
-    switch(choice)
+    int c;
+    scanf("%d", &c);
+    switch(c)
     {
         case 1:
         {
             int minim;
             for(int i = 0; i < varf; i++)
             {
-                H[i] = matrice[i][varf-1]; //initializam vectorul 0
+                H2[i] = matrice[i][varf-1]; //initializam vectorul 0 cu elementele de pe ultima coloana
             }
             do{
                 cpyArr(H, H2, varf);
@@ -205,14 +138,14 @@ void BellmanKalaba()
 			            int k = j+1;
                         if(i != j)
                         {
-				            if(i == k) k = j+2;
-                            minim = min(minim, matrice[i][k] + H[k]);
+				            if(i == k) k = j+2; //daca urmatorul element al matricii este 0, il ignora
+                            minim = min(minim, matrice[i][k] + H[k]); // min dintre elementul curent si urmatorul
                             H2[i] = minim;
                         }
                     }
-		    H2[varf-1] = 0;
+		            H2[varf-1] = 0;
                 }
-            }while(cmpArr(H2, H, varf) != 0);
+            }while(cmpArr(H2, H, varf) != 0); //se va opri cand nicio eticheta nu se va mai schimba
             break;
         }
         case 2:
@@ -221,7 +154,7 @@ void BellmanKalaba()
             {
                 for(int j = 0; j < varf; j++)
                 {
-                    if(matrice[i][j] == 100) matrice[i][j] = -100;
+                    if(matrice[i][j] == 100) matrice[i][j] = -100; //pentru drumul maxim folosim -inf
                 }
                 H2[i] = matrice[i][varf-1];
             }
@@ -234,10 +167,10 @@ void BellmanKalaba()
                     maxim = matrice[i][i+1] + H[i+1];
                     for(int j = 0; j < varf-1; j++)
                     { 
-			            int k = j+1;
+			            int k = j+1;;
                         if(i != j)
                         {
-			                if(i == k) k = j+2; 
+				            if(i == k) k = j+2;
                             maxim = max(maxim, matrice[i][k] + H[k]); 
                             H2[i] = maxim;
                         }
@@ -248,49 +181,45 @@ void BellmanKalaba()
             break;
         }
     }
-    
+    printf("Drumul este: \n");
+    PathBellman(H2, 0, varf+1);
 }
-<<<<<<< HEAD
-int prec = 0, k = 0;
-void Path(int H2[7],int vcurent, int indice)
+int vprec = 0, k = 0;
+void PathFord(int H2[varf],int vcurent, int indice)
 {
-	int pozitie = 0;
-	printf(" \nal doilea indice %d\n", indice);
-	printf("---- k %d ----\n", k);
+	//vcurent = varful curent
+	//k = indicele drumului curent
+	//indice = indicele drumului pana unde acesta nu se imparte in altul
+	//prec[] = drumul precedent (daca drumul a fost impartit in mai multe)
+	//curent[] = drumul curent
+	//vprec = varful precedent unde s-a impartit drumul 
+	
 	if(indice < 100) //testeaza daca incepe un nou drum
-	{
-		for(int i = 0; i < prec; i++)
+	{ 
+	    int i;
+		for(i = 0; i < vprec; i++)
 		{
-		//printf("al treilea idnice %d prec %d\n", indice, prec);
-			prev[i] = 0;
-			if(indice == curent[i])
+			if(indice == prec[i])
 			{
-				pozitie = i;
+				break;
 			}
-			printf(" prev %d indice %d pozitie %d\n", prev[i], indice, pozitie);
 		}
-		for(int j = prec - 1; j >= pozitie; j--)
-		prev[k++] = curent[j];
+		for(int j = vprec - 1; j >= i; j--)
+		curent[k++] = prec[j];//copie toate valorile de pana la varful nou
 		indice = 101; //indicele nu poate fi mai mare decat nr de varfuri
 	}
-	prev[pozitie+k+1] = vcurent; //adauga varful curent la drum
-	//TODO: sa adauge si varful 1
-	printf("---- k %d indice%d mtrice %d----\n", k, indice, matrice[prec][vcurent]);
-	if(vcurent == 0)
+	curent[k++] = vcurent; //adauga varful curent la drum
+	if (vcurent == 0)
 	{
-		printf("Drumul este: ");
-		for(int i = k-1; i >= 0; i--)
-			printf("%d ", prev[i]+1);
-		prec = k;
-		for(int i = k-1; i >= 0; i--)
+    		for (int i = k-1; i >= 0; i--)
+        	printf("%d ", curent[i]+1);
+		printf("\n");
+    		vprec = k; //salveaza pozitia din drumul curent
+    		for (int i = k-1; i >= 0; i--)
 		{
-			curent[k-i-1] = prev[i];
-		}
-		k = 0;
-	}
-	for(int i = 0; i < varf; i++)
-	{
-		printf("prev %d curent %d prec %d indice %d k %d vcurent %d pozitie %d\n", prev[i], curent[i], prec, indice, k, vcurent, pozitie);
+        		prec[k-i-1] = curent[i];
+    		}
+    		k = 0; //reseteaza indicele pentru un drum nou
 	}
 	for(int i = varf-1; i >= 0; i--)
 	{
@@ -298,12 +227,107 @@ void Path(int H2[7],int vcurent, int indice)
 		{
 			if(H2[vcurent] - H2[i] == matrice[i][vcurent])
 			{
-			printf(" inddddice %d \n", indice);
-				Path(H2, i, vcurent);
+				PathFord(H2, i, indice);
+				indice = vcurent; //cand ajunge la capatul unui drum se inntoarce aici si reia procesul din punctul dat
 			}
 		}
 	}
 }
-=======
-
->>>>>>> b191ee043dbbb7276aff78b54a752bd2020fbee8
+void PathBellman(int H2[varf],int vcurent, int indice)
+{
+	if(indice < varf+1) 
+	{ 
+	    int i;
+		int pozitie;
+		for(i = 0; i < vprec; i++)
+		{
+			if(indice == prec[i])
+			{
+				break;
+			}
+		}
+		for(int j = 0; j <= i; j++)
+		curent[k++] = prec[j];
+		indice = varf+1;
+	}
+	curent[k++] = vcurent; 
+	if (vcurent == varf-1) 
+	{
+    		for (int i = 0; i < k; i++)
+        	printf("%d ", curent[i]+1);
+		    printf("\n");
+    		vprec = k; 
+    		for (int i = 0; i < k; i++) 
+		{
+        		prec[i] = curent[i];
+    		}
+    		k = 0;
+	}
+	for(int i = vcurent; i <= varf-1; i++)
+	{
+		if(matrice[vcurent][i] > 0)
+		{
+			if(H2[vcurent] - H2[i] == matrice[vcurent][i])
+			{
+				PathBellman(H2, i, indice); 
+				indice = vcurent;
+			}
+		}
+	}
+}
+void createMatrix()
+{
+    matrice = allocMatrix();
+    input(matrice, varf);
+}
+int **allocMatrix()
+{
+    int **temp = malloc(varf*sizeof(int*));
+    if(!temp)
+    {
+        printf("Alocare esuata");
+        exit(1);
+    }
+    for(int i = 0; i < varf; i++)
+    {
+        temp[i] = malloc(varf*sizeof(int));
+        if(!temp[i])
+        {
+            printf("Alocare esuata");
+            exit(1);
+        }
+    }
+    return temp;
+}
+void input(int **matrice, int varf)
+{
+    printf("Dati matricea ponderata de adiacenta (infinit == 100)\n");
+    for(int i = 0; i < varf; i++)
+    {
+        for(int j = 0; j < varf; j++)
+        {
+            scanf("%d", &matrice[i][j]);
+        }
+    }
+} 
+int cmpArr(int *A, int *B, int varf)
+{
+    for(int i = 0; i < varf; i++)
+        if(A[i] != B[i]) return 1;
+    return 0;
+}
+void cpyArr(int *A, int *B, int varf)
+{
+    for(int i = 0; i < varf; i++)
+    {
+        A[i] = B[i];
+    }
+}
+void freeArr()
+{
+	for(int i = 0; i < varf; i++)
+	{
+		free(matrice[i]);
+	}
+	free(matrice);
+}
