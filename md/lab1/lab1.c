@@ -6,7 +6,23 @@ struct node
     int val;
     struct node* head;
 }*list;
-
+/*MA = {{0, 1, 0, 0, 0},
+ 	{0, 0, 0, 1, 0},
+	{0, 1, 0, 1, 0},
+	{0, 0, 0, 0, 0},
+	{1, 1, 1, 0, 0}}*/
+/*MI = {{0, 1, 0, 0, -1},
+ 	{1, 0, 0, 0, -1},
+	{-1, 1, 0, 0, 0},
+	{0, 0, 1, 0, -1},
+	{0, 0, -1, 1, 0},
+	{0, 1, -1, 0, 0},
+	{0, -1, 0, 1, 0}}*/
+/*LA = {{1 | 2, 0},
+ 	{2 | 4, 0},
+	{3 | 2, 4, 0},
+	{4 | 0},
+	{5 | 1, 2, 3, 0}}*/
 void MI(); //matricea de incidenta
 void LA(); //lista de adiacenta
 void MA(); //matricea de adiacenta
@@ -49,9 +65,6 @@ void MI(int varf, int arc)
     /*INTRODUCERE DATE*/
     int **matrice;
     insertMatrix(&matrice, varf, arc);
-    
-    /*AFISARE ELEMENTE*/
-    printMatrix(matrice, varf, arc);
     
     /*TRANSFORMARI*/
     printf("\nMeniu:\n1.Transformarea in matricea de adiacenta\n2.Transformarea in lista de adiacenta\nAlegerea :");
@@ -104,9 +117,6 @@ void MA(int varf, int arc)
     /*INTRODUCERE DATE*/
     int **matrice;
     insertMatrix(&matrice, varf, varf);
-    
-    /*AFISARE ELEMENTE*/
-    printMatrix(matrice, varf, varf);
     
     /*TRANSFORMARI*/
     printf("\nMeniu:\n1.Transformarea in matricea de incidenta\n2.Transformarea in lista de adiacenta\nAlegerea: ");
@@ -276,7 +286,6 @@ int **allocMatrix(int varf, int arc)
         }
     }
 
-    printf("Memoria pentru matrice a fost alocata\n");
     return a;
 }
 void insertMatrix(int ***a, int varf, int arc)
