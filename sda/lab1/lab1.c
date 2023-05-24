@@ -34,23 +34,45 @@ int main()
 
 	}
 	fclose(ghid_telefon);
-	fflush(stdin);
+	int c;
+while ((c = getchar()) != '\n' && c != EOF);
 	int alegere;
 	printf("Dati numarul de telefon dupa care sa se inceapa cautarea\n");
-	scanf("%d", &alegere);
-	printf("Aleere");
+	scanf(" %d", &alegere);
+	printf("Aleere %d", alegere);
 	if((ghid_telefon = fopen("ghid.txt", "r")) == NULL)
 	{
 		printf("Fisierul nu poate fi deschis");
 		exit(1);
 	}
-	if(!feof(ghid_telefon))
+	/*if(!feof(ghid_telefon))
 	{
 		if(alegere == ghid.numar)
 		{
 			printf("NPP %s %s %s Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
 		}
-	}
+	}*/
+	// ...
+
+int found = 0;  // Flag to indicate if a match is found
+
+while (fscanf(ghid_telefon, "NPP %s %s %s numar %d Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, &ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament) == 7)
+{
+    if (alegere == ghid.numar)
+    {
+        printf("NPP %s %s %s Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
+        found = 1;  // Set the flag to indicate a match is found
+        break;      // Exit the loop after finding the match
+    }
+}
+
+if (!found)
+{
+    printf("No entry found for the given phone number.\n");
+}
+
+// ...
+
 	printf("\nultima");
 	return 0;
 }
