@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 /*Să se creeze fişierul ghidul telefonic. Conform numărului telefonului să se găsească NPP şi adresa proprietarului.*/
 struct Adresa
 {
@@ -12,58 +13,32 @@ struct ghidTel
 	char nume[11];
 	char prenume[11];
 	char patronimic[11];
-	int numar;
+	char numar[10];
 	struct Adresa adresa;
 };
-int main()
-{
-	struct ghidTel ghid;
 	FILE *ghid_telefon;
-
-	if((ghid_telefon = fopen("ghid.txt", "w")) == NULL)
-	{
-		printf("Fisierul nu poate fi deschis\n");
-		exit(1);
-	}
-	printf("Dati NPP, numarul de telefon si adresa(strada, nr casei, ap)");
-	scanf("%s%s%s%d%s%s%s", ghid.nume, ghid.prenume, ghid.patronimic, &ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
-	while(!feof(stdin))
-	{
-		fprintf(ghid_telefon, "NPP %s %s %s numar %d Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
-		scanf("%s%s%s%d%s%s%s", ghid.nume, ghid.prenume, ghid.patronimic, &ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
-
-	}
-	fclose(ghid_telefon);
+	struct ghidTel ghid;
+void test()
+{
 	int c;
 while ((c = getchar()) != '\n' && c != EOF);
-	int alegere;
-	printf("Dati numarul de telefon dupa care sa se inceapa cautarea\n");
-	scanf(" %d", &alegere);
-	printf("Aleere %d", alegere);
+	char alegere[10];
+	printf("Dati nr de telefon dupa care sa se efectueze cautarea\n");
+	scanf("%s", alegere);
 	if((ghid_telefon = fopen("ghid.txt", "r")) == NULL)
 	{
 		printf("Fisierul nu poate fi deschis");
 		exit(1);
 	}
-	/*if(!feof(ghid_telefon))
-	{
-		if(alegere == ghid.numar)
-		{
-			printf("NPP %s %s %s Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
-		}
-	}*/
-	// ...
-
 int found = 0;  // Flag to indicate if a match is found
-
-while (fscanf(ghid_telefon, "NPP %s %s %s numar %d Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, &ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament) == 7)
+while (fscanf(ghid_telefon, "NPP %s %s %s numar %s Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament) == 7)
 {
-    if (alegere == ghid.numar)
+    if (strcmp(alegere, ghid.numar) == 0)
     {
         printf("NPP %s %s %s Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
         found = 1;  // Set the flag to indicate a match is found
         break;      // Exit the loop after finding the match
-    }
+}
 }
 
 if (!found)
@@ -72,7 +47,26 @@ if (!found)
 }
 
 // ...
+}
+int main()
+{
 
+	if((ghid_telefon = fopen("ghid.txt", "w")) == NULL)
+	{
+		printf("Fisierul nu poate fi deschis\n");
+		exit(1);
+	}
+	printf("Dati NPP, numarul de telefon si adresa(strada, nr casei, ap)");
+	scanf("%s%s%s%s%s%s%s", ghid.nume, ghid.prenume, ghid.patronimic, ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
+	while(!feof(stdin))
+	{
+		fprintf(ghid_telefon, "NPP %s %s %s numar %s Adresa %s %s %s\n", ghid.nume, ghid.prenume, ghid.patronimic, ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
+		scanf("%s%s%s%s%s%s%s", ghid.nume, ghid.prenume, ghid.patronimic, ghid.numar, ghid.adresa.strada, ghid.adresa.nr_casei, ghid.adresa.apartament);
+
+	}
+	fclose(ghid_telefon);
+
+test();
 	printf("\nultima");
 	return 0;
 }
