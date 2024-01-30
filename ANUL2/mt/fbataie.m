@@ -1,0 +1,10 @@
+function[x1,x2,x] = fbataie(t,domega)
+a1 = 10;
+a2 = 20;
+omega1 = 15;
+omega2 = omega1+domega;
+alfa1 = pi/2;
+alfa2 = pi/2;
+x1 = a1*sin(omega1*t+alfa1);
+x2 = a2*sin(omega2*t+alfa2);
+x = x1+x2;

@@ -1,0 +1,10 @@
+function[x1,x2,x] = fcoer_dalfa(t,dalfa)
+a1 = 10;
+a2 = 20;
+omega1 = 15;
+omega2 = 5;
+alfa1 = pi/3;
+alfa2 = alfa1-dalfa;
+x1 = a1*sin(omega1*t+alfa1);
+x2 = a2*sin(omega2*t+alfa2);
+x = x1+x2;
