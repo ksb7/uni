@@ -19,91 +19,216 @@ typedef enum{
 } Error_Type;
 
 class Vector{
-public:
-	float *vectorElement;
-	int elementPosition;
+private:
+	float *vectorElements;
+	int size;
 	Error_Type errorCode;
-
+	
+public:
 	Vector() {
-		vectorElement = NULL;
-		elementPosition = 0;
+		vectorElements = NULL;
+		size = 0;
 		errorCode = E_NULL_PTR;
 	}
-
-	Vector(Error_Type error) {
-		vectorElement = NULL;
-		elementPosition = 0;
-		errorCode = error;
+	
+	Vector(int newSize)
+	{
+	    vectorElements = new float[newSize];
+	    if(vectorElements != NULL)
+	    {
+	        size = newSize;
+	        for(int i = 0; i < newSize; i++)
+	        {
+	            vectorElements[i] = 0;
+	        }
+	        errorCode = E_OK;
+	    }
+	    else
+	    {
+	        size = 0;
+	        errorCode = E_INSUFFICIENT_MEMORY;
+	    }
 	}
 
-	Vector(int ptrSize, Error_Type error) {
+	Vector(int newSize, float element) {
 
-		vectorElement = new float[2];
-		if(vectorElement != NULL)
+		vectorElements = new float[newSize];
+		if(vectorElements != NULL)
 		{
-			elementPosition = ptrSize;
+			size = newSize;
+			for(int i = 0; i < newSize; i++)
+			{
+			    vectorElements[i] = element;
+			}
 			errorCode = E_OK;
-
-			cin >> vectorElement[0];
-			cin >> vectorElement[1];
-		} else
+		} 
+		else
 		{
-			elementPosition = 0;
+			size = 0;
 			errorCode = E_INSUFFICIENT_MEMORY;
 		}
 	}
-
-	void setElement(float i, float j, int position) {
-		if(position == elementPosition)
-		{
-			vectorElement[0] = i;
-			vectorElement[1] = j;
-		}
-		else
-		{
-			errorCode = E_VECTOR_UNMATCHED;
-			cout<<"Invalid position"<<endl;
-		}
-
-	}
-
-	float* getElement()
+	
+	~Vector() 
 	{
-		return vectorElement;
-	}
+        delete[] vectorElements;
+    }
 
-
-	friend Vector operator *(const Vector &A, const Vector &B)
+	void setElement(int position, float value) 
 	{
-		A.vectorElement[0] *= B.vectorElement[0];
-		A.vectorElement[1] *= B.vectorElement[1];
-		return A;
+	    if(position < size)
+	    {
+	        vectorElements[position] = value;
+	        errorCode = E_OK;
+	    }
+	    else
+	    {
+	        errorCode = E_MEMORY_OVERFLOW;
+	    }
 	}
 
-	friend Vector operator *(const Vector &A, float factor)
+	float getElement(int position)
 	{
-		A.vectorElement[0] *= factor;
-		A.vectorElement[1] *= factor;
-		return A;
+	    float returnElement = 0;
+	    if(position < size)
+	    {
+	        returnElement = vectorElements[position];
+	        errorCode = E_OK;
+	    }
+	    else
+	    {
+	        errorCode = E_VECTOR_UNMATCHED;
+	    }
+		return returnElement;
 	}
+
+    Vector& operator=(const Vector& second) 
+    {
+        if (this != &second) 
+        {
+            delete[] vectorElements;
+            
+            size = second.size;
+            vectorElements = new float[size];
+            
+            for (int i = 0; i < size; ++i) 
+            {
+                vectorElements[i] = second.vectorElements[i];
+            }
+        }
+        return *this;
+    }
+    
+	friend float operator *(const Vector &A, const Vector &B);
+
+	friend Vector operator *(const Vector &A, float factor);
+	
+	friend Vector operator +(const Vector &A, const Vector &B);
+	
+	friend Vector operator -(const Vector &A, const Vector &B);
+	
+	friend ostream& operator <<(ostream &out, const Vector &vector);
 
 };
-int main() {
+float operator *(const Vector &A, const Vector &B)
+{
+    float result = 0;
+	if (A.size == B.size)
+	{
+	    for(int i = 0; i < A.size; i++)
+	    {
+	        result += A.vectorElements[i] * B.vectorElements[i];
+	    }
+	}
+	return result;
+}
+
+Vector operator *(const Vector &A, float factor)
+{
+    Vector temp(A.size); 
+    for(int i = 0; i < A.size; i++)
+    {
+        float value = A.vectorElements[i] * factor;
+        temp.setElement(i, value);
+    }
+	return temp;
+}
+Vector operator +(const Vector &A, const Vector &B)
+{
+    Vector temp(A.size);
+    if(A.size == B.size)
+    {
+        for(int i = 0; i < A.size; i++)
+        {
+            float value = A.vectorElements[i] + B.vectorElements[i];
+            temp.setElement(i, value);
+        }
+    }
+    return temp;
+}
+Vector operator -(const Vector &A, const Vector &B)
+{
+    Vector temp(A.size);
+    if(A.size == B.size)
+    {
+        for(int i = 0; i < A.size; i++)
+        {
+            float value = A.vectorElements[i] - B.vectorElements[i];
+            temp.setElement(i, value);
+        }
+    }
+    return temp;
+}
+
+ostream& operator <<(ostream &out, const Vector &example)
+{
+    out << fixed;
+    out.precision(2);
+    for(int i = 0; i < example.size; i++)
+    {
+        out << example.vectorElements[i] << " ";
+    }
+    out << endl;
+    return out;
+}
+
+
+int main(void) 
+{
 	int numberOfElements;
-	cout << "Numarul de elemente" << endl;
+	float temp;
+	cout << "Numarul de elemente: (minim 3)" << endl;
 	cin >> numberOfElements;
 
-	Vector vectorList[numberOfElements];
+	Vector vectorList(numberOfElements);
+	Vector result(numberOfElements);
 
-	cout << "Elementele: \ni j\n";
+	cout << "Elementele: \n";
 	for(int i = 0; i < numberOfElements; i++)
 	{
-		Vector temp(i, E_OK);
-		vectorList[i] = temp;
-		cout << (temp * 3).getElement()[0];
+	    cin >> temp;
+	    vectorList.setElement(i, temp);
 	}
 
+    temp = vectorList.getElement(1);
+    cout << "Testarea functiei getElement\n" << temp << endl;
+   
+    cout << "Testarea functiei setElement()\n";
+	cout << "Vectorul inainte de setare\n" << vectorList;
+	vectorList.setElement(0, 34.2);
+	cout << "Elementul dupa setare\n" << vectorList;
 
-	cout << vectorList[2].getElement()[0] << " " << vectorList[2].getElement()[1];
+    result = vectorList + vectorList;
+    cout << "Testarea functiei de adunare a doi vectori\n" << result;
+    
+    result = vectorList - vectorList;
+    cout << "Testarea functiei de scadere a doi vectori\n" << result;
+    
+    temp = vectorList * vectorList;
+    cout << "Testarea functiei de inmultire scalara a doi vectori\n" << temp << endl;
+    
+    result = vectorList * 3;
+    cout << "Testarea functiei de inmultire a unui vector cu un numar\n" << result;
+    
 	return 0;
 }
