@@ -96,10 +96,11 @@ class VectorCollection():
                 file.write(str(vector.Bx))
                 file.write(str(vector.Ay))
                 file.write(str(vector.By))
+                file.write(str("\n"))
                 
     def load(self, filename):
         with open(filename, "r") as file:
-            args_list = [int(i) for i in file.read()]
+            args_list = [i for i in file.read()]
             i = 0
             while i < len(args_list):
                 index = int(args_list[i])
@@ -107,7 +108,7 @@ class VectorCollection():
                 self._date[index].Bx = int(args_list[i+2])
                 self._date[index].Ay = int(args_list[i+3])
                 self._date[index].By = int(args_list[i+4])
-                i = i+5
+                i = i+6
 
     def __getitem__(self, index):
         return f"A[{self.date[index].Ax}, {self.date[index].Ay}], B[{self.date[index].Bx}, {self.date[index].By}]" 
@@ -128,3 +129,10 @@ print("Vector Collection exemplu indexare: " + exempluColectie[1])
 exempluColectie.save("fisier.txt")
 exempluColectie.load("fisier.txt")
 print("Vector Collection exemplu dupa save si load: " + exempluColectie[1])
+
+
+exempluColectie.add(exempluVector2)
+exempluColectie.save("fisier2.txt")
+exempluColectie.load("fisier2.txt")
+
+
