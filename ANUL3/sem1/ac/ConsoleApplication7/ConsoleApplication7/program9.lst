@@ -1,0 +1,112 @@
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    11/28/24 22:00:08
+program9.asm						     Page 1 - 1
+
+
+				.model small
+				.stack 100h
+ 0000				.data
+ 0000				.code
+ 0000				start: 
+ 0000  B8 ---- R		    mov ax, @data
+ 0003  8E D8			    mov ds, ax
+
+ 0005  B4 00			    mov ah, 00h ;Setam modul grafic 12h
+ 0007  B0 12			    mov al, 12h 
+ 0009  CD 10			    int 10h
+
+ 000B  B4 0C			    mov ah, 0Ch ;functia pentru afisarea unui pixel
+ 000D  B7 00			    mov bh, 0 ;pagina de baza - pagina 0
+ 000F  B0 01			    mov al, 01h ;setam culoarea albastru
+ 0011  B9 0000			    mov cx, 0 ;coordonata x initiala (coloana)
+ 0014  BA 0000			    mov dx, 0 ;coordonata y initiala (linie)
+
+ 0017  CD 10			m1: int 10h ;afisam un pixel la coordonataele cx, dx
+ 0019  41			    inc cx ;trecem la urmatoarea coloana
+ 001A  81 F9 00D5		    cmp cx, 213 ;verificam daca am desenat pana la marginea benzii
+ 001E  75 F7			    jne m1 ;continuam daca nu am ajuns la margine
+
+ 0020  42			    inc dx ;trecem la urmatoarea linie
+ 0021  33 C9			    xor cx, cx	;resetam coloana la 0
+ 0023  81 FA 01E0		    cmp dx, 480 ;verificam daca am ajuns la marginea ecranului
+ 0027  75 EE			    jne m1 ;continuam daca mai sunt linii
+
+					;configurarea benzii galben
+ 0029  B4 0C			    mov ah, 0Ch
+ 002B  B0 0E			    mov al, 0Eh
+ 002D  B9 00D5			    mov cx, 213
+ 0030  BA 0000			    mov dx, 0
+
+ 0033  CD 10			m2: int 10h
+ 0035  41			    inc cx
+ 0036  81 F9 01AA		    cmp cx, 426
+ 003A  75 F7			    jne m2
+
+ 003C  42			    inc dx
+ 003D  B9 00D5			    mov cx, 213
+ 0040  81 FA 01E0		    cmp dx, 480
+ 0044  75 ED			    jne m2
+
+					;configurarea benzii rosii
+ 0046  B4 0C			    mov ah, 0Ch
+ 0048  B0 04			    mov al, 04h
+ 004A  B9 01AA			    mov cx, 426
+ 004D  BA 0000			    mov dx, 0
+
+ 0050  CD 10			m3: int 10h
+ 0052  41			    inc cx
+ 0053  81 F9 0280		    cmp cx, 640
+ 0057  75 F7			    jne m3
+ 0059  42			    inc dx
+ 005A  B9 01AA			    mov cx, 426
+ 005D  81 FA 01E0		    cmp dx, 480
+ 0061  75 ED			    jne m3
+
+					;asteptam apasarea unei taste
+ 0063  B4 01			    mov ah, 1
+ 0065  CD 21			    int 21h
+
+					;revenim la modul text
+ 0067  B8 0003			    mov ax, 03h
+ 006A  CD 10			    int 10h
+
+					;iesim din program
+ 006C  B8 4C00			    mov ax, 4C00h
+ 006F  CD 21			    int 21h
+
+				end start
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    11/28/24 22:00:08
+program9.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0000	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0100	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0071	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+m1 . . . . . . . . . . . . . . .	L Near	 0017	  _TEXT	
+m2 . . . . . . . . . . . . . . .	L Near	 0033	  _TEXT	
+m3 . . . . . . . . . . . . . . .	L Near	 0050	  _TEXT	
+start  . . . . . . . . . . . . .	L Near	 0000	  _TEXT	
+
+	   0 Warnings
+	   0 Errors
