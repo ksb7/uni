@@ -1,0 +1,249 @@
+|lab2
+A[0] => FullAdder:FullAdder_0.A
+A[1] => FullAdder:FullAdder_1.A
+A[2] => FullAdder:FullAdder_2.A
+A[3] => FullAdder:FullAdder_3.A
+B[0] => Gate_XOR2:XOR2_0.x
+B[1] => Gate_XOR2:XOR2_1.x
+B[2] => Gate_XOR2:XOR2_2.x
+B[3] => Gate_XOR2:XOR2_3.x
+Sel => Gate_XOR2:XOR2_0.y
+Sel => Gate_XOR2:XOR2_1.y
+Sel => Gate_XOR2:XOR2_2.y
+Sel => Gate_XOR2:XOR2_3.y
+Sel => FullAdder:FullAdder_0.Cin
+Sum[0] <= FullAdder:FullAdder_0.Sum
+Sum[1] <= FullAdder:FullAdder_1.Sum
+Sum[2] <= FullAdder:FullAdder_2.Sum
+Sum[3] <= FullAdder:FullAdder_3.Sum
+Cout <= FullAdder:FullAdder_3.Cout
+
+
+|lab2|Gate_XOR2:XOR2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|Gate_XOR2:XOR2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|Gate_XOR2:XOR2_2
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|Gate_XOR2:XOR2_3
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_0
+A => Gate_XOR2:XOR2_0.x
+A => Gate_And2:AND2_0.x
+A => Gate_And2:AND2_1.x
+B => Gate_XOR2:XOR2_0.y
+B => Gate_And2:AND2_0.y
+B => Gate_And2:AND2_2.x
+Cin => Gate_XOR2:XOR2_1.y
+Cin => Gate_And2:AND2_1.y
+Cin => Gate_And2:AND2_2.y
+SUM <= Gate_XOR2:XOR2_1.f
+Cout <= Gate_OR3:OR3_1.f
+
+
+|lab2|FullAdder:FullAdder_0|Gate_XOR2:XOR2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_0|Gate_XOR2:XOR2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_0|Gate_And2:AND2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_0|Gate_And2:AND2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_0|Gate_And2:AND2_2
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_0|Gate_OR3:OR3_1
+x => F.IN0
+y => F.IN1
+z => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_1
+A => Gate_XOR2:XOR2_0.x
+A => Gate_And2:AND2_0.x
+A => Gate_And2:AND2_1.x
+B => Gate_XOR2:XOR2_0.y
+B => Gate_And2:AND2_0.y
+B => Gate_And2:AND2_2.x
+Cin => Gate_XOR2:XOR2_1.y
+Cin => Gate_And2:AND2_1.y
+Cin => Gate_And2:AND2_2.y
+SUM <= Gate_XOR2:XOR2_1.f
+Cout <= Gate_OR3:OR3_1.f
+
+
+|lab2|FullAdder:FullAdder_1|Gate_XOR2:XOR2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_1|Gate_XOR2:XOR2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_1|Gate_And2:AND2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_1|Gate_And2:AND2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_1|Gate_And2:AND2_2
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_1|Gate_OR3:OR3_1
+x => F.IN0
+y => F.IN1
+z => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_2
+A => Gate_XOR2:XOR2_0.x
+A => Gate_And2:AND2_0.x
+A => Gate_And2:AND2_1.x
+B => Gate_XOR2:XOR2_0.y
+B => Gate_And2:AND2_0.y
+B => Gate_And2:AND2_2.x
+Cin => Gate_XOR2:XOR2_1.y
+Cin => Gate_And2:AND2_1.y
+Cin => Gate_And2:AND2_2.y
+SUM <= Gate_XOR2:XOR2_1.f
+Cout <= Gate_OR3:OR3_1.f
+
+
+|lab2|FullAdder:FullAdder_2|Gate_XOR2:XOR2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_2|Gate_XOR2:XOR2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_2|Gate_And2:AND2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_2|Gate_And2:AND2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_2|Gate_And2:AND2_2
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_2|Gate_OR3:OR3_1
+x => F.IN0
+y => F.IN1
+z => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_3
+A => Gate_XOR2:XOR2_0.x
+A => Gate_And2:AND2_0.x
+A => Gate_And2:AND2_1.x
+B => Gate_XOR2:XOR2_0.y
+B => Gate_And2:AND2_0.y
+B => Gate_And2:AND2_2.x
+Cin => Gate_XOR2:XOR2_1.y
+Cin => Gate_And2:AND2_1.y
+Cin => Gate_And2:AND2_2.y
+SUM <= Gate_XOR2:XOR2_1.f
+Cout <= Gate_OR3:OR3_1.f
+
+
+|lab2|FullAdder:FullAdder_3|Gate_XOR2:XOR2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_3|Gate_XOR2:XOR2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_3|Gate_And2:AND2_0
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_3|Gate_And2:AND2_1
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_3|Gate_And2:AND2_2
+x => F.IN0
+y => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab2|FullAdder:FullAdder_3|Gate_OR3:OR3_1
+x => F.IN0
+y => F.IN1
+z => F.IN1
+F <= F.DB_MAX_OUTPUT_PORT_TYPE
+
+
