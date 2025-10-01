@@ -1,8 +1,8 @@
 /*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Test -c Lab1Test --vector_source="D:/Univer/PDP/Lab1Test/Waveform.vwf" --testbench_file="D:/Univer/PDP/Lab1Test/simulation/qsim/Waveform.vwf.vt"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Test -c Lab1Test --vector_source="D:/Univer/PDP/Lab1Test/Waveform.vwf" --testbench_file="D:/Univer/PDP/Lab1Test/simulation/qsim/Waveform.vwf.vt"</ttestbench_cmd>
-<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="D:/Univer/PDP/Lab1Test/simulation/qsim/" Lab1Test -c Lab1Test</fnetlist_cmd>
-<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="D:/Univer/PDP/Lab1Test/simulation/qsim/" Lab1Test -c Lab1Test</tnetlist_cmd>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Test -c Lab1Test --vector_source="C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/Waveform.vwf" --testbench_file="C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim/Waveform.vwf.vt"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Test -c Lab1Test --vector_source="C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/Waveform.vwf" --testbench_file="C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim/Waveform.vwf.vt"</ttestbench_cmd>
+<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim/" Lab1Test -c Lab1Test</fnetlist_cmd>
+<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim/" Lab1Test -c Lab1Test</tnetlist_cmd>
 <modelsim_script>onerror {exit -code 1}
 vlib work
 vlog -work work Lab1Test.vo
@@ -48,9 +48,9 @@ the Block Editor! File corruption is VERY likely to occur.
 */
 
 /*
-Copyright (C) 2022  Intel Corporation. All rights reserved.
+Copyright (C) 2018  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and any partner logic 
+and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
@@ -60,8 +60,7 @@ the Intel FPGA IP License Agreement, or other applicable license
 agreement, including, without limitation, that your use is for
 the sole purpose of programming logic devices manufactured by
 Intel and sold by Intel or its authorized distributors.  Please
-refer to the applicable agreement for further details, at
-https://fpgasoftware.intel.com/eula.
+refer to the applicable agreement for further details.
 */
 
 HEADER
@@ -69,7 +68,7 @@ HEADER
 	VERSION = 1;
 	TIME_UNIT = ns;
 	DATA_OFFSET = 0.0;
-	DATA_DURATION = 1000.0;
+	DATA_DURATION = 160.0;
 	SIMULATION_TIME = 0.0;
 	GRID_PHASE = 0.0;
 	GRID_PERIOD = 10.0;
@@ -133,11 +132,10 @@ TRANSITION_LIST("X0")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 33;
-			LEVEL 0 FOR 15.0;
-			LEVEL 1 FOR 15.0;
+			REPEAT = 8;
+			LEVEL 0 FOR 10.0;
+			LEVEL 1 FOR 10.0;
 		}
-		LEVEL 0 FOR 10.0;
 	}
 }
 
@@ -148,12 +146,10 @@ TRANSITION_LIST("X1")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 16;
-			LEVEL 0 FOR 30.0;
-			LEVEL 1 FOR 30.0;
+			REPEAT = 4;
+			LEVEL 0 FOR 20.0;
+			LEVEL 1 FOR 20.0;
 		}
-		LEVEL 0 FOR 30.0;
-		LEVEL 1 FOR 10.0;
 	}
 }
 
@@ -164,11 +160,10 @@ TRANSITION_LIST("X2")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 8;
-			LEVEL 0 FOR 60.0;
-			LEVEL 1 FOR 60.0;
+			REPEAT = 2;
+			LEVEL 0 FOR 40.0;
+			LEVEL 1 FOR 40.0;
 		}
-		LEVEL 0 FOR 40.0;
 	}
 }
 
@@ -179,11 +174,10 @@ TRANSITION_LIST("X3")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 4;
-			LEVEL 0 FOR 120.0;
-			LEVEL 1 FOR 120.0;
+			REPEAT = 1;
+			LEVEL 0 FOR 80.0;
+			LEVEL 1 FOR 80.0;
 		}
-		LEVEL 0 FOR 40.0;
 	}
 }
 
@@ -192,13 +186,13 @@ TRANSITION_LIST("Y")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "X3";
+	CHANNEL = "X0";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 0;
@@ -207,7 +201,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "X2";
+	CHANNEL = "X1";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -216,7 +210,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "X1";
+	CHANNEL = "X2";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 2;
@@ -225,7 +219,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "X0";
+	CHANNEL = "X3";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 3;

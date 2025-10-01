@@ -1,0 +1,20 @@
+|registru
+CLK => reg_data[0].CLK
+CLK => reg_data[1].CLK
+CLK => reg_data[2].CLK
+CLK => reg_data[3].CLK
+CLK => reg_data[4].CLK
+RESET => reg_data.OUTPUTSELECT
+RESET => reg_data.OUTPUTSELECT
+RESET => reg_data.OUTPUTSELECT
+RESET => reg_data.OUTPUTSELECT
+RESET => reg_data.OUTPUTSELECT
+SHIFT_EN => reg_data.OUTPUTSELECT
+SHIFT_EN => reg_data.OUTPUTSELECT
+SHIFT_EN => reg_data.OUTPUTSELECT
+SHIFT_EN => reg_data.OUTPUTSELECT
+SHIFT_EN => reg_data.OUTPUTSELECT
+SERIAL_IN => reg_data.DATAB
+SERIAL_OUT <= reg_data[0].DB_MAX_OUTPUT_PORT_TYPE
+
+

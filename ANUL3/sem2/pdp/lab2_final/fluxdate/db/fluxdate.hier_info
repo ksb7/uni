@@ -1,0 +1,12 @@
+|Lab2
+x0 => AND3_0_out.IN0
+x0 => AND3_1_out.IN0
+x1 => AND2_0_out.IN0
+x1 => AND3_1_out.IN1
+x2 => AND2_0_out.IN1
+x2 => AND3_0_out.IN1
+x3 => AND3_0_out.IN1
+x3 => AND3_1_out.IN1
+F << F.DB_MAX_OUTPUT_PORT_TYPE
+
+

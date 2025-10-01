@@ -28,7 +28,7 @@ public class Main1
 			{
 				StringBuffer newBuffer = new StringBuffer(sentence); //creaza un nou buffer 
 				
-				if(pos < newBuffer.length()) // verifica daca 
+				if(pos < newBuffer.length())
 				{
 					newBuffer.setCharAt(pos, ch); // modifica la pozitia data
 				}

@@ -1,0 +1,31 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity registru is
+    port (
+        clk        : in std_logic;   -- Clock pe front crescător
+        reset      : in std_logic;   -- Resetare sincrona (activă pe '1')
+        shift      : in std_logic;   -- Comandă de deplasare
+        serial_in  : in std_logic;   -- Intrare serială
+        serial_out : out std_logic   -- Iesire serială
+    );
+end registru;
+
+architecture behavioral of registru is
+    signal reg : std_logic_vector(4 downto 0);  -- Registrul intern pe 5 biți
+
+begin
+    process (clk)
+    begin
+        if rising_edge(clk) then
+            if reset = '1' then
+                reg <= (others => '0');  -- Resetare sincrona (toți biții devin '0')
+            elsif shift = '1' then
+                reg <= serial_in & reg(4 downto 1);  -- Încărcare serială și deplasare la dreapta
+            end if;
+        end if;
+    end process;
+
+    serial_out <= reg(0);  -- Iesirea serială (bit-ul cel mai puțin semnificativ)
+end behavioral;

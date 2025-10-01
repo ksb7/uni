@@ -1,5 +1,5 @@
 EDA Netlist Writer report for Lab1Test
-Sun Jan 19 16:00:53 2025
+Sat Mar 29 09:38:01 2025
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -36,7 +36,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Sun Jan 19 16:00:53 2025 ;
+; EDA Netlist Writer Status ; Successful - Sat Mar 29 09:38:01 2025 ;
 ; Revision Name             ; Lab1Test                              ;
 ; Top-level Entity Name     ; Lab1Test                              ;
 ; Family                    ; Cyclone IV E                          ;
@@ -65,13 +65,13 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------------------------------+---------------------------+
 
 
-+--------------------------------------------------------------+
-; Simulation Generated Files                                   ;
-+--------------------------------------------------------------+
-; Generated Files                                              ;
-+--------------------------------------------------------------+
-; C:/Users/Admin/Desktop/Lab1Test/simulation/qsim//Lab1Test.vo ;
-+--------------------------------------------------------------+
++------------------------------------------------------------------------------------+
+; Simulation Generated Files                                                         ;
++------------------------------------------------------------------------------------+
+; Generated Files                                                                    ;
++------------------------------------------------------------------------------------+
+; C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim//Lab1Test.vo ;
++------------------------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -93,14 +93,14 @@ Info: Running Quartus Prime EDA Netlist Writer
     Info: the sole purpose of programming logic devices manufactured by
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details.
-    Info: Processing started: Sun Jan 19 16:00:52 2025
-Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/Admin/Desktop/Lab1Test/simulation/qsim/ Lab1Test -c Lab1Test
+    Info: Processing started: Sat Mar 29 09:38:01 2025
+Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim/ Lab1Test -c Lab1Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (204019): Generated file Lab1Test.vo in folder "C:/Users/Admin/Desktop/Lab1Test/simulation/qsim//" for EDA simulation tool
+Info (204019): Generated file Lab1Test.vo in folder "C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim//" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4635 megabytes
-    Info: Processing ended: Sun Jan 19 16:00:53 2025
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:00
+    Info: Peak virtual memory: 4629 megabytes
+    Info: Processing ended: Sat Mar 29 09:38:01 2025
+    Info: Elapsed time: 00:00:00
+    Info: Total CPU time (on all processors): 00:00:01
 
 

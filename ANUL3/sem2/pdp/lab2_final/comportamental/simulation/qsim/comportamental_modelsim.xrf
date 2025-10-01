@@ -1,0 +1,16 @@
+vendor_name = ModelSim
+source_file = 1, C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/lab2_final/comportamental/Lab2.vhd
+source_file = 1, C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/lab2_final/comportamental/Waveform.vwf
+source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/vhdl/ieee/prmtvs_b.vhd
+source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/vhdl/ieee/prmtvs_p.vhd
+source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/vhdl/ieee/timing_b.vhd
+source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/vhdl/ieee/timing_p.vhd
+source_file = 1, C:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/lab2_final/comportamental/db/comportamental.cbx.xml
+design_name = hard_block
+design_name = Lab2
+instance = comp, \f~output\, f~output, Lab2, 1
+instance = comp, \x[2]~input\, x[2]~input, Lab2, 1
+instance = comp, \x[0]~input\, x[0]~input, Lab2, 1
+instance = comp, \x[1]~input\, x[1]~input, Lab2, 1
+instance = comp, \x[3]~input\, x[3]~input, Lab2, 1
+instance = comp, \process_0~0\, process_0~0, Lab2, 1

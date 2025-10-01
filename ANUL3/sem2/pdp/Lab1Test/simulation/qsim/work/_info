@@ -7,15 +7,15 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dC:/Users/Admin/Desktop/Lab1Test/simulation/qsim
+dC:/Users/Admin/Desktop/Lab1Test/simulation/qsim
 vhard_block
-Z1 !s110 1737295255
+Z0 !s110 1743233882
 !i10b 1
 !s100 aGGaXF9Z5nE6o8`Z`T^Yg0
 I@dch`BA:D[dGNR=S6?QaW1
-Z2 VDg1SIo80bB@j0V0VzS_@n1
-R0
-Z3 w1737295253
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/blabla/Downloads/uni/ANUL3/sem2/pdp/Lab1Test/simulation/qsim
+Z3 w1743233881
 Z4 8Lab1Test.vo
 Z5 FLab1Test.vo
 L0 149
@@ -23,19 +23,19 @@ Z6 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z7 !s108 1737295255.000000
+Z7 !s108 1743233882.000000
 Z8 !s107 Lab1Test.vo|
 Z9 !s90 -work|work|Lab1Test.vo|
 !i113 1
 Z10 o-work work
 Z11 tCvgOpt 0
 vLab1Test
-R1
-!i10b 1
-!s100 TEV3i4n2FS[AzC`14^^OG0
-IXlNTJXejck:Me4iC>Rk[n1
-R2
 R0
+!i10b 1
+!s100 0_^KW@`9BS92k8m?UZ5i33
+I[PZ0ij1@]G7<:;eYEWZK@1
+R1
+R2
 R3
 R4
 R5
@@ -52,23 +52,23 @@ R10
 R11
 n@lab1@test
 vLab1Test_vlg_vec_tst
-R1
-!i10b 1
-!s100 odk[eBN9?M9H:JeoCmE];3
-IY4W[LXX5eT;oK1iVCO=m22
-R2
 R0
-w1737295252
-8Waveform1.vwf.vt
-FWaveform1.vwf.vt
+!i10b 1
+!s100 ZaL:4WOnIgBdoMLahclL03
+IULdYUi^D9:UFE;kKRQLgW0
+R1
+R2
+w1743233880
+8Waveform.vwf.vt
+FWaveform.vwf.vt
 L0 29
 R6
 r1
 !s85 0
 31
 R7
-!s107 Waveform1.vwf.vt|
-!s90 -work|work|Waveform1.vwf.vt|
+!s107 Waveform.vwf.vt|
+!s90 -work|work|Waveform.vwf.vt|
 !i113 1
 R10
 R11
