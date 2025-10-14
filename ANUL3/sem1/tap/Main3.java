@@ -1,83 +1,60 @@
-import java.util.Scanner;
+//Pentru toate variantele extindeţi capacităţile clasei de bază dată folosind moştenirea:
+//1.Time, astfel încât să se poată deduce timpul zilei: dimineaţă, seară e.t.c
 
-class Time {
-    int hour;
-    int minute;
-    int second;
-    
-    public Time()
-    {
-    	this.hour = 0;
-    	this.minute = 0;
-    	this.second = 0;
-    }
+import java.time.LocalTime;
 
-    public Time(int hour, int minute, int second) 
-    {
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
-    }
-
-    public String toString() 
-    {
-        return "Ora introdusa:" + String.format("%02d:%02d:%02d", hour, minute, second);
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-}
-
-class MyTime extends Time 
+class ExtendedTime 
 {
-    public MyTime(int hour, int minute, int second) 
+    private LocalTime time;
+
+    public ExtendedTime(int hour, int minute, int second) 
     {
-        super(hour, minute, second);
+        this.time = LocalTime.of(hour, minute, second);
     }
 
-    private String getTimeOfDay() 
+    public String getPartOfDay() 
     {
-        if (hour >= 5 && hour < 12) 
+        int hour = time.getHour();
+
+        if (hour >= 6 && hour < 12) 
         {
-            return "dimineata";
-        } else if (hour >= 12 && hour < 18) 
+            return "Dimineata";
+        } 
+        else if (hour >= 12 && hour < 18) 
         {
-            return "amiaza";
-        } else if (hour >= 18 && hour < 22) 
+            return "Pranz";
+        } 
+        else if (hour >= 18 && hour < 21) 
         {
-            return "seara";
-        } else 
+            return "Seara";
+        } 
+        else 
         {
-            return "noaptea";
+            return "Noaptea";
         }
     }
 
-    @Override
-    public String toString() 
-    {
-        return super.toString() + "\nEste "+ getTimeOfDay();
+    public void printTimeWithPartOfDay() {
+        System.out.println("Ora: " + time);
+        System.out.println("Partea zilei: " + getPartOfDay());
     }
+
 }
 
 public class Main3
 {
-    public static void main(String[] args) 
-    {
-        try (Scanner in = new Scanner(System.in)) {
-			System.out.println("Introduceti ora: ");
-			int hour = in.nextInt();
-			System.out.println("Introduceti minutele: ");
-			int minute = in.nextInt();
-			System.out.println("Introduceti secundele: ");
-			int second = in.nextInt();
+	public static void main(String[] args) {
 
-			MyTime time = new MyTime(hour, minute, second);
-			System.out.println(time);
-		}
+        ExtendedTime t1 = new ExtendedTime(9, 30, 0);
+        t1.printTimeWithPartOfDay();
+
+        ExtendedTime t2 = new ExtendedTime(14, 45, 0);
+        t2.printTimeWithPartOfDay();
+
+        ExtendedTime t3 = new ExtendedTime(19, 15, 0);
+        t3.printTimeWithPartOfDay();
+
+        ExtendedTime t4 = new ExtendedTime(2, 0, 0);
+        t4.printTimeWithPartOfDay();
     }
 }
