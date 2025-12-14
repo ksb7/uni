@@ -1,10 +1,16 @@
-#ifndef CLIENT_NETWORK_H
-#define CLIENT_NETWORK_H
+#ifndef CLIENTNETWORK_H
+#define CLIENTNETWORK_H
 
-#include <pthread.h>
+#include <QString>
 
-int connect_to_server(const char *ip, int port);
-void *receive_loop(void *arg);
-void send_edit(const char *text);
+extern "C" {
+    void client_network_init(const char *ip, int port);
+    void client_network_start();
+    void client_network_stop();
+
+    void send_edit_to_server(const QString &text);
+    void send_clear_request();
+    void send_username_change_request(const QString &name);
+}
 
 #endif
