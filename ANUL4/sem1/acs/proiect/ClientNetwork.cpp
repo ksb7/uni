@@ -8,21 +8,28 @@
 #include <pthread.h>
 #include <cstring>
 #include <cstdlib>
-
+#include <QDebug>
 #include <QMetaObject>
+#include <QMap>
+#include <QString>
 
- // Global GUI pointer
+// Mapare versiuni server per fișier
+static QMap<QString, int> serverFileVersions;
+
+// Global GUI pointer
 extern ClientGUI *gui;
 
 static int sockfd = -1;
 static pthread_t recv_thread;
 static int running = 0;
 
-// Send message
+// ======== Send message ========
 static int send_message(uint8_t op, const void *payload, uint32_t len) {
     if (sockfd < 0) return -1;
+
     uint32_t total_len = 1 + len;
     uint32_t be_len = htonl(total_len);
+
     if (::send(sockfd, &be_len, sizeof(be_len), 0) != sizeof(be_len)) return -1;
     if (::send(sockfd, &op, 1, 0) != 1) return -1;
 
@@ -33,24 +40,36 @@ static int send_message(uint8_t op, const void *payload, uint32_t len) {
         if (s <= 0) return -1;
         p += s; left -= s;
     }
+
+    qDebug() << "Sent op" << op << "len" << len;
     return 0;
 }
 
+// ======== Connect ========
 int connect_to_server(const char *ip, int port, const char *username) {
     struct sockaddr_in serv{};
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) return -1;
+    if (sockfd < 0) { qDebug() << "Socket creation failed"; return -1; }
 
     serv.sin_family = AF_INET;
     serv.sin_port = htons(port);
     if (inet_pton(AF_INET, ip, &serv.sin_addr) <= 0) { close(sockfd); sockfd=-1; return -1; }
-    if (::connect(sockfd, (struct sockaddr*)&serv, sizeof(serv)) < 0) { close(sockfd); sockfd=-1; return -1; }
 
-    if (username) send_message(OP_JOIN, username, (uint32_t)strlen(username));
+    if (::connect(sockfd, (struct sockaddr*)&serv, sizeof(serv)) < 0) {
+        qDebug() << "Connect failed";
+        close(sockfd); sockfd=-1; return -1;
+    }
+
+    qDebug() << "Connected to server";
+
+    if (username && strlen(username) > 0) {
+        send_message(OP_JOIN, username, (uint32_t)strlen(username));
+    }
+
     return 0;
 }
 
-// Send functions
+// ======== Send functions ========
 void send_edit_to_server(const QString &text) {
     QByteArray ba = text.toUtf8();
     send_message(OP_EDIT, ba.constData(), (uint32_t)ba.size());
@@ -65,19 +84,21 @@ void send_username_change_request(const QString &name) {
     send_message(OP_RENAME, ba.constData(), (uint32_t)ba.size());
 }
 
-// new: request server to save current document under filename (broadcasts happen server-side)
-void send_save_request(const QString &filename) {
-    QByteArray ba = filename.toUtf8();
+void send_save_request(const QString &filename, const QString &content)
+{
+    QString payload = filename + ":" + content;
+    QByteArray ba = payload.toUtf8();
     send_message(OP_SAVE, ba.constData(), (uint32_t)ba.size());
 }
 
-// new: request server to load filename and broadcast its content
+
+
 void send_load_request(const QString &filename) {
     QByteArray ba = filename.toUtf8();
     send_message(OP_LOAD, ba.constData(), (uint32_t)ba.size());
 }
 
-// Read exactly
+// ======== Read exactly ========
 static int read_n(int fd, void *buf, uint32_t len) {
     char *p = (char*)buf;
     uint32_t left = len;
@@ -89,7 +110,7 @@ static int read_n(int fd, void *buf, uint32_t len) {
     return len;
 }
 
-// Receive loop
+// ======== Receive loop ========
 static void* recv_loop(void*) {
     while (running) {
         uint32_t be_len;
@@ -108,40 +129,91 @@ static void* recv_loop(void*) {
             payload[payload_len] = '\0';
         }
 
-        // Thread-safe GUI update
-        switch (op) {
-            case OP_EDIT:
-                QMetaObject::invokeMethod(gui, "applyRemoteEdit", Qt::QueuedConnection,
-                                          Q_ARG(QString, QString::fromUtf8(payload ? payload : "", payload_len)));
-                break;
-            case OP_CLEAR:
-                QMetaObject::invokeMethod(gui, "applyRemoteClear", Qt::QueuedConnection);
-                break;
-            case OP_USERS:
-                QMetaObject::invokeMethod(gui, "updateUserList", Qt::QueuedConnection,
-                                          Q_ARG(QString, QString::fromUtf8(payload ? payload : "", payload_len)));
-                break;
-            case OP_FILE:
-                QMetaObject::invokeMethod(gui, "onFileChanged",
-                                        Qt::QueuedConnection,
-                                        Q_ARG(QString, QString::fromUtf8(payload ? payload : "", payload_len)));
-                break;
-            case OP_STATUS:
-                QMetaObject::invokeMethod(gui, "onStatusChanged",
-                                        Qt::QueuedConnection,
-                                        Q_ARG(QString, QString::fromUtf8(payload ? payload : "", payload_len)));
-                break;
-            default:
-                break;
+        qDebug() << "Received op:" << op << "payload:" << (payload ? payload : "");
+
+        if (gui) {
+            switch (op) {
+                case OP_EDIT:
+                {
+                    QString html = QString::fromUtf8(payload ? payload : "", payload_len);
+
+                    QMetaObject::invokeMethod(gui, "applyRemoteEdit",
+                                            Qt::QueuedConnection,
+                                            Q_ARG(QString, html));
+                    break;
+                }
+
+
+                case OP_CLEAR:
+                    QMetaObject::invokeMethod(gui, "applyRemoteClear", Qt::QueuedConnection);
+                    break;
+
+                case OP_USERS:
+                    QMetaObject::invokeMethod(gui, "updateUserList", Qt::QueuedConnection,
+                                              Q_ARG(QString, QString::fromUtf8(payload ? payload : "", payload_len)));
+                    break;
+
+                case OP_FILE:
+                {
+                    QString html = QString::fromUtf8(payload ? payload : "", payload_len);
+
+                    // În loc de -1, așteptăm să vină OP_STATUS și acolo setăm versiunea
+                    QMetaObject::invokeMethod(gui, "loadFromServer",
+                                            Qt::QueuedConnection,
+                                            Q_ARG(QString, html),
+                                            Q_ARG(int, -1));
+                    break;
+                }
+
+                case OP_STATUS:
+                {
+                    QString str = QString::fromUtf8(payload ? payload : "", payload_len);
+                    QStringList parts = str.split(':');
+                    if (parts.size() != 2) break;
+
+                    QString file = parts[0];
+                    int version = parts[1].toInt();
+
+                    serverFileVersions[file] = version;
+
+                    if(gui) {
+                        QMetaObject::invokeMethod(gui, "onServerVersion",
+                              Qt::QueuedConnection,
+                              Q_ARG(QString, file),
+                              Q_ARG(int, version));
+                    }
+
+                    // Dacă tocmai am făcut load de la server, actualizează localFileVersions
+                    if(gui && file == gui->getCurrentFile() && gui->isLoadingFromServer()) {
+                        QMetaObject::invokeMethod(gui, "setLocalVersion",
+                                                Qt::QueuedConnection,
+                                                Q_ARG(QString, file),
+                                                Q_ARG(int, version));
+                        QMetaObject::invokeMethod(gui, "setServerVersion",
+                                                Qt::QueuedConnection,
+                                                Q_ARG(QString, file),
+                                                Q_ARG(int, version));
+                        QMetaObject::invokeMethod(gui, "loadFromServerCompleted",
+                                                Qt::QueuedConnection);
+                    }
+
+
+                    break;
+                }
+
+                default:
+                    break;
+            }
         }
 
         if (payload) free(payload);
     }
+
     if (sockfd >= 0) { close(sockfd); sockfd = -1; }
     return nullptr;
 }
 
-// Start / stop
+// ======== Start / stop ========
 void client_network_init(const char *ip, int port) {
     connect_to_server(ip, port, "Guest");
 }

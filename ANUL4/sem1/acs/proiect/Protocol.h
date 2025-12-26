@@ -15,15 +15,19 @@ Framed protocol:
 #define OP_JOIN     5
 #define OP_USERS    6
 #define OP_PING     7
-#define OP_RENAME   8   // existing
+#define OP_RENAME   8
 
-// === NEW BROADCAST OPS ===
-#define OP_FILE     9   // payload = current filename (UTF-8, not null-terminated)
-#define OP_STATUS   10  // payload = "saved" or "unsaved"
+// === SERVER → CLIENT ===
+#define OP_FILE     9    // payload = current filename
+#define OP_STATUS   10   // payload = "saved" | "unsaved"
 
+// === NEW ===
+#define OP_EDITORS  11   // payload = "user1,user2,..."
 
 #define SERVER_PORT_DEFAULT 8080
 #define MAX_CLIENTS 32
 #define BUFFER_CHUNK 1024
+#define MAX_FILE_SIZE 1048576
+
 
 #endif

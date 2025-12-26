@@ -1,17 +1,18 @@
 #include "NetworkWorker.h"
 #include <QDataStream>
 #include <QDebug>
+#include <QTcpSocket>
 
 NetworkWorker::NetworkWorker(QObject *parent)
-    : QThread(parent), op(None), socket(nullptr)
+    : QThread(parent), op(None)
 {
 }
+
 
 NetworkWorker::~NetworkWorker()
 {
     if(socket) {
         socket->disconnectFromHost();
-        socket->deleteLater();
     }
     quit();
     wait();
@@ -38,39 +39,69 @@ void NetworkWorker::requestFile(const QString &fileName)
     if(!isRunning()) start();
 }
 
+void NetworkWorker::sendUsername(const QString &username)
+{
+    pendingFileName = username;
+    op = SendUsername;
+    if(!isRunning()) start();
+}
 void NetworkWorker::run()
 {
-    socket = new QTcpSocket();
-    socket->connectToHost(serverHost, serverPort);
-    if(!socket->waitForConnected(3000)) {
+    QTcpSocket socket; // socket local în thread-ul curent
+    socket.connectToHost(serverHost, serverPort);
+
+    if(!socket.waitForConnected(3000)) {
         emit errorOccurred("Cannot connect to server");
+        op = None;
         return;
     }
 
-    QDataStream out(socket);
+    QDataStream out(&socket);
     out.setVersion(QDataStream::Qt_5_0);
 
-    if(op == SendFile) {
-        // Simple protocol: [len][filename][content]
-        QByteArray payload;
-        QDataStream payloadStream(&payload, QIODevice::WriteOnly);
-        payloadStream << pendingFileName << pendingFileContent;
+    switch(op) {
+        case SendFile:
+        {
+            QByteArray payload;
+            QDataStream payloadStream(&payload, QIODevice::WriteOnly);
+            payloadStream << pendingFileName << pendingFileContent;
 
-        out << (quint32)payload.size();
-        socket->write(payload);
-        socket->flush();
-        if(!socket->waitForBytesWritten(3000)) {
-            emit errorOccurred("Failed to send file");
-        } else {
+            out << (quint32)payload.size();
+            socket.write(payload);
+            socket.flush();
+            socket.waitForBytesWritten(3000);
+
             emit fileSent(pendingFileName);
+            qDebug() << "File sent:" << pendingFileName;
+            break;
         }
-    } else if(op == RequestFile) {
-        // Not implemented in detail, placeholder
-        emit errorOccurred("Request file not implemented yet");
+
+        case SendUsername:
+        {
+            QByteArray payload = pendingFileName.toUtf8(); // direct UTF-8
+            out << (quint32)payload.size();
+            socket.write(payload);
+            socket.flush();
+            socket.waitForBytesWritten(3000);
+
+            qDebug() << "Username sent:" << pendingFileName;
+            break;
+        }
+
+
+        case RequestFile:
+            emit errorOccurred("Request file not implemented yet");
+            break;
+
+        case None:
+        default:
+            break;
     }
 
-    socket->disconnectFromHost();
-    socket->deleteLater();
-    socket = nullptr;
     op = None;
+
+    // Disconnect, fără waitForDisconnected
+    if(socket.state() == QAbstractSocket::ConnectedState) {
+        socket.disconnectFromHost();
+    }
 }

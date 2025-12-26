@@ -1,4 +1,4 @@
-// Server.c
+// Server.c - Server cu SQLite și sincronizare fișiere
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,122 +9,196 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <sys/types.h>
+#include <sqlite3.h>
 #include "Protocol.h"
 
+/* ================= STRUCTURI ================= */
 typedef struct {
     int fd;
     char username[64];
     int joined;
+    int editing;
 } client_t;
 
 static client_t clients[MAX_CLIENTS];
+static sqlite3 *db = NULL; // SQLite DB pointer
 
-// read exactly len bytes
+// Baza de date
+static char *last_file_content = NULL;      // conținutul ultimului fișier salvat în DB
+static uint32_t last_file_version = 0;     // versiunea ultimului fișier
+static char last_file_name[256] = "";      // numele ultimului fișier
+
+/* ================= DATABASE ================= */
+static int db_init() {
+
+    
+    int rc = sqlite3_open("files.db", &db);
+    if(rc) {
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+        return -1;
+    }
+
+    const char *sql = "CREATE TABLE IF NOT EXISTS files ("
+                      "filename TEXT PRIMARY KEY,"
+                      "content BLOB,"
+                      "version INTEGER);";
+
+    char *errmsg = NULL;
+    rc = sqlite3_exec(db, sql, 0, 0, &errmsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", errmsg);
+        sqlite3_free(errmsg);
+        return -1;
+    }
+
+    return 0;
+}
+
+// Returnează 0 dacă găsit, -1 dacă nu
+static int db_get_file(const char *filename, char **content, int *size, int *version) {
+    if(!filename || !content || !size || !version) return -1;
+
+    const char *sql = "SELECT content, version FROM files WHERE filename = ?;";
+    sqlite3_stmt *stmt = NULL;
+    if(sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return -1;
+
+    sqlite3_bind_text(stmt, 1, filename, -1, SQLITE_STATIC);
+
+    int rc = sqlite3_step(stmt);
+    if(rc == SQLITE_ROW) {
+        const void *blob = sqlite3_column_blob(stmt, 0);
+        int sz = sqlite3_column_bytes(stmt, 0);
+        *version = sqlite3_column_int(stmt, 1);
+
+        *content = malloc(sz);
+        if(!*content) { sqlite3_finalize(stmt); return -1; }
+        memcpy(*content, blob, sz);
+        *size = sz;
+
+        sqlite3_finalize(stmt);
+        return 0;
+    } else {
+        sqlite3_finalize(stmt);
+        *content = NULL;
+        *size = 0;
+        *version = 0;
+        return -1;
+    }
+}
+
+static int db_save_file(const char *filename, const char *content, int size, int version) {
+    if(!filename || !content || size < 0) return -1;
+
+    const char *sql = "INSERT INTO files(filename, content, version) "
+                      "VALUES(?, ?, ?) "
+                      "ON CONFLICT(filename) DO UPDATE SET content=excluded.content, version=excluded.version;";
+    sqlite3_stmt *stmt = NULL;
+    if(sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return -1;
+
+    sqlite3_bind_text(stmt, 1, filename, -1, SQLITE_STATIC);
+    sqlite3_bind_blob(stmt, 2, content, size, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 3, version);
+
+    int rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    return (rc == SQLITE_DONE) ? 0 : -1;
+}
+
+/* ================= UTIL ================= */
 static int read_n(int fd, void *buf, uint32_t len) {
-    char *p = (char*)buf;
+    char *p = buf;
     uint32_t left = len;
-    while (left > 0) {
+    while(left > 0) {
         ssize_t r = recv(fd, p, left, 0);
-        if (r <= 0) return r;
-        p += r; left -= r;
+        if(r <= 0) return r;
+        p += r;
+        left -= r;
     }
     return len;
 }
 
-// send framed message to client
 static int send_message_fd(int fd, uint8_t op, const void *payload, uint32_t payload_len) {
     uint32_t total_len = 1 + payload_len;
     uint32_t be_len = htonl(total_len);
-    if (send(fd, &be_len, sizeof(be_len), 0) != sizeof(be_len)) return -1;
-    if (send(fd, &op, 1, 0) != 1) return -1;
 
-    if (payload_len > 0 && payload) {
-        const char *p = (const char*)payload;
+    if(send(fd, &be_len, sizeof(be_len), 0) != sizeof(be_len)) return -1;
+    if(send(fd, &op, 1, 0) != 1) return -1;
+
+    if(payload_len && payload) {
+        const char *p = payload;
         uint32_t left = payload_len;
-        while (left > 0) {
+        while(left > 0) {
             ssize_t s = send(fd, p, left, 0);
-            if (s <= 0) return -1;
-            p += s; left -= s;
+            if(s <= 0) return -1;
+            p += s;
+            left -= s;
         }
     }
     return 0;
 }
 
-// save content to disk
-static int save_document_to_disk(const char *filename, const char *data) {
-    FILE *f = fopen(filename, "wb");
-    if (!f) return -1;
-    if (data) fwrite(data, 1, strlen(data), f);
-    fclose(f);
-    return 0;
-}
-
-// load file content from disk
-static char *load_file_content(const char *filename, size_t *out_len) {
-    if (!filename) return NULL;
-    FILE *f = fopen(filename, "rb");
-    if (!f) return NULL;
-    if (fseek(f, 0, SEEK_END) != 0) { fclose(f); return NULL; }
-    long sz = ftell(f);
-    if (sz < 0) { fclose(f); return NULL; }
-    rewind(f);
-    char *buf = malloc((size_t)sz + 1);
-    if (!buf) { fclose(f); return NULL; }
-    size_t got = fread(buf, 1, (size_t)sz, f);
-    buf[got] = '\0';
-    fclose(f);
-    if (out_len) *out_len = got;
-    return buf;
-}
-
-// add client
+/* ================= CLIENT MGMT ================= */
 static int add_client(int fd) {
-    for (int i = 0; i < MAX_CLIENTS; ++i) {
-        if (clients[i].fd == 0) {
+    for(int i = 0; i < MAX_CLIENTS; i++) {
+        if(clients[i].fd == 0) {
             clients[i].fd = fd;
             clients[i].username[0] = '\0';
             clients[i].joined = 0;
+            clients[i].editing = 0;
             return i;
         }
     }
     return -1;
 }
 
-static void remove_client_index(int idx) {
-    if (clients[idx].fd) {
-        close(clients[idx].fd);
-        clients[idx].fd = 0;
-        clients[idx].username[0] = '\0';
-        clients[idx].joined = 0;
+static void remove_client_index(int i) {
+    if(clients[i].fd) {
+        close(clients[i].fd);
+        memset(&clients[i], 0, sizeof(client_t));
     }
 }
 
-// broadcast user list
-static void update_and_broadcast_users() {
-    char list[4096];
-    list[0] = '\0';
+/* ================= BROADCAST ================= */
+static void update_and_broadcast_users(void) {
+    char list[4096] = "";
     int first = 1;
-    for (int i = 0; i < MAX_CLIENTS; ++i) {
-        if (clients[i].fd > 0 && clients[i].joined) {
-            if (!first) strncat(list, ",", sizeof(list)-strlen(list)-1);
-            strncat(list, clients[i].username, sizeof(list)-strlen(list)-1);
+    for(int i = 0; i < MAX_CLIENTS; i++) {
+        if(clients[i].fd > 0 && clients[i].joined) {
+            if(!first) strcat(list, ",");
+            strcat(list, clients[i].username);
             first = 0;
         }
     }
-    for (int i = 0; i < MAX_CLIENTS; ++i) {
-        if (clients[i].fd > 0 && clients[i].joined) {
-            send_message_fd(clients[i].fd, OP_USERS, list, (uint32_t)strlen(list));
+    for(int i = 0; i < MAX_CLIENTS; i++) {
+        if(clients[i].fd > 0 && clients[i].joined) {
+            send_message_fd(clients[i].fd, OP_USERS, list, strlen(list));
         }
     }
 }
 
-int main(int argc, char **argv) {
-    int port = (argc >= 2) ? atoi(argv[1]) : SERVER_PORT_DEFAULT;
+static void broadcast_file_version(const char *filename, int version, int skip_fd) {
+    char msg[64];
+    snprintf(msg, sizeof(msg), "%s:%d", filename, version);
+    for(int i = 0; i < MAX_CLIENTS; i++) {
+        if(clients[i].fd > 0 && clients[i].fd != skip_fd) {
+            send_message_fd(clients[i].fd, OP_STATUS, msg, strlen(msg));
+        }
+    }
+}
 
-    for (int i = 0; i < MAX_CLIENTS; ++i) clients[i].fd = 0;
+/* ================= MAIN ================= */
+int main(int argc, char **argv) {
+    int port = (argc > 1) ? atoi(argv[1]) : SERVER_PORT_DEFAULT;
+    memset(clients, 0, sizeof(clients));
+
+    if(db_init() != 0) {
+        fprintf(stderr, "Database init failed\n");
+        return 1;
+    }
 
     int listen_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (listen_fd < 0) { perror("socket"); exit(1); }
+    if(listen_fd < 0) { perror("socket"); return 1; }
 
     int opt = 1;
     setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
@@ -134,128 +208,161 @@ int main(int argc, char **argv) {
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = INADDR_ANY;
 
-    if (bind(listen_fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) { perror("bind"); exit(1); }
-    if (listen(listen_fd, 10) < 0) { perror("listen"); exit(1); }
+    if(bind(listen_fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) { perror("bind"); return 1; }
+    if(listen(listen_fd, 10) < 0) { perror("listen"); return 1; }
 
     printf("Server listening on port %d\n", port);
 
-    while (1) {
-        fd_set readfds;
-        FD_ZERO(&readfds);
-        FD_SET(listen_fd, &readfds);
+    while(1) {
+        fd_set rfds;
+        FD_ZERO(&rfds);
+        FD_SET(listen_fd, &rfds);
         int maxfd = listen_fd;
 
-        for (int i = 0; i < MAX_CLIENTS; ++i) {
-            if (clients[i].fd > 0) {
-                FD_SET(clients[i].fd, &readfds);
-                if (clients[i].fd > maxfd) maxfd = clients[i].fd;
+        for(int i = 0; i < MAX_CLIENTS; i++) {
+            if(clients[i].fd > 0) {
+                FD_SET(clients[i].fd, &rfds);
+                if(clients[i].fd > maxfd) maxfd = clients[i].fd;
             }
         }
 
-        int activity = select(maxfd + 1, &readfds, NULL, NULL, NULL);
-        if (activity < 0) {
-            if (errno == EINTR) continue;
+        if(select(maxfd + 1, &rfds, NULL, NULL, NULL) < 0) {
+            if(errno == EINTR) continue;
             perror("select"); break;
         }
 
-        // accept new client
-        if (FD_ISSET(listen_fd, &readfds)) {
-            struct sockaddr_in cli_addr;
-            socklen_t len = sizeof(cli_addr);
-            int newfd = accept(listen_fd, (struct sockaddr*)&cli_addr, &len);
-            if (newfd >= 0) {
-                char ip[INET_ADDRSTRLEN];
-                inet_ntop(AF_INET, &cli_addr.sin_addr, ip, sizeof(ip));
-                printf("New connection from %s:%d (fd=%d)\n", ip, ntohs(cli_addr.sin_port), newfd);
-                if (add_client(newfd) < 0) {
-                    printf("Max clients reached, closing connection\n");
-                    close(newfd);
-                }
-            }
+        if(FD_ISSET(listen_fd, &rfds)) {
+            int fd = accept(listen_fd, NULL, NULL);
+            if(fd >= 0 && add_client(fd) < 0) close(fd);
         }
 
-        // handle client I/O
-        for (int i = 0; i < MAX_CLIENTS; ++i) {
+        for(int i = 0; i < MAX_CLIENTS; i++) {
             int fd = clients[i].fd;
-            if (fd <= 0 || !FD_ISSET(fd, &readfds)) continue;
+            if(fd <= 0 || !FD_ISSET(fd, &rfds)) continue;
 
             uint32_t be_len;
-            int r = recv(fd, &be_len, sizeof(be_len), MSG_PEEK | MSG_DONTWAIT);
-            if (r == 0) { remove_client_index(i); update_and_broadcast_users(); continue; }
-            else if (r < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)) continue;
+            if(read_n(fd, &be_len, 4) <= 0) { remove_client_index(i); update_and_broadcast_users(); continue; }
 
-            if (read_n(fd, &be_len, sizeof(be_len)) <= 0) { remove_client_index(i); update_and_broadcast_users(); continue; }
             uint32_t total_len = ntohl(be_len);
-            if (total_len < 1) { remove_client_index(i); update_and_broadcast_users(); continue; }
-
             uint8_t op;
-            if (read_n(fd, &op, 1) <= 0) { remove_client_index(i); update_and_broadcast_users(); continue; }
+            read_n(fd, &op, 1);
 
-            uint32_t payload_len = total_len - 1;
-            char *payload = NULL;
-            if (payload_len > 0) {
-                payload = (char*)malloc(payload_len + 1);
-                if (read_n(fd, payload, payload_len) <= 0) { free(payload); remove_client_index(i); update_and_broadcast_users(); continue; }
-                payload[payload_len] = '\0';
-            }
+            uint32_t plen = total_len - 1;
+            char *payload = plen ? malloc(plen + 1) : NULL;
+            if(payload) { read_n(fd, payload, plen); payload[plen] = 0; }
 
-            switch (op) {
+            switch(op) {
                 case OP_JOIN:
-                    if (payload && payload_len > 0) {
-                        strncpy(clients[i].username, payload, sizeof(clients[i].username)-1);
-                        clients[i].username[sizeof(clients[i].username)-1] = '\0';
-                        clients[i].joined = 1;
-                        update_and_broadcast_users();
-                        printf("User joined: %s (fd=%d)\n", clients[i].username, fd);
-                    }
-                    break;
-
                 case OP_RENAME:
-                    if (payload && payload_len > 0) {
-                        strncpy(clients[i].username, payload, sizeof(clients[i].username)-1);
-                        clients[i].username[sizeof(clients[i].username)-1] = '\0';
-                        update_and_broadcast_users();
-                    }
-                    break;
-
-                case OP_SAVE:
-                    {
-                        const char *file = (payload && payload_len>0) ? payload : "document.html";
-                        send_message_fd(fd, OP_STATUS, "saved", (uint32_t)strlen("saved"));
-                        send_message_fd(fd, OP_FILE, file, (uint32_t)strlen(file));
-                        printf("Client fd %d saved file %s\n", fd, file);
-                    }
-                    break;
-
-                case OP_LOAD:
-                    {
-                        const char *file = (payload && payload_len>0) ? payload : "document.html";
-                        size_t html_len = 0;
-                        char *html = load_file_content(file, &html_len);
-                        if (!html) html = strdup("");
-                        send_message_fd(fd, OP_FILE, file, (uint32_t)strlen(file));
-                        send_message_fd(fd, OP_EDIT, html, (uint32_t)html_len);
-                        send_message_fd(fd, OP_STATUS, "saved", (uint32_t)strlen("saved"));
-                        free(html);
-                        printf("Client fd %d loaded file %s\n", fd, file);
-                    }
+                    printf("Received op: %d payload: %s from fd %d\n", op, payload, fd);    
+                    strncpy(clients[i].username, payload, 63);
+                    clients[i].joined = 1;
+                    printf("Broadcasting users to fd %d\n", clients[i].fd);
+                    update_and_broadcast_users();
                     break;
 
                 case OP_EDIT:
-                case OP_CLEAR:
-                case OP_PING:
+                    clients[i].editing = 1;
                     break;
 
-                default:
-                    printf("Unknown op %d from fd %d\n", op, fd);
+                case OP_CLEAR:
+                    clients[i].editing = 1;
+                    break;
+
+                case OP_SAVE:
+                {
+                    if (!payload || plen == 0) break;
+
+                    // Payload: filename + ":" + content
+                    char *sep = memchr(payload, ':', plen);
+                    if (!sep) break; // nu e format corect
+
+                    size_t fname_len = sep - payload;
+                    char filename[256];
+                    if (fname_len >= sizeof(filename)) fname_len = sizeof(filename) - 1;
+                    memcpy(filename, payload, fname_len);
+                    filename[fname_len] = '\0';
+
+                    char *file_content = sep + 1;
+                    size_t content_len = plen - (fname_len + 1);
+
+                    // Salvează în baza de date
+                    sqlite3_stmt *stmt;
+                    const char *sql = "INSERT INTO files (filename, content, version) "
+                                    "VALUES (?, ?, 1) "
+                                    "ON CONFLICT(filename) DO UPDATE SET "
+                                    "content=excluded.content, "
+                                    "version=files.version+1;";
+                    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) == SQLITE_OK) {
+                        sqlite3_bind_text(stmt, 1, filename, -1, SQLITE_STATIC);
+                        sqlite3_bind_blob(stmt, 2, file_content, (int)content_len, SQLITE_STATIC);
+
+                        if (sqlite3_step(stmt) != SQLITE_DONE) {
+                            fprintf(stderr, "DB save error: %s\n", sqlite3_errmsg(db));
+                        }
+                        sqlite3_finalize(stmt);
+                    } else {
+                        fprintf(stderr, "DB prepare error: %s\n", sqlite3_errmsg(db));
+                    }
+
+                    // Actualizează last_file_name / last_file_version
+                    strncpy(last_file_name, filename, 255);
+                    last_file_name[255] = '\0';
+
+                    // Obține versiunea nouă din DB
+                    char sql_ver[256];
+                    snprintf(sql_ver, sizeof(sql_ver), "SELECT version FROM files WHERE filename='%s';", filename);
+                    sqlite3_stmt *stmt_ver;
+                    if (sqlite3_prepare_v2(db, sql_ver, -1, &stmt_ver, NULL) == SQLITE_OK) {
+                        if (sqlite3_step(stmt_ver) == SQLITE_ROW) {
+                            last_file_version = sqlite3_column_int(stmt_ver, 0);
+                        }
+                        sqlite3_finalize(stmt_ver);
+                    }
+
+                    // Trimite OP_STATUS către ceilalți clienți
+                    for (int j = 0; j < MAX_CLIENTS; j++) {
+                        if (clients[j].fd > 0 && j != i && clients[j].joined) {
+                            char version_str[300];
+                            snprintf(version_str, sizeof(version_str), "%s:%u", filename, last_file_version);
+                            send_message_fd(clients[j].fd, OP_STATUS, version_str, strlen(version_str));
+                        }
+                    }
+
+                    break;
+                }
+
+
+                case OP_LOAD:{
+                    char *content = NULL;
+                    int size = 0;
+                    int version = 0;
+
+                    if (db_get_file(payload, &content, &size, &version) == 0) {
+
+                        // 1️⃣ Trimite conținutul
+                        send_message_fd(clients[i].fd, OP_FILE, content, size);
+
+                        // 2️⃣ Trimite versiunea
+                        char status[512];
+                        snprintf(status, sizeof(status), "%s:%d", payload, version);
+                        send_message_fd(clients[i].fd, OP_STATUS, status, strlen(status));
+
+                        free(content);
+                    }
+                    break;
+                }
+
+
+                case OP_PING:
                     break;
             }
 
-            if (payload) free(payload);
+            free(payload);
         }
     }
 
-    for (int i = 0; i < MAX_CLIENTS; ++i) if (clients[i].fd) close(clients[i].fd);
+    sqlite3_close(db);
     close(listen_fd);
     return 0;
 }

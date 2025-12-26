@@ -1,8 +1,10 @@
 # Makefile - builds Server (C) and Client (C++ + Qt5)
+
+# Compilatoare
 CC = gcc
 CXX = g++
-CFLAGS = -Wall -pthread -O2 -fPIC
-CXXFLAGS = -Wall -pthread -O2 -fPIC -std=c++17
+CFLAGS = -Wall -pthread -O2 -fPIC -g
+CXXFLAGS = -Wall -pthread -O2 -fPIC -std=c++17 -g
 
 # Qt detection (Qt5 preferred)
 PKG_QT5 := $(shell pkg-config --exists Qt5Widgets && echo yes)
@@ -18,16 +20,16 @@ else
     QT_LIBS := -L/usr/lib/x86_64-linux-gnu -lQt5Widgets -lQt5Gui -lQt5Core -lQt5Network
 endif
 
-# Sources
+# Surse
 CLIENT_SRC = main_client.cpp ClientNetwork.cpp ClientGUI.cpp NetworkWorker.cpp FileManager.cpp
 CLIENT_HEADERS = Protocol.h ClientNetwork.h ClientGUI.h NetworkWorker.h FileManager.h
 
-# Targets
+# Ținte
 all: Server Client
 
-# Server
+# Server (C + SQLite)
 Server: Server.c Protocol.h
-	$(CC) $(CFLAGS) Server.c -o Server
+	$(CC) $(CFLAGS) Server.c -o Server -lsqlite3 -pthread
 
 # Generate moc files for Qt classes
 moc_ClientGUI.cpp: ClientGUI.h
@@ -39,7 +41,7 @@ moc_NetworkWorker.cpp: NetworkWorker.h
 moc_FileManager.cpp: FileManager.h
 	moc FileManager.h -o moc_FileManager.cpp
 
-# Client
+# Client (C++ + Qt5)
 Client: $(CLIENT_SRC) $(CLIENT_HEADERS) moc_ClientGUI.cpp moc_NetworkWorker.cpp moc_FileManager.cpp
 	$(CXX) $(CXXFLAGS) $(QT_CFLAGS) $(CLIENT_SRC) moc_ClientGUI.cpp moc_NetworkWorker.cpp moc_FileManager.cpp -o Client $(QT_LIBS) -lpthread
 
