@@ -16,13 +16,9 @@ Framed protocol:
 #define OP_USERS    6
 #define OP_PING     7
 #define OP_RENAME   8
-
-// === SERVER → CLIENT ===
-#define OP_FILE     9    // payload = current filename
-#define OP_STATUS   10   // payload = "saved" | "unsaved"
-
-// === NEW ===
-#define OP_EDITORS  11   // payload = "user1,user2,..."
+#define OP_FILE     9 
+#define OP_STATUS   10
+#define OP_EDITORS  11
 
 #define SERVER_PORT_DEFAULT 8080
 #define MAX_CLIENTS 32

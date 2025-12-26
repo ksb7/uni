@@ -23,8 +23,8 @@ public slots:
     void loadFromServer(const QString &fileName);
 
 private:
-    QString serverHost = "192.168.100.11"; // change to your server IP
-    quint16 serverPort = 12345;            // change to your server port
+    QString serverHost = "127.0.0.1";
+    quint16 serverPort = 8080; 
 };
 
 #endif // FILEMANAGER_H

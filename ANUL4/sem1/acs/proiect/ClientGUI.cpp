@@ -28,7 +28,6 @@ ClientGUI::ClientGUI(QWidget *parent)
     QHBoxLayout *mainLayout = new QHBoxLayout();
 
     /* ===== SIDEBAR ===== */
-
     QVBoxLayout *sideLayout = new QVBoxLayout();
 
     usernameBox = new QLineEdit();
@@ -118,7 +117,9 @@ ClientGUI::ClientGUI(QWidget *parent)
 
     QComboBox *fontSize = new QComboBox();
     for (int i = 8; i <= 32; i += 2)
+    {
         fontSize->addItem(QString::number(i));
+    }
     connect(fontSize, &QComboBox::currentTextChanged,
             this, &ClientGUI::changeFontSize);
     toolbar->addWidget(fontSize);
@@ -130,27 +131,23 @@ ClientGUI::ClientGUI(QWidget *parent)
     connect(bgColor, &QAction::triggered, this, &ClientGUI::changeBackgroundColor);
 
     QAction *saveAction = new QAction(this);
-    saveAction->setShortcut(QKeySequence::Save); // Ctrl+S / Cmd+S
+    saveAction->setShortcut(QKeySequence::Save);
     addAction(saveAction);
-
     connect(saveAction, &QAction::triggered, this, &ClientGUI::saveFile);
 
     networkWorker = new NetworkWorker(this);
-    networkWorker->setServerInfo("127.0.0.1", 8080); // pune host și port corecte
+    networkWorker->setServerInfo("127.0.0.1", 8080);
 
-    // Conectează butonul de username
     connect(applyBtn, &QPushButton::clicked, this, &ClientGUI::applyUsername);
     connect(networkWorker, &NetworkWorker::activeEditorsReceived,
-        this, &ClientGUI::updateUserList);
-
-
-
+            this, &ClientGUI::updateUserList);
 
     /* =========================
        SIGNALS
     ========================= */
 
-    connect(editor, &QTextEdit::textChanged, this, [this]() {
+    connect(editor, &QTextEdit::textChanged, this, [this]()
+    {
         if (!localEdit || applyingServerContent)
             return;
 
@@ -164,10 +161,11 @@ ClientGUI::ClientGUI(QWidget *parent)
 
     connect(updateBtn, &QPushButton::clicked, this, &ClientGUI::updateFromServer);
 
-    connect(loadBtn, &QPushButton::clicked, this, [this]() 
+    connect(loadBtn, &QPushButton::clicked, this, [this]()
     {
         QString fileName = QFileDialog::getOpenFileName(this, "Open File");
-        if(fileName.isEmpty()) return;
+        if(fileName.isEmpty())
+            return;
 
         currentFile = fileName;
         currentFileLabel->setText("File: " + currentFile);
@@ -176,7 +174,6 @@ ClientGUI::ClientGUI(QWidget *parent)
         unsavedLabel->setText("Status: Loading...");
         status->showMessage("Loading " + currentFile);
 
-        // Trimite cererea de load
         send_load_request(currentFile);
     });
 
@@ -191,7 +188,8 @@ ClientGUI::ClientGUI(QWidget *parent)
 void ClientGUI::updateActiveEditors(const QString &users)
 {
     userList->clear();
-    for (const QString &u : users.split(',')) {
+    for (const QString &u : users.split(','))
+    {
         if (!u.isEmpty())
             userList->addItem(u);
     }
@@ -201,7 +199,8 @@ void ClientGUI::updateActiveEditors(const QString &users)
 void ClientGUI::updateUserList(const QString &list)
 {
     userList->clear();
-    for (const QString &u : list.split(',')) {
+    for (const QString &u : list.split(','))
+    {
         if (!u.isEmpty())
             userList->addItem(u);
     }
@@ -213,21 +212,27 @@ void ClientGUI::updateStatus(const QString &msg)
     statusBar()->showMessage(msg);
 }
 
+
 void ClientGUI::onServerVersion(const QString &file, int version)
 {
     serverFileVersions[file] = version;
 
-    if(file != currentFile) return;
+    if(file != currentFile)
+        return;
+
     if (applyingServerContent || loadingFromServer || updatingFromServer)
         return;
 
     int localVersion = localFileVersions.value(file, 0);
 
-    if(localVersion < version) {
+    if(localVersion < version)
+    {
         setOutOfDate(true);
         unsavedLabel->setText("Status: Out of date");
         syncIndicator->setStyleSheet("background-color:red;");
-    } else {
+    }
+    else
+    {
         setOutOfDate(false);
         unsavedLabel->setText("Status: Synced");
         syncIndicator->setStyleSheet("background-color:green;");
@@ -235,12 +240,10 @@ void ClientGUI::onServerVersion(const QString &file, int version)
 }
 
 
-
-
-
 void ClientGUI::loadFromServer(const QString &content, int version)
 {
-    if(currentFile.isEmpty()) return;
+    if(currentFile.isEmpty())
+        return;
 
     applyingServerContent = true;
     localEdit = false;
@@ -255,10 +258,10 @@ void ClientGUI::loadFromServer(const QString &content, int version)
 
     hasUnsavedChanges = false;
     loadingFromServer = false;
-    updatingFromServer = false;       // ✅ aici resetăm flag-ul
+    updatingFromServer = false;
     ignoreServerStatusTemporarily = false;
 
-    unsavedLabel->setText("Status: Up to date"); // ✅ folosim exact ca save
+    unsavedLabel->setText("Status: Up to date");
     syncIndicator->setStyleSheet("background-color:green;");
     pulseAnimation->stop();
 
@@ -267,6 +270,7 @@ void ClientGUI::loadFromServer(const QString &content, int version)
 
     applyingServerContent = false;
 }
+
 
 void ClientGUI::applyRemoteClear()
 {
@@ -315,11 +319,7 @@ void ClientGUI::applyRemoteEdit(const QString &html)
     setOutOfDate(false);
 
     applyingServerContent = false;
-
-    status->clearMessage();
-
 }
-
 /* =========================
    STATUS SERVER
 ========================= */
@@ -327,8 +327,7 @@ void ClientGUI::applyRemoteEdit(const QString &html)
 void ClientGUI::onStatusChanged(const QString &statusStr)
 {
     if (applyingServerContent || loadingFromServer || updatingFromServer)
-        return;  // nu modificăm statusul în timpul update-ului
-
+        return;
 
     QStringList parts = statusStr.split(":");
     if (parts.size() != 2)
@@ -344,35 +343,38 @@ void ClientGUI::onStatusChanged(const QString &statusStr)
 
     int localVersion = localFileVersions.value(file, 0);
 
-    if (localVersion < serverVersion) {
+    if (localVersion < serverVersion)
+    {
         setOutOfDate(true);
         unsavedLabel->setText("Status: Out of date");
         syncIndicator->setStyleSheet("background-color:red;");
-    } else {
+    }
+    else
+    {
         setOutOfDate(false);
         unsavedLabel->setText("Status: Synced");
         syncIndicator->setStyleSheet("background-color:green;");
     }
 }
 
+
 /* =========================
-   UPDATE
+   UPDATE FROM SERVER
 ========================= */
+
 void ClientGUI::updateFromServer()
 {
-    if(currentFile.isEmpty()) return;
+    if(currentFile.isEmpty())
+        return;
 
     updatingFromServer = true;
     loadingFromServer = true;
 
     unsavedLabel->setText("Status: Loading...");
-    syncIndicator->setStyleSheet("background-color:orange;"); // optional
+    syncIndicator->setStyleSheet("background-color:orange;");
 
-    send_load_request(currentFile);  // trimitem cererea
+    send_load_request(currentFile);
 }
-
-
-
 
 
 /* =========================
@@ -381,16 +383,20 @@ void ClientGUI::updateFromServer()
 
 void ClientGUI::setOutOfDate(bool out)
 {
-    if (out) {
+    if (out)
+    {
         outOfDateLabel->setText("Out of date");
         outOfDateLabel->setStyleSheet("color:red; font-weight:bold;");
         updateBtn->setVisible(true);
-    } else {
+    }
+    else
+    {
         outOfDateLabel->setText("Up to date");
         outOfDateLabel->setStyleSheet("color:green; font-weight:bold;");
         updateBtn->setVisible(false);
     }
 }
+
 
 /* =========================
    CLEAR / SAVE
@@ -402,24 +408,16 @@ void ClientGUI::clearEditor()
     editor->clear();
     localEdit = true;
 
-    // Resetare fișier curent
     currentFile = "";
     currentFileLabel->setText("File: No file");
 
-    // Șterge versiunile pentru fișierul anterior
-    // Dacă vrei să păstrezi istoricul tuturor fișierelor, poți să nu golești QMap-urile
-    // aici ștergem doar fișierul curent
-    // localFileVersions.remove(currentFile); // currentFile deja ""
-    // serverFileVersions.remove(currentFile);
-
-    // Resetare status
     hasUnsavedChanges = false;
     loadingFromServer = false;
     updatingFromServer = false;
     applyingServerContent = false;
 
     unsavedLabel->setText("Status: Blank");
-    syncIndicator->setStyleSheet("background-color:gray;"); // gray ca să arate că e gol
+    syncIndicator->setStyleSheet("background-color:gray;");
     pulseAnimation->stop();
 
     setOutOfDate(false);
@@ -429,10 +427,11 @@ void ClientGUI::clearEditor()
 
 void ClientGUI::saveFile()
 {
-    if (currentFile.isEmpty()) {
+    if (currentFile.isEmpty())
+    {
         QString fileName = QFileDialog::getSaveFileName(this, "Save File As");
         if (fileName.isEmpty())
-            return; // utilizatorul a anulat
+            return;
 
         currentFile = fileName;
         currentFileLabel->setText("File: " + currentFile);
@@ -449,19 +448,24 @@ void ClientGUI::saveFile()
 
     setOutOfDate(false);
 
-    status->showMessage("Saved", 1500); // ⏱ mesaj temporar
+    status->showMessage("Saved", 1500);
 }
 
 
-void ClientGUI::setLocalVersion(const QString &file, int version) {
+void ClientGUI::setLocalVersion(const QString &file, int version)
+{
     localFileVersions[file] = version;
 }
 
-void ClientGUI::setServerVersion(const QString &file, int version) {
+
+void ClientGUI::setServerVersion(const QString &file, int version)
+{
     serverFileVersions[file] = version;
 }
 
-void ClientGUI::loadFromServerCompleted() {
+
+void ClientGUI::loadFromServerCompleted()
+{
     loadingFromServer = false;
     updatingFromServer = false;
     hasUnsavedChanges = false;
@@ -469,36 +473,127 @@ void ClientGUI::loadFromServerCompleted() {
     unsavedLabel->setText("Status: Up to date");
     syncIndicator->setStyleSheet("background-color:green;");
     pulseAnimation->stop();
+
     setOutOfDate(false);
 }
 
-bool ClientGUI::isLoadingFromServer() const {
+
+bool ClientGUI::isLoadingFromServer() const
+{
     return loadingFromServer;
 }
+
 
 void ClientGUI::applyUsername()
 {
     QString name = usernameBox->text().trimmed();
-    if(name.isEmpty()) {
+    if(name.isEmpty())
+    {
         status->showMessage("Username cannot be empty", 1500);
         return;
     }
-    else {
-        send_username_change_request(name); // folosește funcția din ClientNetwork.cpp
+    else
+    {
+        send_username_change_request(name);
         status->showMessage("Username set: " + name, 1500);
     }
 }
 
 
+/* =========================
+   FORMATTING
+========================= */
 
-// Formatting functions (rămân neschimbate)
-void ClientGUI::setBold() { QTextCharFormat fmt; fmt.setFontWeight(boldAction->isChecked()?QFont::Bold:QFont::Normal); editor->mergeCurrentCharFormat(fmt); }
-void ClientGUI::setItalic() { QTextCharFormat fmt; fmt.setFontItalic(italicAction->isChecked()); editor->mergeCurrentCharFormat(fmt); }
-void ClientGUI::setUnderline() { QTextCharFormat fmt; fmt.setFontUnderline(underlineAction->isChecked()); editor->mergeCurrentCharFormat(fmt); }
-void ClientGUI::toggleBulletList() { QTextCursor c=editor->textCursor(); c.beginEditBlock(); QTextListFormat l; l.setStyle(QTextListFormat::ListDisc); c.createList(l); c.endEditBlock(); }
-void ClientGUI::toggleNumberList() { QTextCursor c=editor->textCursor(); c.beginEditBlock(); QTextListFormat l; l.setStyle(QTextListFormat::ListDecimal); c.createList(l); c.endEditBlock(); }
-void ClientGUI::insertTable() { QTextCursor c=editor->textCursor(); c.beginEditBlock(); c.insertTable(2,2); c.endEditBlock(); }
-void ClientGUI::changeFont(const QFont &font) { QTextCharFormat fmt; fmt.setFont(font); editor->mergeCurrentCharFormat(fmt); }
-void ClientGUI::changeFontSize(const QString &size) { QTextCharFormat fmt; fmt.setFontPointSize(size.toDouble()); editor->mergeCurrentCharFormat(fmt); }
-void ClientGUI::changeTextColor() { QColor c=QColorDialog::getColor(Qt::black,this,"Text Color"); if(c.isValid()){ QTextCharFormat fmt; fmt.setForeground(c); editor->mergeCurrentCharFormat(fmt);} }
-void ClientGUI::changeBackgroundColor() { QColor c=QColorDialog::getColor(Qt::white,this,"Background Color"); if(c.isValid()){ QTextCharFormat fmt; fmt.setBackground(c); editor->mergeCurrentCharFormat(fmt);} }
+void ClientGUI::setBold()
+{
+    QTextCharFormat fmt;
+    fmt.setFontWeight(boldAction->isChecked() ? QFont::Bold : QFont::Normal);
+    editor->mergeCurrentCharFormat(fmt);
+}
+
+
+void ClientGUI::setItalic()
+{
+    QTextCharFormat fmt;
+    fmt.setFontItalic(italicAction->isChecked());
+    editor->mergeCurrentCharFormat(fmt);
+}
+
+
+void ClientGUI::setUnderline()
+{
+    QTextCharFormat fmt;
+    fmt.setFontUnderline(underlineAction->isChecked());
+    editor->mergeCurrentCharFormat(fmt);
+}
+
+
+void ClientGUI::toggleBulletList()
+{
+    QTextCursor c = editor->textCursor();
+    c.beginEditBlock();
+    QTextListFormat l;
+    l.setStyle(QTextListFormat::ListDisc);
+    c.createList(l);
+    c.endEditBlock();
+}
+
+
+void ClientGUI::toggleNumberList()
+{
+    QTextCursor c = editor->textCursor();
+    c.beginEditBlock();
+    QTextListFormat l;
+    l.setStyle(QTextListFormat::ListDecimal);
+    c.createList(l);
+    c.endEditBlock();
+}
+
+
+void ClientGUI::insertTable()
+{
+    QTextCursor c = editor->textCursor();
+    c.beginEditBlock();
+    c.insertTable(2,2);
+    c.endEditBlock();
+}
+
+
+void ClientGUI::changeFont(const QFont &font)
+{
+    QTextCharFormat fmt;
+    fmt.setFont(font);
+    editor->mergeCurrentCharFormat(fmt);
+}
+
+
+void ClientGUI::changeFontSize(const QString &size)
+{
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(size.toDouble());
+    editor->mergeCurrentCharFormat(fmt);
+}
+
+
+void ClientGUI::changeTextColor()
+{
+    QColor c = QColorDialog::getColor(Qt::black, this, "Text Color");
+    if (c.isValid())
+    {
+        QTextCharFormat fmt;
+        fmt.setForeground(c);
+        editor->mergeCurrentCharFormat(fmt);
+    }
+}
+
+
+void ClientGUI::changeBackgroundColor()
+{
+    QColor c = QColorDialog::getColor(Qt::white, this, "Background Color");
+    if (c.isValid())
+    {
+        QTextCharFormat fmt;
+        fmt.setBackground(c);
+        editor->mergeCurrentCharFormat(fmt);
+    }
+}

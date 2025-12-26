@@ -3,54 +3,75 @@
 #include <QDebug>
 #include <QTcpSocket>
 
+// Constructor
 NetworkWorker::NetworkWorker(QObject *parent)
     : QThread(parent), op(None)
 {
 }
 
-
+// Destructor
 NetworkWorker::~NetworkWorker()
 {
-    if(socket) {
+    if(socket)
+    {
         socket->disconnectFromHost();
     }
     quit();
     wait();
 }
 
+// Seteaza informatiile serverului (host si port)
 void NetworkWorker::setServerInfo(const QString &host, quint16 port)
 {
     serverHost = host;
     serverPort = port;
 }
 
+// Trimite un fisier la server
 void NetworkWorker::sendFile(const QString &fileName, const QString &content)
 {
     pendingFileName = fileName;
     pendingFileContent = content;
     op = SendFile;
-    if(!isRunning()) start();
+
+    if(!isRunning())
+    {
+        start();
+    }
 }
 
+// Cere un fisier de la server
 void NetworkWorker::requestFile(const QString &fileName)
 {
     pendingFileName = fileName;
     op = RequestFile;
-    if(!isRunning()) start();
+
+    if(!isRunning())
+    {
+        start();
+    }
 }
 
+// Trimite username la server
 void NetworkWorker::sendUsername(const QString &username)
 {
     pendingFileName = username;
     op = SendUsername;
-    if(!isRunning()) start();
+
+    if(!isRunning())
+    {
+        start();
+    }
 }
+
+// Functie principala a thread-ului
 void NetworkWorker::run()
 {
-    QTcpSocket socket; // socket local în thread-ul curent
+    QTcpSocket socket; // socket local in thread-ul curent
     socket.connectToHost(serverHost, serverPort);
 
-    if(!socket.waitForConnected(3000)) {
+    if(!socket.waitForConnected(3000))
+    {
         emit errorOccurred("Cannot connect to server");
         op = None;
         return;
@@ -59,13 +80,16 @@ void NetworkWorker::run()
     QDataStream out(&socket);
     out.setVersion(QDataStream::Qt_5_0);
 
-    switch(op) {
+    switch(op)
+    {
         case SendFile:
         {
+            // Construim payload-ul cu nume fisier + continut
             QByteArray payload;
             QDataStream payloadStream(&payload, QIODevice::WriteOnly);
             payloadStream << pendingFileName << pendingFileContent;
 
+            // Trimitem dimensiunea si apoi payload-ul
             out << (quint32)payload.size();
             socket.write(payload);
             socket.flush();
@@ -78,7 +102,8 @@ void NetworkWorker::run()
 
         case SendUsername:
         {
-            QByteArray payload = pendingFileName.toUtf8(); // direct UTF-8
+            // Payload-ul este doar UTF-8 al username-ului
+            QByteArray payload = pendingFileName.toUtf8();
             out << (quint32)payload.size();
             socket.write(payload);
             socket.flush();
@@ -88,20 +113,25 @@ void NetworkWorker::run()
             break;
         }
 
-
         case RequestFile:
+        {
+            // Inca neimplementat
             emit errorOccurred("Request file not implemented yet");
             break;
+        }
 
         case None:
         default:
+        {
+            // Nu avem operatiune de efectuat
             break;
+        }
     }
 
     op = None;
 
-    // Disconnect, fără waitForDisconnected
-    if(socket.state() == QAbstractSocket::ConnectedState) {
+    if(socket.state() == QAbstractSocket::ConnectedState)
+    {
         socket.disconnectFromHost();
     }
 }
