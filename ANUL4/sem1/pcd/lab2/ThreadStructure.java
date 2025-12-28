@@ -4,7 +4,7 @@ public class ThreadStructure {
 
         ThreadGroup mainGroup = Thread.currentThread().getThreadGroup();
 
-        // Runnable care ține firul în viață pentru 2 secunde
+        // Runnable care tine firul în viata pentru 2 secunde
         Runnable hold = () -> 
         {
             try 
@@ -37,16 +37,16 @@ public class ThreadStructure {
         Thread Thcc = new Thread(G3, hold, "Thcc"); Thcc.setPriority(8);
         Thread Thdd = new Thread(G3, hold, "Thdd"); Thdd.setPriority(3);
 
-        // Startăm firele (acum rămân active 2 secunde)
+        // Pornim firele
         thA.start();
         Th1.start(); Th2.start(); Th33.start();
         Th11.start(); Th22.start();
         Thaa.start(); Thbb.start(); Thcc.start(); Thdd.start();
 
-        // Așteptăm puțin ca toate firele să pornească
+        // Aateptam putin ca toate firele sa porneasca
         try { Thread.sleep(100); } catch (Exception e) {}
 
-        // Afișăm structura
+        // afisam structura
         System.out.println("=== Structura ThreadGroup ===");
         printGroupInfo(mainGroup, "");
     }
