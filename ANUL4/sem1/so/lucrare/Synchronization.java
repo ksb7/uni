@@ -1,35 +1,34 @@
-public class Synchronization 
-{
-    private int available;
+import java.util.function.Consumer;
 
-    public Synchronization(int available) 
-    {
+public class Synchronization {
+    private int available;
+    private Consumer<String> logger;
+
+    public Synchronization(int available, Consumer<String> logger) {
         this.available = available;
+        this.logger = logger;
     }
 
-    // Cererea unei resurse
-    public synchronized void requestResource(int processId) 
-    {
-        while (available == 0) 
-        {
-            try 
-            {
-                System.out.println("Procesul " + processId + " asteapta resurse");
-                wait();
-            } catch (InterruptedException e) 
-            {
-                e.printStackTrace();
-            }
+    public synchronized void requestResource(int processId) {
+        while (available == 0) {
+            log("Procesul " + processId + " așteaptă resurse");
+            try { wait(); } catch (InterruptedException e) { e.printStackTrace(); }
         }
         available--;
-        System.out.println("Procesul " + processId + " a primit o resursa. Resurse libere: " + available);
+        log("Procesul " + processId + " a primit o resursă. Resurse libere: " + available);
     }
 
-    // Eliberarea unei resurse
-    public synchronized void releaseResource(int processId) 
-    {
+    public synchronized void releaseResource(int processId) {
         available++;
-        System.out.println("Procesul " + processId + " a eliberat o resursa. Resurse libere: " + available);
+        log("Procesul " + processId + " a eliberat o resursă. Resurse libere: " + available);
         notifyAll();
+    }
+
+    private void log(String mesaj) {
+        if (logger != null) {
+            logger.accept(mesaj);
+        } else {
+            System.out.println(mesaj);
+        }
     }
 }

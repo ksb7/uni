@@ -1,57 +1,49 @@
-public class UnstableState 
-{
+import java.util.function.Consumer;
+
+public class UnstableState {
     private int[][] max;
     private int[][] allocated;
     private int[] available;
+    private Consumer<String> logger;
 
-    public UnstableState(int processes, int resources) 
-    {
+    public UnstableState(int processes, int resources, Consumer<String> logger) {
+        this.logger = logger;
         max = new int[processes][resources];
         allocated = new int[processes][resources];
         available = new int[resources];
 
-        // Valori care produc o stare nesigura
-        for (int i = 0; i < processes; i++) 
-        {
-            for (int j = 0; j < resources; j++) 
-            {
+        // Valori care duc la stare nesigură
+        for (int i = 0; i < processes; i++) {
+            for (int j = 0; j < resources; j++) {
                 max[i][j] = 3;
-                allocated[i][j] = 2; // alocari mari → risc de deadlock
+                allocated[i][j] = 2; // risc deadlock
             }
         }
-        for (int j = 0; j < resources; j++) 
-        {
+        for (int j = 0; j < resources; j++) {
             available[j] = 0;
         }
     }
 
-    public boolean isSafeState() 
-    {
-        int p = max.length, r = max[0].length;
+    public boolean isSafeState() {
+        int p = max.length;
+        int r = max[0].length;
         boolean[] finished = new boolean[p];
         int[] work = available.clone();
 
         int finishedCount = 0;
-        while (finishedCount < p) 
-        {
+        while (finishedCount < p) {
             boolean found = false;
-            for (int i = 0; i < p; i++) 
-            {
-                if (!finished[i]) 
-                {
+            for (int i = 0; i < p; i++) {
+                if (!finished[i]) {
                     boolean canFinish = true;
-                    for (int j = 0; j < r; j++) 
-                    {
-                        if (max[i][j] - allocated[i][j] > work[j]) 
-                        {
+                    for (int j = 0; j < r; j++) {
+                        if (max[i][j] - allocated[i][j] > work[j]) {
                             canFinish = false;
                             break;
                         }
                     }
-                    if (canFinish) 
-                    {
-                        for (int j = 0; j < r; j++) 
-                        {
+                    if (canFinish) {
+                        for (int j = 0; j < r; j++) {
                             work[j] += allocated[i][j];
                         }
                         finished[i] = true;
@@ -66,12 +58,10 @@ public class UnstableState
         return finishedCount == p;
     }
 
-    public void runThreads() 
-    {
-        Synchronization sync = new Synchronization(1); // mai putine resurse - conflict
-        for (int i = 1; i <= 8; i++) 
-        {
-            new ProcessThread(i, 300 + i * 100, sync).start();
+    public void runThreads() {
+        Synchronization sync = new Synchronization(1, logger); // resurse limitate
+        for (int i = 1; i <= 8; i++) {
+            new ProcessThread(i, 300 + i * 100, sync, logger).start();
         }
     }
 }
