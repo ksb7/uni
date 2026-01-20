@@ -429,7 +429,7 @@ int main(int argc, char **argv)
                         // Trimite versiunea fisierului
                         char status[512];
                         snprintf(status, sizeof(status), "%s:%d", payload, version);
-                        send_message_fd(clients[i].fd, OP_STATUS, status, strlen(status));
+                        send_message_fd(clients[i].fd, OP_LOAD_DONE, status, strlen(status));
 
                         free(content);
                     }

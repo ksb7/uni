@@ -243,6 +243,18 @@ static void* recv_loop(void*)
 
                     break;
                 }
+                case OP_LOAD_DONE:
+                {
+                    QString str = QString::fromUtf8(payload, payload_len);
+                    QStringList parts = str.split(':');
+                    if (parts.size() == 2)
+                    {
+                        gui->setLocalVersion(parts[0], parts[1].toInt());
+                        gui->setServerVersion(parts[0], parts[1].toInt());
+                        gui->loadFromServerCompleted();
+                    }
+                    break;
+                }
 
                 default:
                 {

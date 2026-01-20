@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QTimer>
+#include <QDebug>
 #include "ClientGUI.h"
 #include "ClientNetwork.h"
 
@@ -12,14 +13,28 @@ int main(int argc, char *argv[])
     gui = new ClientGUI();
     gui->show();
 
-    // Conectare la server
-    client_network_init("127.0.0.1", 8080);
+    // --- Parse IP and port from command line ---
+    QString serverIp = "127.0.0.1"; // default
+    int serverPort = 8080;          // default
 
-    // Start thread-ul de retea după ce GUI-ul este complet construit
-    QTimer::singleShot(0, []()
-    {
-        qDebug("Starting network thread...");
-        client_network_start();
+    if (argc >= 2) {
+        serverIp = argv[1];         // first argument = IP
+    }
+    if (argc >= 3) {
+        serverPort = QString(argv[2]).toInt(); // second argument = port
+    }
+
+    qDebug() << "Client connecting to" << serverIp << ":" << serverPort;
+
+    // Connect to server after small delay
+    QTimer::singleShot(500, [=]() {
+        qDebug() << "Starting network init...";
+        client_network_init(serverIp.toUtf8().constData(), serverPort);
+
+        QTimer::singleShot(0, []() {
+            qDebug("Starting network thread...");
+            client_network_start();
+        });
     });
 
     int ret = app.exec();

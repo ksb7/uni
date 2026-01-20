@@ -19,6 +19,7 @@ Framed protocol:
 #define OP_FILE     9 
 #define OP_STATUS   10
 #define OP_EDITORS  11
+#define OP_LOAD_DONE  0x20
 
 #define SERVER_PORT_DEFAULT 8080
 #define MAX_CLIENTS 32

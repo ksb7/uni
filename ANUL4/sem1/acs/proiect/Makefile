@@ -29,22 +29,22 @@ all: Server Client
 
 # Server (C + SQLite)
 Server: Server.c Protocol.h
-	$(CC) $(CFLAGS) Server.c -o Server -lsqlite3 -pthread
+	$(CC) $(CFLAGS) Server.c -o build/Server -lsqlite3 -pthread
 
 # Generate moc files for Qt classes
 moc_ClientGUI.cpp: ClientGUI.h
-	moc ClientGUI.h -o moc_ClientGUI.cpp
+	moc ClientGUI.h -o build/moc_ClientGUI.cpp
 
 moc_NetworkWorker.cpp: NetworkWorker.h
-	moc NetworkWorker.h -o moc_NetworkWorker.cpp
+	moc NetworkWorker.h -o build/moc_NetworkWorker.cpp
 
 moc_FileManager.cpp: FileManager.h
-	moc FileManager.h -o moc_FileManager.cpp
+	moc FileManager.h -o build/moc_FileManager.cpp
 
 # Client (C++ + Qt5)
 Client: $(CLIENT_SRC) $(CLIENT_HEADERS) moc_ClientGUI.cpp moc_NetworkWorker.cpp moc_FileManager.cpp
-	$(CXX) $(CXXFLAGS) $(QT_CFLAGS) $(CLIENT_SRC) moc_ClientGUI.cpp moc_NetworkWorker.cpp moc_FileManager.cpp -o Client $(QT_LIBS) -lpthread
+	$(CXX) $(CXXFLAGS) $(QT_CFLAGS) $(CLIENT_SRC) build/moc_ClientGUI.cpp build/moc_NetworkWorker.cpp build/moc_FileManager.cpp -o build/Client $(QT_LIBS) -lpthread
 
 # Clean
 clean:
-	rm -f Server Client moc_ClientGUI.cpp moc_NetworkWorker.cpp moc_FileManager.cpp
+	rm -f build/Server build/Client build/moc_ClientGUI.cpp build/moc_NetworkWorker.cpp build/moc_FileManager.cpp
