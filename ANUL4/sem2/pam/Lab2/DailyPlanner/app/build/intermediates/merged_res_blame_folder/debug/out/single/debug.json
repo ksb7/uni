@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "com.example.dailyplanner.app-merged_res-29:/layout_activity_add.xml.flat",
+        "source": "com.example.dailyplanner.app-main-31:/layout/activity_add.xml"
+    },
+    {
+        "merged": "com.example.dailyplanner.app-merged_res-29:/layout_activity_main.xml.flat",
+        "source": "com.example.dailyplanner.app-main-31:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.dailyplanner.app-merged_res-29:/layout_list_item_task.xml.flat",
+        "source": "com.example.dailyplanner.app-main-31:/layout/list_item_task.xml"
+    },
+    {
+        "merged": "com.example.dailyplanner.app-merged_res-29:/drawable_edittext_bg.xml.flat",
+        "source": "com.example.dailyplanner.app-main-31:/drawable/edittext_bg.xml"
+    }
+]

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FAFAFA"
+    tools:context=".MainActivity">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Căutare și notificări"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#111111" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Search field -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Caută pe Google"
+                android:textSize="13sp"
+                android:textColor="#888888"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/editTextSearch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Introdu un cuvânt cheie"
+                android:paddingHorizontal="14dp"
+                android:textSize="15sp"
+                android:textColor="#111111"
+                android:textColorHint="#AAAAAA"
+                android:background="@drawable/edittext_background"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Action buttons -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acțiuni disponibile"
+                android:textSize="13sp"
+                android:textColor="#888888"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:id="@+id/btnNotification"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Trimite notificare"
+                    android:backgroundTint="#1A73E8"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="6dp"/>
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Caută în browser"
+                    android:backgroundTint="#1A73E8"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="6dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="28dp">
+
+                <Button
+                    android:id="@+id/btnAddItem"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Adaugă în listă"
+                    android:backgroundTint="#34A853"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="6dp"/>
+
+                <Button
+                    android:id="@+id/btnClearList"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Golește lista"
+                    android:backgroundTint="#EA4335"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="6dp"/>
+
+            </LinearLayout>
+
+            <!-- List section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lista de elemente"
+                android:textSize="13sp"
+                android:textColor="#888888"
+                android:layout_marginBottom="10dp"/>
+
+            <ListView
+                android:id="@+id/listViewItems"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

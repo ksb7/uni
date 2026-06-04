@@ -1,0 +1,43 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega32"</DEVICE>
+ <WORKING_DIR>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m32def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\Debug\lab4.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>lab4.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>lab4.map</FILE>
+  <FILE>lab4.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <Display><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>13</LINE></Display>
+  <RESET><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>60</LINE></RESET>
+  <TIMER1_ISR><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>122</LINE></TIMER1_ISR>
+  <Display_Next><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>136</LINE></Display_Next>
+  <End_Conversion><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>165</LINE></End_Conversion>
+  <MAIN><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>119</LINE></MAIN>
+  <end_display><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>160</LINE></end_display>
+  <Channel2><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>188</LINE></Channel2>
+  <store_result><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>202</LINE></store_result>
+  <Convert><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>213</LINE></Convert>
+  <Mie><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>221</LINE></Mie>
+  <end_Mie><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>229</LINE></end_Mie>
+  <CodeTable><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>293</LINE></CodeTable>
+  <Sute><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>242</LINE></Sute>
+  <end_Sute><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>250</LINE></end_Sute>
+  <Zeci><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>263</LINE></Zeci>
+  <end_Zeci><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab4 (lab5 ELSE)\lab4\lab4\main.asm</FILE><LINE>271</LINE></end_Zeci>
+ </LABELS>
+</ASSEMBLER_INFO>

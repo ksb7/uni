@@ -1,0 +1,118 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.dailyplanner"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+11-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:5:5-77
+11-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:5:22-74
+12    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+12-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:6:5-81
+12-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:6:22-78
+13    <uses-permission android:name="android.permission.VIBRATE" />
+13-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:7:5-66
+13-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:7:22-63
+14    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+14-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:8:5-77
+14-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:8:22-74
+15
+16    <permission
+16-->[androidx.core:core:1.9.0] C:\Users\blabla\.gradle\caches\transforms-3\c73afc1fa215d9ca128620a3c01802b0\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+17        android:name="com.example.dailyplanner.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.9.0] C:\Users\blabla\.gradle\caches\transforms-3\c73afc1fa215d9ca128620a3c01802b0\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.9.0] C:\Users\blabla\.gradle\caches\transforms-3\c73afc1fa215d9ca128620a3c01802b0\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.example.dailyplanner.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.9.0] C:\Users\blabla\.gradle\caches\transforms-3\c73afc1fa215d9ca128620a3c01802b0\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.9.0] C:\Users\blabla\.gradle\caches\transforms-3\c73afc1fa215d9ca128620a3c01802b0\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:10:5-40:19
+23        android:allowBackup="true"
+23-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:11:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.9.0] C:\Users\blabla\.gradle\caches\transforms-3\c73afc1fa215d9ca128620a3c01802b0\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+25        android:debuggable="true"
+26        android:extractNativeLibs="false"
+27        android:icon="@android:drawable/ic_menu_agenda"
+27-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:12:9-56
+28        android:label="@string/app_name"
+28-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:13:9-41
+29        android:supportsRtl="true"
+29-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:14:9-35
+30        android:testOnly="true"
+31        android:theme="@style/Theme.DailyPlanner" >
+31-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:15:9-50
+32        <activity
+32-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:17:9-24:20
+33            android:name="com.example.dailyplanner.MainActivity"
+33-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:18:13-41
+34            android:exported="true" >
+34-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:19:13-36
+35            <intent-filter>
+35-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:20:13-23:29
+36                <action android:name="android.intent.action.MAIN" />
+36-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:21:17-69
+36-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:21:25-66
+37
+38                <category android:name="android.intent.category.LAUNCHER" />
+38-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:22:17-77
+38-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:22:27-74
+39            </intent-filter>
+40        </activity>
+41        <activity
+41-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:26:9-29:46
+42            android:name="com.example.dailyplanner.AddActivity"
+42-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:27:13-40
+43            android:exported="false"
+43-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:28:13-37
+44            android:label="Adaugă sarcină" />
+44-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:29:13-43
+45        <activity
+45-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:31:9-34:48
+46            android:name="com.example.dailyplanner.UpdateActivity"
+46-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:32:13-43
+47            android:exported="false"
+47-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:33:13-37
+48            android:label="Editează sarcină" />
+48-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:34:13-45
+49
+50        <service
+50-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:36:9-38:40
+51            android:name="com.example.dailyplanner.NotificationService"
+51-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:37:13-48
+52            android:exported="false" />
+52-->C:\Users\blabla\Downloads\DailyPlanner\DailyPlanner\app\src\main\AndroidManifest.xml:38:13-37
+53
+54        <provider
+54-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+55            android:name="androidx.startup.InitializationProvider"
+55-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+56            android:authorities="com.example.dailyplanner.androidx-startup"
+56-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+57            android:exported="false" >
+57-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+58            <meta-data
+58-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+59                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+59-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+60                android:value="androidx.startup" />
+60-->[androidx.emoji2:emoji2:1.2.0] C:\Users\blabla\.gradle\caches\transforms-3\8a0777f78bcfa47490aa03185cd86673\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+61            <meta-data
+61-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\blabla\.gradle\caches\transforms-3\1d96e2c00249b5a696793deadf4ca594\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+62                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+62-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\blabla\.gradle\caches\transforms-3\1d96e2c00249b5a696793deadf4ca594\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+63                android:value="androidx.startup" />
+63-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\blabla\.gradle\caches\transforms-3\1d96e2c00249b5a696793deadf4ca594\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+64        </provider>
+65    </application>
+66
+67</manifest>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title field -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titlu"
+            android:textSize="13sp"
+            android:textColor="#888888"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/editTitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Numele sarcinii"
+            android:paddingHorizontal="12dp"
+            android:textSize="15sp"
+            android:background="@drawable/edittext_bg"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Description field -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descriere"
+            android:textSize="13sp"
+            android:textColor="#888888"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/editDescription"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:hint="Detalii despre sarcină (opțional)"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="10dp"
+            android:textSize="14sp"
+            android:background="@drawable/edittext_bg"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Date picker -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data"
+            android:textSize="13sp"
+            android:textColor="#888888"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvSelectedDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textColor="#111111"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnPickDate"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Schimbă data"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:backgroundTint="#1565C0"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <!-- Time picker -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ora"
+            android:textSize="13sp"
+            android:textColor="#888888"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvSelectedTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textColor="#111111"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnPickTime"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Schimbă ora"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:backgroundTint="#1565C0"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <!-- Priority spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioritate"
+            android:textSize="13sp"
+            android:textColor="#888888"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerPriority"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/edittext_bg"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Save / Cancel buttons -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Salvează"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:backgroundTint="#2E7D32"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Anulează"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:backgroundTint="#78909C"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+</ScrollView>

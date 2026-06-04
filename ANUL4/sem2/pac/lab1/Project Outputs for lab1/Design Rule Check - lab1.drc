@@ -1,0 +1,114 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\blabla\Downloads\uni\ANUL4\sem2\pac\lab1\lab1.PcbDoc
+Date     : 4/5/2026
+Time     : 11:42:28 AM
+
+Processing Rule : Clearance Constraint (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+Rule Violations :0
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
+   Violation between Minimum Solder Mask Sliver Constraint: (0.179mm < 0.254mm) Between Pad R13-2(95.775mm,91mm) on Top Layer And Via (94.183mm,91.516mm) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.179mm]
+Rule Violations :1
+
+Processing Rule : Silk To Solder Mask (Clearance=0.15mm) (IsPad),(All)
+   Violation between Silk To Solder Mask Clearance Constraint: (0.069mm < 0.15mm) Between Pad DD5-7(81.38mm,50.88mm) on Multi-Layer And Text "DD6" (79.908mm,48.26mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.069mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-1(81.75mm,92.25mm) on Multi-Layer And Track (81.75mm,87.75mm)(81.75mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-1(81.75mm,92.25mm) on Multi-Layer And Track (81.75mm,92.25mm)(88.25mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-2(88.25mm,92.25mm) on Multi-Layer And Track (81.75mm,92.25mm)(88.25mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-2(88.25mm,92.25mm) on Multi-Layer And Track (88.25mm,87.75mm)(88.25mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-3(81.75mm,87.75mm) on Multi-Layer And Track (81.75mm,87.75mm)(81.75mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-3(81.75mm,87.75mm) on Multi-Layer And Track (81.75mm,87.75mm)(88.25mm,87.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-4(88.25mm,87.75mm) on Multi-Layer And Track (81.75mm,87.75mm)(88.25mm,87.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB1-4(88.25mm,87.75mm) on Multi-Layer And Track (88.25mm,87.75mm)(88.25mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-1(106.75mm,96.75mm) on Multi-Layer And Track (106.75mm,92.25mm)(106.75mm,96.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-1(106.75mm,96.75mm) on Multi-Layer And Track (106.75mm,96.75mm)(113.25mm,96.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-2(113.25mm,96.75mm) on Multi-Layer And Track (106.75mm,96.75mm)(113.25mm,96.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-2(113.25mm,96.75mm) on Multi-Layer And Track (113.25mm,92.25mm)(113.25mm,96.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-3(106.75mm,92.25mm) on Multi-Layer And Track (106.75mm,92.25mm)(106.75mm,96.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-3(106.75mm,92.25mm) on Multi-Layer And Track (106.75mm,92.25mm)(113.25mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-4(113.25mm,92.25mm) on Multi-Layer And Track (106.75mm,92.25mm)(113.25mm,92.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (Collision < 0.15mm) Between Pad SB2-4(113.25mm,92.25mm) on Multi-Layer And Track (113.25mm,92.25mm)(113.25mm,96.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]
+Rule Violations :17
+
+Processing Rule : Silk to Silk (Clearance=0.15mm) (All),(All)
+   Violation between Silk To Silk Clearance Constraint: (Collision < 0.15mm) Between Arc (86.881mm,99.8mm) on Top Overlay And Text "R5" (86.639mm,98.628mm) on Top Overlay Silk Text to Silk Clearance [0mm]
+   Violation between Silk To Silk Clearance Constraint: (Collision < 0.15mm) Between Text "DD6" (79.908mm,48.26mm) on Top Overlay And Track (83.465mm,49.61mm)(83.465mm,67.39mm) on Top Overlay Silk Text to Silk Clearance [0mm]
+   Violation between Silk To Silk Clearance Constraint: (Collision < 0.15mm) Between Text "DD6" (79.908mm,48.26mm) on Top Overlay And Track (83.465mm,49.61mm)(86.915mm,49.61mm) on Top Overlay Silk Text to Silk Clearance [0mm]
+   Violation between Silk To Silk Clearance Constraint: (0.108mm < 0.15mm) Between Text "R5" (86.639mm,98.628mm) on Top Overlay And Track (85.25mm,100.45mm)(100.75mm,100.45mm) on Top Overlay Silk Text to Silk Clearance [0.108mm]
+   Violation between Silk To Silk Clearance Constraint: (0.108mm < 0.15mm) Between Text "R7" (95.123mm,98.628mm) on Top Overlay And Track (85.25mm,100.45mm)(100.75mm,100.45mm) on Top Overlay Silk Text to Silk Clearance [0.108mm]
+Rule Violations :5
+
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
+Rule Violations :0
+
+Processing Rule : Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1'))
+   Violation between Room Definition: Between Component K1-Releu (73.5mm,110mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between Component K2-Releu (93mm,110mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between Component SB1-Intrerupator (85mm,90mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between Component SB2-Intrerupator (110mm,94.5mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD1-k155la3 (66mm,83.12mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD2-K155IE4 (59mm,60.54mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD3-K155IE4 (44.88mm,61.08mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD4-K155IE4 (47.38mm,84.62mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD5-K155IE4 (81.38mm,66.12mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD6-K155IE4 (81mm,46.12mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD7-K155IR17 (119mm,74.78mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between DIP Component DD8-K155TM2 (99.5mm,87.58mm) on Top Layer And Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SIP Component SA1-3P1N (96mm,49.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SIP Component SA2-4P1N (104mm,32mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SIP Component SA3-5P1N (141.5mm,45mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And Small Component VT1-KT3102G (58mm,98.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And Small Component VT2-KT3102G (134mm,33.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component C1-Condensator (52.5mm,34.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component C2-Condensator (113mm,64.025mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component C3-Condensator (73.5mm,50.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component C4-Condensator (112mm,42mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R10-Resistor (120.5mm,34mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R11-Resistor (112mm,52mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R12-Resistor (120.5mm,40mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R13-Resistor (94mm,91mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R1-Resistor (61mm,82.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R2-Resistor (69.275mm,91.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R3-Resistor (121.275mm,84.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R4-Resistor (141mm,79.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R5-Resistor (89mm,96.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R6-Resistor (140.775mm,87.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R7-Resistor (97.5mm,96.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R8-Resistor (85mm,82mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component R9-Resistor (74mm,60mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component VD1-KC139A (119.5mm,93.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component VD2-KD522B (61.5mm,111mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component VD3-KD522B (61.5mm,120mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component VD4-KD522B (92.5mm,80.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component VD5-KD522B (73.5mm,39.5mm) on Top Layer 
+   Violation between Room Definition: Between Room lab1 (Bounding Region = (180.277mm, 26.051mm, 523.177mm, 59.579mm) (InComponentClass('lab1')) And SMT Small Component VD6-KD522B (103.5mm,61.5mm) on Top Layer 
+Rule Violations :40
+
+Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
+Rule Violations :0
+
+
+Violations Detected : 63
+Waived Violations : 0
+Time Elapsed        : 00:00:01

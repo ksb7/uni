@@ -1,0 +1,37 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega32"</DEVICE>
+ <WORKING_DIR>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m32def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\Debug\lab5.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>lab5.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>lab5.map</FILE>
+  <FILE>lab5.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <VideoBuff><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>15</LINE></VideoBuff>
+  <ADCResults><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>16</LINE></ADCResults>
+  <RESET><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>93</LINE></RESET>
+  <TRANSMIT><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>75</LINE></TRANSMIT>
+  <End_Conversion><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>35</LINE></End_Conversion>
+  <SAVE_ADC3><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>59</LINE></SAVE_ADC3>
+  <SAVE_ADC1><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>48</LINE></SAVE_ADC1>
+  <ADC_DONE><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>68</LINE></ADC_DONE>
+  <TX_END><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>86</LINE></TX_END>
+  <MAIN><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>132</LINE></MAIN>
+  <WAIT_TX><FILE>C:\Users\blabla\Downloads\uni\ANUL4\sem2\sm\lab5 (lab6 ELSE)\lab5\lab5\main.asm</FILE><LINE>178</LINE></WAIT_TX>
+ </LABELS>
+</ASSEMBLER_INFO>

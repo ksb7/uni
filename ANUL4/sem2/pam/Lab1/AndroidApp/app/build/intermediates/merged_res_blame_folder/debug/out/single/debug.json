@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "com.example.myapp-merged_res-29:/drawable_edittext_background.xml.flat",
+        "source": "com.example.myapp-main-31:/drawable/edittext_background.xml"
+    },
+    {
+        "merged": "com.example.myapp-merged_res-29:/drawable_circle_badge.xml.flat",
+        "source": "com.example.myapp-main-31:/drawable/circle_badge.xml"
+    },
+    {
+        "merged": "com.example.myapp-merged_res-29:/layout_list_item.xml.flat",
+        "source": "com.example.myapp-main-31:/layout/list_item.xml"
+    },
+    {
+        "merged": "com.example.myapp-merged_res-29:/layout_activity_main.xml.flat",
+        "source": "com.example.myapp-main-31:/layout/activity_main.xml"
+    }
+]
