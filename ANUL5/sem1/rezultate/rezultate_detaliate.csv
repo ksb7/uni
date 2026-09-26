@@ -1,0 +1,287 @@
+﻿model,model_size_gb,external_api_cost_usd,id,cat,question,reference,answer,final_answer,exact,partial,math_correct,has_steps,extracted_number,ttft_ms,total_ms,tps,gen_tokens,prompt_tokens,load_ms,prompt_eval_ms,eval_ms,ref_ppl
+gemma3:1b,0.82,0.0,1,istorie,Cine a fost ales domnitor al Moldovei și al Țării Românești în 1859?,Alexandru Ioan Cuza,"Alexandru Ioan Cucoș.
+
+RĂSPUNSFINAL: Alexandru Ioan Cucoș","Alexandru Ioan Cucoș.
+
+RĂSPUNSFINAL: Alexandru Ioan Cucoș",0.0,0.4,,,,1883.694899999682,2952.4183000003177,23.331821431304583,25,123,27.0151,1713.703,1071.498,91.12987518310547
+gemma3:1b,0.82,0.0,2,istorie,În ce oraș a fost votată Unirea Transilvaniei cu România la 1 Decembrie 1918?,Alba Iulia,"Ungaria.
+
+RĂSPUNSFINAL: Ungaria","Ungaria.
+
+RĂSPUNSFINAL: Ungaria",0.0,0.0,,,,1583.4423999995124,2172.700999999506,23.640502259356573,14,122,4.2182,1549.28,592.204,521.7294921875
+gemma3:1b,0.82,0.0,3,istorie,În ce an a fost anexată Basarabia de către Imperiul Rus?,1812,"1604
+
+RĂSPUNSFINAL: 1604","1604
+
+RĂSPUNSFINAL: 1604",0.0,0.0,,,,1424.941599999329,2211.269999999786,22.931513760182227,18,112,5.2915,1401.328,784.946,489.38525390625
+gemma3:1b,0.82,0.0,4,istorie,"Care domnitor a realizat în 1600 prima unire politică a Țării Românești, Moldovei și Transilvaniei?",Mihai Viteazul,"Vladicia. RĂSPUNSs Final: Vladicia a organizat unirea politică a Țării Românești, Moldovei și Transilvaniei în 1600.","Vladicia. RĂSPUNSs Final: Vladicia a organizat unirea politică a Țării Românești, Moldovei și Transilvaniei în 1600.",0.0,0.0,,,,1699.2943000004743,3667.457600000489,21.83684424083703,43,131,7.2456,1676.074,1969.149,249.79017639160156
+gemma3:1b,0.82,0.0,5,istorie,Pe ce dată a proclamat Republica Moldova independența?,27 august 1991,"19 septembrie 1992
+
+RĂSPUNSs Final: 19 Septembrie 1992","19 septembrie 1992
+
+RĂSPUNSs Final: 19 Septembrie 1992",0.0,0.0,,,,1493.6762999996063,2809.530800000175,21.297845038400776,28,109,4.165,1470.989,1314.687,826.6276245117188
+gemma3:1b,0.82,0.0,6,istorie,"În ce oraș a fost semnat, în 1878, tratatul care a recunoscut independența României?",Berlin,"Berlin.
+
+RĂSPUNSFINAL: Berlin","Berlin.
+
+RĂSPUNSFINAL: Berlin",0.0,0.5,,,,1705.715500000224,2258.950700001151,21.702173834412413,12,124,5.234,1680.015,552.94,462.57177734375
+gemma3:1b,0.82,0.0,7,română,Care este pluralul substantivului «ou»?,ouă,"Pluralul substantivului ""ou"" este ""ochi"".
+
+RĂSPUNSFINAL: <ochi>","Pluralul substantivului ""ou"" este ""ochi"".
+
+RĂSPUNSFINAL: <ochi>",0.0,0.0,,,,1333.1766999999672,2528.0906000007235,20.92901380812615,25,107,4.6824,1315.538,1194.514,635.8873291015625
+gemma3:1b,0.82,0.0,8,română,Care este forma articulată de genitiv-dativ singular a substantivului «fată»?,fetei,"Forma articulată de genitiv-dativ singular a substantivelui «fata» este ""fata **face**"".
+
+RĂSPUNS FINAL: fata face",fata face,0.0,0.0,,,,1636.1323000000993,3490.8342999988236,20.48925096151202,38,117,6.2001,1618.023,1854.631,397.59637451171875
+gemma3:1b,0.82,0.0,9,română,Care este pluralul substantivului «băiat»?,băieți,"Pluralul substantivelui ""băiat"" este ""bâieți"".
+
+RĂСПUNSFINAL: <bâieţi>","Pluralul substantivelui ""băiat"" este ""bâieți"".
+
+RĂСПUNSFINAL: <bâieţi>",0.0,0.5,,,,1574.2153999999573,3159.7029000004113,20.814686843036448,33,109,4.8816,1561.596,1585.419,275.2842102050781
+gemma3:1b,0.82,0.0,10,română,Care este participiul verbului «a face»?,făcut,"Participul verbului ""a face"" se referă la acțiunea de a realiza o activitate.
+
+RĂSPUNSFINAL: <Realizarea unei activități>","Participul verbului ""a face"" se referă la acțiunea de a realiza o activitate.
+
+RĂSPUNSFINAL: <Realizarea unei activități>",0.0,0.0,,,,1463.9342000009492,3361.4162000012584,20.023226943254173,38,108,4.1584,1449.599,1897.796,383.22039794921875
+gemma3:1b,0.82,0.0,11,română,Ce parte de vorbire este cuvântul «lângă» în propoziția «Stau lângă fereastră.»?,prepoziție,"Lângă.
+
+RĂSPUNSFINAL: Stau","Lângă.
+
+RĂSPUNSFINAL: Stau",0.0,0.0,,,,1699.8915000003763,2402.087800001027,21.389947295169865,15,123,4.149,1680.934,701.264,263.96868896484375
+gemma3:1b,0.82,0.0,12,română,Care este antonimul adjectivului «bogat»?,sărac,"Răspuns: sălbătos.
+
+RĂСПUNS FINAL: sălbătos","Răspuns: sălbătos.
+
+RĂСПUNS FINAL: sălbătos",0.0,0.0,,,,1453.520799999751,2592.54460000011,20.19552783207155,23,110,4.9049,1437.724,1138.866,46.34386444091797
+gemma3:1b,0.82,0.0,13,matematica,Calculează: 847 + 1596 =,2443,"847 + 1596 = 2443
+
+RĂSPUNSFINAL: 2443",2443.0,,,1.0,1.0,2443.0,1547.7477000004,2978.146299999935,20.28072722491816,29,111,6.6698,1533.447,1429.929,372.77294921875
+gemma3:1b,0.82,0.0,14,matematica,Calculează: 23 × 47 =,1081,"23 × 47 = 1081
+
+RĂSPUNSFINAL: 1081",1081.0,,,1.0,1.0,1081.0,1557.9397000001336,2828.680300000997,20.461211445372108,26,108,4.7155,1544.795,1270.697,389.1689453125
+gemma3:1b,0.82,0.0,15,matematica,Calculează: 1728 ÷ 12 =,144,RĂSPUNSFINAL: Răspuns: 144,144.0,,,1.0,0.0,144.0,1528.838199999882,2393.045400000119,19.68629312890469,17,110,6.6,1512.933,863.545,754.3657836914062
+gemma3:1b,0.82,0.0,16,matematica,Rezolvă pentru x: 5x - 7 = 3x + 9,8,"1. Adună 7 din ambele părți: 5x - 7 + 7 = 3x + 9 + 7  =>  5x = 3x + 16
+2. Scade 3x din ambele părți: 5x - 3x = 3x + 16 - 3x  =>  2x = 16
+3. Împarte ambele părți la 2: x = 8
+
+RĂSPUNS FINAL: x=8",8.0,,,1.0,1.0,8.0,1621.5759999995498,8016.910799999096,18.138646497325723,116,116,4.6745,1607.108,6395.185,36.75229263305664
+gemma3:1b,0.82,0.0,17,matematica,Rezolvă pentru x: 4(x + 3) = 36,6,"1. Multiplică 4 cu 3: 4 * 3 = 12
+2. Adună rezultatul la 12: 12 + 12 = 24
+3.  Așează 24 înaintea lui 36: 4(x + 3) = 36 
+
+RĂSPUNS FINAL: x+3=9",3.0,,,0.0,1.0,3.0,1599.7006999987207,6423.139599999558,18.451106330408727,89,115,3.6747,1583.878,4823.559,130.8541717529297
+gemma3:1b,0.82,0.0,18,matematica,Un tren merge cu viteză constantă și parcurge 240 km în 3 ore. Câți kilometri parcurge în 5 ore?,400,"Calculați viteza trenului.
+
+Viteza = Distanță / Timp = 240 km / 3 h = 80 km/h.
+
+RĂSPUNS FINAL: 80",80.0,,,0.0,1.0,80.0,1961.26650000042,4545.349599999099,18.578310287197457,48,132,4.6761,1941.428,2583.658,148.8831024169922
+gemma3:1b,0.82,0.0,19,matematica,Un produs costă 250 de lei și se ieftinește cu 20%. Cât costă după reducere (în lei)?,200,"Prețul original este 250 de lei. Reducerea este de 20%, deci prețul redus este 250 - (0.20 * 250) = 250 - 50 = 200 de lei.
+
+RĂSPUNS FINAL: 200",200.0,,,1.0,1.0,200.0,1951.5173999989202,5786.196499999278,18.77666873731597,72,128,6.5096,1930.509,3834.546,181.39576721191406
+gemma3:1b,0.82,0.0,20,matematica,Calculează: 3² × 4 - 10 ÷ 2 =,31,RĂSPUNSFINAL: <32 - 5= 27>,27.0,,,0.0,1.0,27.0,1677.6666000005207,2643.98059999985,19.677108997720563,19,114,5.2528,1658.739,965.589,1315.1085205078125
+granite4:3b,2.1,0.0,1,istorie,Cine a fost ales domnitor al Moldovei și al Țării Românești în 1859?,Alexandru Ioan Cuza,Domnitorul ales pentru Moldova și Țara Românești în anul 1859 a fost Alexandru Dimitrie Ghica. RĂSPUNS FINAL: Alexandru Dimitrie Ghica.,Alexandru Dimitrie Ghica.,0.0,0.2,,,,1591.1636000000726,7053.968400001395,8.969913445827032,49,136,16.7857,1551.39,5462.706,205.50991821289062
+granite4:3b,2.1,0.0,2,istorie,În ce oraș a fost votată Unirea Transilvaniei cu România la 1 Decembrie 1918?,Alba Iulia,"Unirea Transilvaniei cu România a fost votată în orașul Cluj (întărirea ideii de naționalism al maghiarilor, care erau majoritari în regiune). RĂSPUNS FINAL: Cluj.",Cluj.,0.0,0.0,,,,1618.608900000254,8135.9740999996575,9.513711252725601,62,135,9.2793,1595.035,6516.91,448.1636047363281
+granite4:3b,2.1,0.0,3,istorie,În ce an a fost anexată Basarabia de către Imperiul Rus?,1812,Basarabia a fost anexată de Imperiul Rus în 1812. RĂSPUNS FINAL: 1812.,1812.,1.0,1.0,,,,1085.1796000006289,4218.711200001053,9.870778769419564,31,126,6.2657,1059.217,3140.583,486.577880859375
+granite4:3b,2.1,0.0,4,istorie,"Care domnitor a realizat în 1600 prima unire politică a Țării Românești, Moldovei și Transilvaniei?",Mihai Viteazul,"Domnul Mihai Viteazul a realizat în anul 1600 prima unire politică a țărilor românești, Moldovei și Transilvaniei. Acest eveniment a avut loc în contextul complex al succesiunii de pe tronul bizantin și al necesității unei coaliții între diferitele regiuni care să împiedice invazia otomană.
+
+RĂSPUNS FINAL: Domnul Mihai Viteazul.",Domnul Mihai Viteazul.,0.0,0.6666666666666666,,,,1839.4274000002042,14977.04850000082,9.36234370975334,123,143,5.6819,1821.009,13137.736,194.46908569335938
+granite4:3b,2.1,0.0,5,istorie,Pe ce dată a proclamat Republica Moldova independența?,27 august 1991,Republica Moldova a proclamat independența pe 27 august 1991. RĂSPUNS FINAL: 27 august 1991.,27 august 1991.,1.0,1.0,,,,977.2637999994913,4487.739399999555,9.970430551678167,35,122,6.7449,946.229,3510.38,201.21629333496094
+granite4:3b,2.1,0.0,6,istorie,"În ce oraș a fost semnat, în 1878, tratatul care a recunoscut independența României?",Berlin,Tratatul de la Iași. RĂSPUNS FINAL: Iași.,Iași.,0.0,0.0,,,,1511.8755000003148,3613.271000000168,9.998162242559225,21,137,6.8261,1494.584,2100.386,158.93893432617188
+granite4:3b,2.1,0.0,7,română,Care este pluralul substantivului «ou»?,ouă,"Pluralul pentru numele propriu ""ou"" nu există. Acesta se referă la un loc specific și, prin urmare, nu are o formă plurală.
+
+RĂSPUNS FINAL: Nu există niciun plural pentru ""ou"".","Nu există niciun plural pentru ""ou"".",0.0,0.0,,,,666.5137999989383,7030.695699999342,9.11438935791327,58,116,6.7306,647.9,6363.564,448.7065124511719
+granite4:3b,2.1,0.0,8,română,Care este forma articulată de genitiv-dativ singular a substantivului «fată»?,fetei,"Forma articulată de genitiv-dativ singulare a substantivului ""fătă"" este ""fetei"".
+
+RĂSPUNS FINAL: fetei.",fetei.,1.0,1.0,,,,1193.8563000003342,6101.352800000313,8.558911599892891,42,127,8.3526,1173.844,4907.166,221.2295684814453
+granite4:3b,2.1,0.0,9,română,Care este pluralul substantivului «băiat»?,băieți,"Pluralul pentru substantivul ""băiat"" este ""băieți"".
+
+RĂSPUNS FINAL: băieți.",băieți.,1.0,1.0,,,,675.9992000006605,4278.528500000903,8.883090205005066,32,118,7.9063,658.885,3602.35,135.5689697265625
+granite4:3b,2.1,0.0,10,română,Care este participiul verbului «a face»?,făcut,"Participiul verbelui ""a face"" în română se formează prin adăugarea finală a ""-ând"" la infinitiv. Astfel, participiul verbelui ""a face"" este ""înfruntând"". RĂSPUNS FINAL: Înfruntând.",Înfruntând.,0.0,0.0,,,,841.3486000008561,9020.261499999833,8.314154738401847,68,118,6.7719,823.651,8178.823,159.2926483154297
+granite4:3b,2.1,0.0,11,română,Ce parte de vorbire este cuvântul «lângă» în propoziția «Stau lângă fereastră.»?,prepoziție,"Cuvântul ""lângă"" este un prepoziție.
+
+RĂSPUNS FINAL: prepoziție",prepoziție,1.0,1.0,,,,1911.8304000003263,5621.600700000272,8.624776665451112,32,143,6.9827,1893.303,3710.241,137.13177490234375
+granite4:3b,2.1,0.0,12,română,Care este antonimul adjectivului «bogat»?,sărac,Antonimul adjectivului „bogat” este „obisnuit”. Răspuns final: OBISNUIT.,OBISNUIT.,0.0,0.0,,,,908.1314000013663,4405.363600000783,9.151001534222601,32,121,9.8625,888.267,3496.885,368.8351745605469
+granite4:3b,2.1,0.0,13,matematica,Calculează: 847 + 1596 =,2443,"Pentru a calcula suma:
+
+847 + 1596 se poate face prin adunarea numerelor în mod simplu:
+- Aduna cifrele unităților: 7 + 6 = 13, scrie 3 și trec 1 la zile.
+- Aduna cifrele zilelor: 4 (din 847) + 9 (din 1596) + 1 (transmiterea de mai sus) = 14, scrie 4 și trec 1 la mii.
+- Aduna cifrele mii: 0 (din 847) + 5 (din 1596) + 1 (transmiterea de mai sus) = 6.
+
+Astfel, suma este 2443.
+
+RĂSPUNS FINAL: 2443",2443.0,,,1.0,1.0,2443.0,695.4987000008259,22047.02189999989,8.149387070079436,174,116,7.0575,676.028,21351.299,61.05146789550781
+granite4:3b,2.1,0.0,14,matematica,Calculează: 23 × 47 =,1081,"Pentru a calcula produsul lui 23 și 47:
+
+1. Înmulțim primele două cifre ale numerelor:
+   23 × 40 = 920
+
+2. Înmulțim următoarea parte:
+   23 × 7 = 161
+
+3. Adunăm rezultatele:
+   920 + 161 = 1081
+
+RĂSPUNS FINAL: 1081",1081.0,,,1.0,1.0,1081.0,632.1150000003399,12350.376399999732,8.447818338114457,99,115,8.4825,600.872,11719.002,133.01937866210938
+granite4:3b,2.1,0.0,15,matematica,Calculează: 1728 ÷ 12 =,144,"Pentru a calcula 1728 divizat de 12:
+
+1728 ÷ 12 = 144
+
+Răspunsul final este 144. RĂSPUNS FINAL: 144",144.0,,,1.0,1.0,144.0,640.9000000003289,5949.177200000122,8.665958569935981,46,117,11.1406,610.153,5308.126,387.95867919921875
+granite4:3b,2.1,0.0,16,matematica,Rezolvă pentru x: 5x - 7 = 3x + 9,8,"Pentru a rezolva ecuația 5x - 7 = 3x + 9 pentru x, urmărim acești pași:
+
+1. Începeți prin a aduna termenii cu x pe partea stângă:
+   5x - 3x = 9 + 7
+
+2. Simplificarea obține:
+   2x = 16
+
+3. Împărțiți ambele părți la 2 pentru a găsi x:
+   x = 8
+
+RĂSPUNS FINAL: <răspuns> x = 8 </răspuns>",8.0,,,1.0,1.0,8.0,1133.0985999993572,18448.21729999967,8.374403042230036,145,125,5.7174,1118.882,17314.667,81.98107147216797
+granite4:3b,2.1,0.0,17,matematica,Rezolvă pentru x: 4(x + 3) = 36,6,"Pasul 1: Expandăm ecuația.
+4(x + 3) = 36
+
+4x + 12 = 36
+
+Pasul 2: Scădem 12 din ambele părți ale ecuatiei pentru a îndepărta termenul constant.
+4x + 12 - 12 = 36 - 12
+4x = 24
+
+Pasul 3: Împărțim ambele părți cu 4 pentru a rezolva x.
+4x / 4 = 24 / 4
+x = 6
+
+RĂSPUNS FINAL: <6>",6.0,,,1.0,1.0,6.0,844.2309999991267,17497.780499999863,8.40671242360175,140,122,5.2447,818.583,16653.359,61.987728118896484
+granite4:3b,2.1,0.0,18,matematica,Un tren merge cu viteză constantă și parcurge 240 km în 3 ore. Câți kilometri parcurge în 5 ore?,400,"Viteză = distanță / timp
+
+Distanța parcursă în 3 ore = 240 km  
+Viteză = 240 km / 3 h = 80 km/h  
+
+Pentru 5 ore, distanța = Viteză * Timp  
+Distanța = 80 km/h * 5 h = 400 km
+
+RĂSPUNS FINAL: 400",400.0,,,1.0,1.0,400.0,1719.0888999994058,12443.472699998892,8.48543158630108,91,139,8.4123,1667.082,10724.263,59.10041427612305
+granite4:3b,2.1,0.0,19,matematica,Un produs costă 250 de lei și se ieftinește cu 20%. Cât costă după reducere (în lei)?,200,"Pentru a găsi prețul după reducere, trebuie să calculăm primul procent din prețul inițial.
+
+1. Calculăm 20% din 250 de lei:
+   20% din 250 = 0.2 * 250 = 50 de lei
+
+2. Scădem acest valoar de la prețul original:
+   250 - 50 = 200 de lei
+
+RĂSPUNS FINAL: 200",200.0,,,1.0,1.0,200.0,1660.7137999999395,15362.919000001057,7.591412098272873,104,139,7.4403,1625.078,13699.691,88.30075073242188
+granite4:3b,2.1,0.0,20,matematica,Calculează: 3² × 4 - 10 ÷ 2 =,31,"Calculul este următor:
+
+1. În primul rând, calculăm puterea: 3² = 9.
+2. Apoi efectuăm înmulțirea și împărțiți consecutiv: 9 × 4 = 36 și 10 ÷ 2 = 5.
+3. În cele din urmă, deducem rezultatul împărțiții de pe produsul obținut înmulțirii.
+
+Rezultatul final este: 36 - 5 = 31.
+
+RĂSPUNS FINAL: 31",31.0,,,1.0,1.0,31.0,921.2717000009434,17134.289600000557,8.325919667209908,135,123,6.3436,878.301,16214.425,74.48809814453125
+llama3.2,2.02,0.0,1,istorie,Cine a fost ales domnitor al Moldovei și al Țării Românești în 1859?,Alexandru Ioan Cuza,Alexandru Ioan Cuza.,Alexandru Ioan Cuza.,1.0,1.0,,,,1447.1582999995007,2322.2678000001906,10.294232027414683,9,146,10.2107,1398.196,874.276,680.591064453125
+llama3.2,2.02,0.0,2,istorie,În ce oraș a fost votată Unirea Transilvaniei cu România la 1 Decembrie 1918?,Alba Iulia,Brașov.,Brașov.,0.0,0.0,,,,1349.5404999994207,1902.90449999884,10.870096906913924,6,145,7.9405,1306.014,551.973,159.31057739257812
+llama3.2,2.02,0.0,3,istorie,În ce an a fost anexată Basarabia de către Imperiul Rus?,1812,Anexarea Basarabiei de către Imperiul Rus a avut loc în 1812.,Anexarea Basarabiei de către Imperiul Rus a avut loc în 1812.,0.0,0.5,,,,1058.5418000009668,3607.763400001204,9.414408124006583,24,136,8.595,1021.262,2549.284,779.6491088867188
+llama3.2,2.02,0.0,4,istorie,"Care domnitor a realizat în 1600 prima unire politică a Țării Românești, Moldovei și Transilvaniei?",Mihai Viteazul,RĂSPUNS FINAL: Mihai Viteazul.,Mihai Viteazul.,1.0,1.0,,,,1742.4661000004562,3269.949400000769,9.82553775168115,15,153,8.3664,1714.688,1526.634,923.7325439453125
+llama3.2,2.02,0.0,5,istorie,Pe ce dată a proclamat Republica Moldova independența?,27 august 1991,RĂSPUNS FINAL: 27 august 1991.,27 august 1991.,1.0,1.0,,,,1044.9067999998078,2573.3638999990944,9.166016861542731,14,132,9.4295,1004.21,1527.381,811.9022216796875
+llama3.2,2.02,0.0,6,istorie,"În ce oraș a fost semnat, în 1878, tratatul care a recunoscut independența României?",Berlin,"Tratatul de la San Stefano, semnat în 1878.","Tratatul de la San Stefano, semnat în 1878.",0.0,0.0,,,,1466.880800000581,3390.494500001296,8.844677065232094,17,147,9.4388,1429.016,1922.06,256.0504150390625
+llama3.2,2.02,0.0,7,română,Care este pluralul substantivului «ou»?,ouă,"Pluralul cuvântului ""ou"" este ""oui"".","Pluralul cuvântului ""ou"" este ""oui"".",0.0,0.0,,,,666.8355000001611,2323.3737999998993,9.663948278548814,16,126,7.9002,637.767,1655.638,764.9967651367188
+llama3.2,2.02,0.0,8,română,Care este forma articulată de genitiv-dativ singular a substantivului «fată»?,fetei,"Forma articulată de genitiv-dativ singular a substantivului ""femură"" (nu ""fată"") este femură.","Forma articulată de genitiv-dativ singular a substantivului ""femură"" (nu ""fată"") este femură.",0.0,0.0,,,,1062.916499999119,4822.467899999538,9.04509110934052,34,137,12.3095,1029.097,3758.945,169.42025756835938
+llama3.2,2.02,0.0,9,română,Care este pluralul substantivului «băiat»?,băieți,"Pluralul substantivului ""băiat"" este ""băieți"".","Pluralul substantivului ""băiat"" este ""băieți"".",0.0,0.5,,,,653.6840000007942,2645.378700000947,9.540441933355494,19,128,8.4707,634.374,1991.522,242.1627960205078
+llama3.2,2.02,0.0,10,română,Care este participiul verbului «a face»?,făcut,"Participiul verbului ""a face"" este:
+
+- Prezent: fac
+- Pretutimpozitiv: făcusem (în prezent, dar în trecut)
+- Imperfect: făcea
+- Suprapretutimpozitiv: făcuserăm
+- Futur perfect: va face
+- Suprafutur perfect: va făcusem","Participiul verbului ""a face"" este:
+
+- Prezent: fac
+- Pretutimpozitiv: făcusem (în prezent, dar în trecut)
+- Imperfect: făcea
+- Suprapretutimpozitiv: făcuserăm
+- Futur perfect: va face
+- Suprafutur perfect: va făcusem",0.0,0.0,,,,691.9662999989669,12171.746399999392,8.014141126237705,92,128,9.3848,665.749,11479.708,95.45170593261719
+llama3.2,2.02,0.0,11,română,Ce parte de vorbire este cuvântul «lângă» în propoziția «Stau lângă fereastră.»?,prepoziție,"Cuvântul ""lângă"" în propoziția ""Stau lângă fereastră"" este un prepozitiv. Prepozițiile exprimă relații de timp, loc, mod, cauză sau efect, etc., între cuvinte sau fraze dintr-o propoziție.
+
+În acest caz, ""lângă"" indică locul în care se află persoana (starea) față de fereastră.","Cuvântul ""lângă"" în propoziția ""Stau lângă fereastră"" este un prepozitiv. Prepozițiile exprimă relații de timp, loc, mod, cauză sau efect, etc., între cuvinte sau fraze dintr-o propoziție.
+
+În acest caz, ""lângă"" indică locul în care se află persoana (starea) față de fereastră.",0.0,0.0,,,,1536.6648999988683,15100.492300000042,8.405588212003092,114,150,9.0085,1498.089,13562.406,84.5964584350586
+llama3.2,2.02,0.0,12,română,Care este antonimul adjectivului «bogat»?,sărac,"Antonimul adjectivului ""bogat"" este ""poară"".","Antonimul adjectivului ""bogat"" este ""poară"".",0.0,0.0,,,,936.702899998636,3047.265699999116,9.47699318200328,20,131,7.3192,897.963,2110.373999,634.0322265625
+llama3.2,2.02,0.0,13,matematica,Calculează: 847 + 1596 =,2443,"Pașii pentru calcul:
+
+1. Adunăm zeci: 84 + 59 = 143
+2. Adunăm unități: 7 + 6 = 13
+3. Adunăm sute: 800 + 1500 = 2300
+4. Adunăm sute de sută: 400 + 900 = 1300
+
+Rezultatul este: 847 + 1596 = 2433",2433.0,,,0.0,1.0,2433.0,656.3304999999673,12049.44550000073,8.690085481474187,99,126,8.0981,628.295,11392.293,42.06291580200195
+llama3.2,2.02,0.0,14,matematica,Calculează: 23 × 47 =,1081,"Pașii pentru calcul:
+
+1. Mulțumim din 47 și 10 (de exemplu, 47 - 10 = 37).
+2. Mulițăm 23 cu 37.
+3. Rezultatul este 851.
+
+RĂSPUNS FINAL: 851",851.0,,,0.0,1.0,851.0,591.1058000001503,7760.613099999318,8.926707131616068,64,125,7.2693,574.669,7169.497,213.74266052246094
+llama3.2,2.02,0.0,15,matematica,Calculează: 1728 ÷ 12 =,144,"Pașii:
+
+1. Împărțim 1728 de 12.
+2. Rezultatul este 144.
+
+RĂSPUNS FINAL: 144",144.0,,,1.0,1.0,144.0,584.8816000016086,4684.507900001336,9.26921282185817,38,127,6.7921,566.813,4099.593,224.15350341796875
+llama3.2,2.02,0.0,16,matematica,Rezolvă pentru x: 5x - 7 = 3x + 9,8,"Pașii:
+
+1. Adaugă 7 la ambele părți ale ecuației: 
+   5x - 7 + 7 = 3x + 9 + 7
+   5x = 3x + 16
+
+2. Subtragă 3x de ambele părți ale ecuației:
+   5x - 3x = 3x - 3x + 16
+   2x = 16
+
+3. Diviză ambii părți cu 2:
+   (2x)/2 = 16/2
+   x = 8
+
+RĂSPUNS FINAL: x = 8",8.0,,,1.0,1.0,8.0,1050.830500000302,18371.53009999929,8.717417856955024,151,135,8.414,1030.471,17321.643,32.042423248291016
+llama3.2,2.02,0.0,17,matematica,Rezolvă pentru x: 4(x + 3) = 36,6,"Pașii:
+
+1. Distribuim 4 la termenul interior: 4x + 12 = 36
+2. Istrăm toate termenele cu 4: 4x = 24
+3. Divizăm ambe părțile cu 4: x = 6
+
+RĂSPUNS FINAL: 6",6.0,,,1.0,1.0,6.0,745.7813000000897,9310.662599998977,8.990075890251022,77,132,6.4421,710.003,8565.0,162.9270782470703
+llama3.2,2.02,0.0,18,matematica,Un tren merge cu viteză constantă și parcurge 240 km în 3 ore. Câți kilometri parcurge în 5 ore?,400,"Pentru a găsi distanța parcursă de tren în 5 ore, putem calcula viteza sa:
+
+Viteză = Distanță / Timp
+= 240 km / 3 ore
+= 80 km/oră
+
+Din această viteză, putem calcula distanța parcursă în 5 ore:
+
+Distanță = Viteză * Timp
+= 80 km/oră * 5 ore
+= 400 km
+
+RĂSPUNS FINAL: 400",400.0,,,1.0,1.0,400.0,1582.0820000008098,15452.775000001566,8.579195781861763,119,149,5.2236,1555.411,13870.764,53.5893669128418
+llama3.2,2.02,0.0,19,matematica,Un produs costă 250 de lei și se ieftinește cu 20%. Cât costă după reducere (în lei)?,200,"Pașii pentru a găsi răspunsul:
+
+1. Calculăm reducerea: 20% din 250 lei = 0,2 x 250 = 50 lei
+2. Reducem prețul cu reducerea calculată: 250 - 50 = 200 lei
+
+RĂSPUNS FINAL: 200",200.0,,,1.0,1.0,200.0,1521.3879000002635,10550.216300000102,8.41901434389569,76,149,5.182,1482.216,9027.185,145.60791015625
+llama3.2,2.02,0.0,20,matematica,Calculează: 3² × 4 - 10 ÷ 2 =,31,"Pașii pentru a rezolva problema:
+
+1. Calculăm prima operatie, potrivit regulilor exponentiale: 
+   3² = 9
+2. Apoi, realizăm operația de multiplicare:
+   9 × 4 = 36
+3. În continuare, realizăm operația de divizie:
+   10 ÷ 2 = 5
+4. Finalmente, realizăm operația de subtragere:
+   36 - 5 = 31
+
+RĂSPUNS FINAL: 31",31.0,,,1.0,1.0,31.0,1090.4884999999922,15327.434599999833,8.569547886809197,122,133,6.4251,1057.715999,14236.457,70.42820739746094
